@@ -1,11 +1,22 @@
-import React from "react";
+// src/pages/HomePage.js
+import React from 'react';
+import Navbar from '../components/Navbar';
+import HeroSection from '../components/HeroSection';
+import SearchSection from '../components/SearchSection';
+import FeaturedPlans from '../components/FeaturedPlans';
+// import AboutUs from '../components/AboutUs';
+import Footer from '../components/Footer';
 
-function HomePage() {
+const HomePage = () => {
   return (
-    <>
-      <div>HomePage</div>
-    </>
+    <div>
+      <Navbar />
+      <HeroSection />
+      <SearchSection />
+      <FeaturedPlans />
+      <Footer />
+    </div>
   );
-}
+};
 
 export default HomePage;

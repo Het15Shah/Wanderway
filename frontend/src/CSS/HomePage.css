@@ -1,0 +1,104 @@
+.homepage {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Hero Section */
+.hero-section {
+  background-image: url("../assets/bg-hero.jpg"); /* Replace with a relevant image */
+  background-size: cover;
+  color: white;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.hero-section h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.search-form input,
+.search-form button {
+  padding: 10px;
+  font-size: 1em;
+}
+
+.search-form button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Popular Trips Section */
+.popular-trips-section {
+  margin-top: 40px;
+}
+
+.popular-trips-section h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.trip-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.trip-card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 250px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.trip-card:hover {
+  transform: scale(1.05);
+}
+
+.trip-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.trip-info {
+  padding: 10px;
+  text-align: center;
+}
+
+.trip-info h3 {
+  font-size: 1.2em;
+}
+
+.trip-info p {
+  color: #555;
+  margin: 5px 0;
+}
+
+.trip-info strong {
+  color: #ff6600;
+}
+
+/* Search Results Section */
+.search-results-section {
+  margin-top: 40px;
+}
+
+.search-results-section h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}

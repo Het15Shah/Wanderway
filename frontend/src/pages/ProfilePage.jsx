@@ -1,76 +1,48 @@
-import useAPI from "../hooks/useAPI";
-
-// function ProfilePage() {
-//   const { GET } = useAPI();
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const results = await GET("/");
-//       console.log(results);
-//     };
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <>
-//       <div>ProfilePage</div>
-//     </>
-//   );
-// }
-
-// export default ProfilePage;
-
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-  TextField,
+  Box,
   Button,
-  Switch,
-  FormControlLabel,
-  CircularProgress,
+  Card,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+  InputAdornment,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Camera from "@mui/icons-material/Camera";
+import Phone from "@mui/icons-material/Phone";
+import LocationOn from "@mui/icons-material/LocationOn";
+import useAPI from "../hooks/useAPI";
 
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-
-const Profile = () => {
-  const navigate = useNavigate();
-  const { GET, POST } = useAPI();
+const TravelProfilePage = () => {
+  const { POST } = useAPI();
 
   const [loading, setLoading] = useState(false);
-  const [valid, setValid] = useState(false);
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [location, setLocation] = useState(""); // Latitude and Longitude
+  const [location, setLocation] = useState("");
   const [birthdate, setBirthdate] = useState(null);
-  const [experience, setExperience] = useState("");
   const [isWorking, setIsWorking] = useState(true);
-  const [justVerify, setJustVerify] = useState(false);
-  const [showEditFields, setShowEditFields] = useState(true);
-  const [apiKey, setApiKey] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState("");
+  const [gender, setGender] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
 
-  const [birthDatePicker, setBirthDatePicker] = useState(null);
-
-  const theme = createTheme({
-    typography: {
-      fontFamily: "Quicksand",
-      body1: { fontWeight: "600" },
-    },
-    palette: {
-      primary: { main: "#4caf50" },
-      secondary: { main: "#81c784" },
-    },
-  });
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+      setProfileImage(file);
+    }
+  };
 
   const handlePhoneNumber = (e) => {
     const input = e.target.value;
@@ -82,34 +54,54 @@ const Profile = () => {
   };
 
   const updateProfile = async () => {
-    setJustVerify(true);
-
     if (
       name === "" ||
       address === "" ||
       location === "" ||
       phoneNumber.length !== 10 ||
       birthdate === "" ||
-      address === ""
+      address === "" ||
+      gender === ""
     ) {
       return;
     }
 
     setLoading(true);
 
-    try {
-      const results = await POST("/update-profile", {
-        name,
-        username: userName,
-        email,
-        contact: phoneNumber,
-        address,
-        location,
-        birthdate,
-        experience,
-      });
+    const profileData = {
+      name,
+      username: userName,
+      email,
+      contact: phoneNumber,
+      address,
+      gender,
+      profileImage,
+    };
 
-      if (results?.status === 200) {
+    // const formData = new FormData();
+    // formData.append("name", name);
+    // formData.append("username", userName);
+    // formData.append("email", email);
+    // formData.append("contact", phoneNumber);
+    // formData.append("address", address);
+    // formData.append("location", location);
+    // formData.append("birthdate", birthdate);
+    // formData.append("gender", gender);
+
+    // if (profileImage) {
+    //   formData.append("profileImage", profileImage);
+    // }
+
+    try {
+      
+      const response = await POST("/update-profile", profileData);
+
+      // const response = await fetch("/update-profile", {
+      //   method: "POST",
+      //   body: formData,
+      // });
+
+      if (response.ok) {
         toast.success("Profile updated successfully!");
       } else {
         toast.error("Failed to update profile.");
@@ -124,27 +116,25 @@ const Profile = () => {
 
   const getUser = async () => {
     try {
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-      };
+      const response = await fetch("/profile", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
 
-      const results = await GET("/profile");
-
-      // console.log(results.data);
-
-      if (results?.status === 200) {
-        const { user } = results?.data;
-        setValid(user?.valid === undefined ? "" : user.valid);
-        setName(user?.name === undefined ? "" : user.name);
-        setUserName(user?.username === undefined ? "" : user.username);
-        setEmail(user?.email === undefined ? "" : user.email);
-        setPhoneNumber(user?.contact === undefined ? "" : user.contact);
-        setAddress(user?.address === undefined ? "" : user.address);
-        setLocation(user?.location === undefined ? "" : user.location);
-        setIsWorking(user?.working === undefined ? "" : user.working);
-        setExperience(user?.experience === undefined ? "" : user.experience);
-        setBirthdate(user?.birthdate === undefined ? "" : user.birthdate);
+      if (response.ok) {
+        const { user } = await response.json();
+        setName(user?.name || "");
+        setUserName(user?.username || "");
+        setEmail(user?.email || "");
+        setPhoneNumber(user?.contact || "");
+        setAddress(user?.address || "");
+        setLocation(user?.location || "");
+        setIsWorking(user?.working || true);
+        setBirthdate(user?.birthdate || "");
+        setGender(user?.gender || "");
+        setPreviewImage(user?.profileImage || "");
       } else {
         toast.error("Invalid Credentials");
       }
@@ -154,384 +144,232 @@ const Profile = () => {
     }
   };
 
-  function formatToISOWithLocalTime(dateString) {
-    const date = new Date(dateString);
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-
-    const formattedDate = `${year}-${month}-${day}`;
-
-    return formattedDate;
-  }
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <div
-        data-aos="fade-up"
-        style={{
-          margin: "2em",
-          fontFamily: "Quicksand",
-          fontWeight: "600",
-          marginTop: "5em",
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+        backgroundImage:
+          "url('https://source.unsplash.com/1600x900/?nature,travel')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backdropFilter: "blur(8px)",
+        transition: "background 0.5s ease",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          padding: "3rem",
+          borderRadius: "20px",
+          boxShadow: "0 6px 12px rgba(0, 0, 0, 0.3)",
+          backdropFilter: "blur(10px)",
+          width: "100%",
+          maxWidth: "1200px",
         }}
       >
-        <Grid container spacing={3} justifyContent="center">
-          <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={4}>
             <Card
-              sx={{ maxWidth: "100%", padding: "1em", textAlign: "center" }}
+              sx={{
+                bgcolor: "#ffffff",
+                borderRadius: "16px",
+                boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)",
+                padding: "2rem",
+                textAlign: "center",
+                transition: "all 0.3s ease-in-out",
+                "&:hover": {
+                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.15)",
+                  transform: "scale(1.02)",
+                },
+              }}
             >
-              <CardMedia
-                component="img"
-                alt="profile"
-                height="100"
-                image="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
-                sx={{
-                  maxWidth: "80%",
-                  height: "auto",
-                  borderRadius: "50%",
-                  margin: "auto",
-                }}
-              />
-              <CardContent>
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  {name || "No Name"}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Username{userName !== "" ? ":" : ""} {userName}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Email{email !== "" ? ":" : ""} {email}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Phone{phoneNumber !== "" ? ": +91" : ""} {phoneNumber}
-                </Typography>
-                {address && (
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    sx={{ fontWeight: "bold" }}
-                  >
-                    Address{address !== "" ? ":" : ""} {address}
-                  </Typography>
-                )}
-              </CardContent>
-            </Card>
-            {valid && (
-              <Card
-                sx={{
-                  my: 4,
-                  backgroundColor:
-                    isWorking === "false" ? "#f08080" : "#e8f5e9",
-                }}
-              >
-                <CardContent
+              <label htmlFor="icon-button-file">
+                <input
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="icon-button-file"
+                  type="file"
+                  onChange={handleImageUpload}
+                />
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.2)",
+                    },
                   }}
                 >
-                  <Typography
-                    fontSize="large"
-                    fontWeight="bold"
+                  <Box
                     sx={{
-                      color: isWorking === "false" ? "#c1121f" : "#388e3c",
+                      position: "relative",
+                      width: "120px",
+                      height: "120px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      border: "4px solid #FF5A5F",
+                      margin: "0 auto",
+                      transition: "all 0.3s ease-in-out",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                      },
                     }}
                   >
-                    {typeof isWorking === "string"
-                      ? isWorking === "false"
-                        ? "Not Working"
-                        : isWorking
-                      : ""}
-                  </Typography>
-                </CardContent>
-              </Card>
-            )}
-          </Grid>
-          {showEditFields && (
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-              <Card>
-                <CardContent>
-                  <Grid item>
-                    <Typography
-                      fontSize="xx-large"
-                      sx={{
-                        fontWeight: "bold",
-                        color: "#134611",
-                        textAlign: "center",
+                    <img
+                      src={previewImage || "https://via.placeholder.com/120"}
+                      alt="profile"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        transition: "all 0.3s ease-in-out",
                       }}
-                    >
-                      Profile
-                    </Typography>
-                  </Grid>
-                  <Grid item margin={0} padding={4}>
-                    <Grid item xs={12} padding={1}>
-                      <TextField
-                        color="success"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        id="name"
-                        label="Name"
-                        placeholder="Name"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        size="small"
-                        autoComplete="off"
-                        error={justVerify && !name}
-                        helperText={
-                          justVerify && !name
-                            ? "Please enter a valid name."
-                            : ""
-                        }
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} padding={1}>
-                      <TextField
-                        color="success"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                        id="username"
-                        label="Username"
-                        placeholder="Username"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        size="small"
-                        autoComplete="off"
-                        error={justVerify && !userName}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        helperText={
-                          justVerify && !userName
-                            ? "Please enter a valid username."
-                            : ""
-                        }
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} padding={1}>
-                      <TextField
-                        color="success"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        id="email"
-                        label="Email"
-                        placeholder="Email"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        size="small"
-                        autoComplete="off"
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        error={justVerify && email === ""}
-                        helperText={
-                          justVerify && email === ""
-                            ? "Please enter a valid email."
-                            : ""
-                        }
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} padding={1}>
-                      <TextField
-                        color="success"
-                        value={phoneNumber}
-                        onChange={handlePhoneNumber}
-                        id="phone-number"
-                        label="Phone Number"
-                        placeholder="Phone Number"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        size="small"
-                        autoComplete="off"
-                        error={justVerify && phoneNumber.length !== 10}
-                        helperText={
-                          justVerify && phoneNumber.length !== 10
-                            ? "Please enter a valid Phone Number."
-                            : ""
-                        }
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </Grid>
+                    />
+                  </Box>
+                </IconButton>
+              </label>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: "bold", mt: 2, color: "#333" }}
+              >
+                {name || "No Name"}
+              </Typography>
+              <Typography variant="body1" color="textSecondary" sx={{ mt: 1 }}>
+                {userName}
+              </Typography>
+              <Typography variant="body1" color="textSecondary" sx={{ mt: 1 }}>
+                {email}
+              </Typography>
+              <Typography variant="body1" color="textSecondary" sx={{ mt: 1 }}>
+                <Phone /> {phoneNumber ? `+91 ${phoneNumber}` : ""}
+              </Typography>
+              {address && (
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  sx={{ mt: 1 }}
+                >
+                  <LocationOn /> {address}
+                </Typography>
+              )}
+            </Card>
+          </Grid>
 
-                    <Grid item xs={12} padding={1} paddingY={2}>
-                      <Typography fontWeight="bold">
-                        <LocationOnRoundedIcon sx={{ color: "#134611" }} />
-                        Location*
-                      </Typography>
-                      <Grid
-                        item
-                        margin={0}
-                        padding={0}
-                        id="searchBoxContainer"
-                      ></Grid>
-                      <TextField
-                        id="location"
-                        label="Location"
-                        value={location}
-                        onChange={(e) => {
-                          setLocation(e.target.value);
-                        }}
-                        sx={{ display: "none" }}
-                        error={justVerify && location === ""}
-                        helperText={
-                          justVerify &&
-                          (location === "" ? "Please select your location" : "")
-                        }
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12} padding={1}>
-                      <TextField
-                        color="success"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        id="address"
-                        label="Exact Address"
-                        placeholder="Address"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        size="small"
-                        autoComplete="off"
-                        error={justVerify && !address}
-                        helperText={
-                          justVerify && !address
-                            ? "Please enter a valid address."
-                            : ""
-                        }
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} padding={1}>
-                      <TextField
-                        color="success"
-                        value={experience}
-                        onChange={(e) => setExperience(e.target.value)}
-                        id="experience"
-                        label="Experiences (in years)"
-                        placeholder="Experiences"
-                        variant="outlined"
-                        fullWidth
-                        size="small"
-                        autoComplete="off"
-                        error={justVerify && !experience}
-                        helperText={
-                          justVerify && !experience
-                            ? "Please enter a valid experience."
-                            : ""
-                        }
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            fontWeight: "bold",
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} padding={1}>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={showEditFields}
-                            onChange={(e) =>
-                              setShowEditFields(e.target.checked)
-                            }
-                          />
-                        }
-                        label="Edit Profile"
-                      />
-                    </Grid>
-                    <Grid item xs={12} container justifyContent="center">
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        onClick={updateProfile}
-                        sx={{
-                          width: "fit-content",
-                          fontWeight: "bold",
-                          borderRadius: "12px",
-                          backgroundColor: "#134611",
-                          color: "white",
-                          "&:hover": {
-                            color: "white",
-                            backgroundColor: "#155d27",
-                          },
-                        }}
-                      >
-                        {!loading ? "Update" : "Updating..."}
-                        {loading && (
-                          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        )}
-                        {loading && (
-                          <CircularProgress
-                            size={20}
-                            sx={{
-                              color: "white",
-                              right: 0,
-                            }}
-                          />
-                        )}
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
-          )}
+          <Grid item xs={12} md={8}>
+            <Card
+              sx={{
+                bgcolor: "#ffffff",
+                borderRadius: "16px",
+                boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)",
+                padding: "2rem",
+                transition: "all 0.3s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.02)",
+                },
+              }}
+            >
+              <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
+                Update Profile
+              </Typography>
+
+              <TextField
+                label="Full Name"
+                variant="outlined"
+                fullWidth
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                sx={{
+                  mb: 2,
+                  "& .MuiOutlinedInput-root": {
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.02)",
+                    },
+                  },
+                }}
+              />
+              <TextField
+                label="Username"
+                variant="outlined"
+                fullWidth
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                label="Email Address"
+                variant="outlined"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                label="Phone Number"
+                variant="outlined"
+                fullWidth
+                value={phoneNumber}
+                onChange={handlePhoneNumber}
+                sx={{ mb: 2 }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">+91</InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                label="Address"
+                variant="outlined"
+                fullWidth
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Gender</InputLabel>
+                <Select
+                  label="Gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={updateProfile}
+                disabled={loading}
+                sx={{
+                  mt: 2,
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  },
+                }}
+              >
+                {loading ? "Updating..." : "Update Profile"}
+              </Button>
+            </Card>
+          </Grid>
         </Grid>
-      </div>
-    </ThemeProvider>
+      </Box>
+    </Box>
   );
 };
 
-export default Profile;
+export default TravelProfilePage;
