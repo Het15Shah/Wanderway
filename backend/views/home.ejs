@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Management App</title>
+    
+    <style>
+        /* Reset some basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #333;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar a:hover {
+            background-color: #555;
+            border-radius: 5px;
+        }
+
+        /* Main content styling */
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Featured destinations section */
+        .destinations {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .destination {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            width: 200px;
+            text-align: center;
+        }
+
+        .destination img {
+            width: 100%;
+            border-radius: 10px 10px 0 0;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .destination h3 {
+            margin-top: 0.5rem;
+            color: #333;
+        }
+
+        /* Call to Action section */
+        .cta {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+        }
+
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background-color: #ff6b6b;
+            color: #fff;
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #ff4c4c;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: #fff;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="navbar">
+            <a href="/">Home</a>
+            <a href="/destinations">Destinations</a>
+            <a href="/trips">Trips</a>
+            <a href="/bookings">Bookings</a>
+            <a href="/user/myProfile">My Profile</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Welcome to the Travel Management App</h1>
+        <p>Explore the world with us! Book amazing trips and manage your travel plans easily.</p>
+        
+        <!-- Featured Destinations Section -->
+        <section>
+            <h2>Featured Destinations</h2>
+            <div class="destinations">
+                <div class="destination">
+                    <img src="/images/destination1.jpg" alt="Destination 1">
+                    <h3>Paris, France</h3>
+                    <p>Discover the city of love and lights.</p>
+                </div>
+                <div class="destination">
+                    <img src="/images/destination2.jpg" alt="Destination 2">
+                    <h3>Bali, Indonesia</h3>
+                    <p>Relax in the tropical paradise.</p>
+                </div>
+                <div class="destination">
+                    <img src="/images/destination3.jpg" alt="Destination 3">
+                    <h3>New York, USA</h3>
+                    <p>Explore the vibrant city life.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Call to Action -->
+        <section class="cta">
+            <h2>Ready for Your Next Adventure?</h2>
+            <a href="/bookings" class="btn">Book Now</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Travel Management App. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
