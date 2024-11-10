@@ -182,10 +182,13 @@ function SignUpPage() {
                             <Link href="#" underline="hover">
                             </Link>
                         </Typography> */}
-                        <Button
-                            onClick={() => { navigate("/login"); }}>
-                            I am already a member
-                        </Button>
+                        <Typography align='center'>
+                        Already a member?
+                            <Button
+                                onClick={() => { navigate("/login"); }}>
+                                login
+                            </Button>
+                        </Typography>
                     </Box>
                 </Box>
 
