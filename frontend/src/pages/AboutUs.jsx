@@ -28,7 +28,7 @@ const teamData = {
 
     {
       name: 'Kavit Patel',
-      id: '202201290',
+      //id: '202201290',
       photo: kavit, 
       instagram: 'https://instagram.com/kavit007',
       github: 'https://github.com/alicesmith',
@@ -37,7 +37,7 @@ const teamData = {
 
     {
       name: 'Darpan Lunagariya',
-      id: '202201462',
+      //id: '202201462',
       photo: darpan,
       instagram: 'https://instagram.com/darpan_1405',
       github: 'https://github.com/bobjones',
@@ -46,7 +46,7 @@ const teamData = {
 
     {
       name: 'Jinay Vora',
-      id: '202201473',
+      //id: '202201473',
       photo: jinay,
       instagram: 'https://instagram.com/jinayvora_',
       github: 'https://github.com/Jinay-Vora123',
@@ -56,7 +56,7 @@ const teamData = {
 
     {
       name: 'Shrey Bhavishi',
-      id: '202201478',
+      //id: '202201478',
       photo: shrey,
       instagram: 'https://instagram.com/shrey.bavishi',
       github: 'https://github.com/ShreyBavishi',
@@ -66,7 +66,7 @@ const teamData = {
 
     {
       name: 'Meet Zalavadiya',
-      id: '202201482',
+      //id: '202201482',
       photo: meet,
       instagram: 'https://instagram.com/meet.patel6154',
       github: 'https://github.com/Meet-Zalavadiya',
@@ -75,7 +75,7 @@ const teamData = {
 
     {
       name: 'Neel Patel',
-      id: '202201494',
+      //id: '202201494',
       photo: Neel, 
       instagram: 'https://instagram.com/_neel_05__',
       github: 'https://github.com/Neel075',
@@ -84,7 +84,7 @@ const teamData = {
 
     {
       name: 'Divy Patel',
-      id: '202201495',
+      //id: '202201495',
       photo: divy,
       instagram: 'https://instagram.com/divypatel473',
       github: 'https://github.com/ddpatel123',
@@ -93,7 +93,7 @@ const teamData = {
 
     {
       name: 'Priyank Ramani',
-      id: '202201497',
+     // id: '202201497',
       photo: priyank,
       instagram: 'https://instagram.com/priyank.ramani',
       github: 'https://github.com/priyankramani',
@@ -102,7 +102,7 @@ const teamData = {
 
     {
       name: 'Ram Patel',
-      id: '202201509',
+      //id: '202201509',
       photo: ram,
       instagram: 'https://instagram.com/bobjones',
       github: 'https://github.com/bobjones',
@@ -111,7 +111,7 @@ const teamData = {
 
     {
       name: 'Het Shah',
-      id: '202201515',
+      //id: '202201515',
       photo: het, 
       instagram: 'https://instagram.com/hetshah_3030',
       github: 'https://github.com/Het15Shah',
@@ -153,128 +153,7 @@ const AboutUs = () => {
 
       </div>
 
-      <footer className="footer" style={styles.footer}>
-      <div className="container">
-        <div className="row">
-          {/* Company Section */}
-
-          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
-            <h5 style={styles.heading}>Company</h5>
-
-            <ul style={styles.list}>
-              {/* Updated About Us Link */}
-
-              <li>
-                <Link to="/about-us" style={styles.link}>
-                  About Us
-                </Link>
-              </li>
-
-              <li>
-                <a href="#" style={styles.link}>
-                  FAQs & Help
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Section */}
-
-          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
-            <h5 style={styles.heading}>Contact us</h5>
-
-            <p style={styles.text}>
-              <i className="fas fa-map-marker-alt"></i> DA-IICT, Gandhinagar,
-              India
-              <br />
-              <i className="fas fa-phone"></i> +123 456 7890
-              <br />
-              <i className="fas fa-envelope"></i> daiict.ac.in
-            </p>
-            <div style={styles.socialMedia}>
-              <a href="https://x.com/i/flow/login?redirect_after_login=%2Fdaiictofficial" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fab fa-twitter"
-                  style={{ ...styles.icon, marginRight: "10px" }}
-                >
-                  {" "}
-                </i>
-              </a>
-              <a href="https://www.facebook.com/DAIICT/" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fab fa-facebook-f"
-                  style={{ ...styles.icon, marginRight: "10px" }}
-                >
-                  {" "}
-                </i>
-              </a>
-              <a href="https://www.instagram.com/daiictofficial/?hl=en" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fab fa-instagram"
-                  style={{ ...styles.icon, marginRight: "10px" }}
-                >
-                  {" "}
-                </i>
-              </a>
-              <a href="https://in.linkedin.com/school/dhirubhai-ambani-institute-of-information-and-communication-technology/" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-linkedin-in" style={styles.icon}>
-                  {" "}
-                </i>
-              </a>
-            </div>
-          </div>
-
-          {/* Gallery Section */}
-
-          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
-            <h5 style={styles.heading}>Gallery</h5>
-
-            <div style={styles.galleryImages}>
-              {/* Updated to use imported images */}
-
-              <img
-                src={photo1}
-                alt="Gallery Image 1"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo2}
-                alt="Gallery Image 2"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo3}
-                alt="Gallery Image 3"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo4}
-                alt="Gallery Image 4"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo5}
-                alt="Gallery Image 5"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo6}
-                alt="Gallery Image 6"
-                style={styles.galleryImage}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style={styles.footerBottom}>
-        <p style={styles.footerText}>&copy; Wanderways, All Rights Reserved.</p>
-
-        <a href="#top" style={styles.backToTop}>
-          ↑
-        </a>
-      </div>
-    </footer>
+      
     </div>
   );
 };
