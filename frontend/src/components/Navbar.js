@@ -1,4 +1,4 @@
-import React,{ memo,useState, useEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { AppBar, Toolbar, Typography, Button, Box, Slide } from "@mui/material";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,7 +13,7 @@ const Navbar = memo(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       const isScrollingUp = prevScrollPos > currentScrollPos;
-      
+
       // Show navbar when scrolling up, hide it when scrolling down
       setShowNavbar(isScrollingUp || currentScrollPos < 100);
       setPrevScrollPos(currentScrollPos);
@@ -93,7 +93,7 @@ const Navbar = memo(() => {
             </Button>
             <Button
               component={Link}
-              to="#login"
+              to="/login"
               variant="text"
               color="inherit"
               sx={{
@@ -114,7 +114,7 @@ const Navbar = memo(() => {
             </Button>
             <Button
               component={Link}
-              to="#signup"
+              to="/signup"
               variant="contained"
               sx={{
                 backgroundColor: "#FF8C00", // Lighter yellow-orange color

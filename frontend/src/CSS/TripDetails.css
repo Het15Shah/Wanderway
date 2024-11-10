@@ -1,119 +1,221 @@
-/* TripDetails.css */
-
 /* Hero Section */
 .trip-hero {
-    width: 100%;
-    height: 400px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-bottom: 5px solid #e65100;
+}
+
+.trip-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+  z-index: 1;
+}
+
+.trip-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 2;
+  animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Content Section */
+.trip-content {
+  padding: 50px 30px;
+  max-width: 900px;
+  margin: -50px auto 0;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  position: relative;
+}
+
+/* Trip Details Header */
+.trip-details-header {
+  margin-bottom: 30px;
+  text-align: center;
+  border-bottom: 2px solid #e65100;
+  padding-bottom: 15px;
+}
+
+.trip-details-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a237e;
+}
+
+.trip-details-header p {
+  font-size: 1.2rem;
+  color: #757575;
+  margin-top: 10px;
+}
+
+/* Trip Summary Section */
+.trip-summary {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 30px;
+  background: linear-gradient(to right, #e3f2fd, #ffebee);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.trip-summary .price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #e65100;
+}
+
+.trip-summary .duration {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a237e;
+}
+
+/* Trip Itinerary Section */
+.trip-itinerary {
+  margin-top: 40px;
+}
+
+.day-card {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #e3f2fd, #ffebee);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.day-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: #e65100;
+}
+
+.day-card h4 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1a237e;
+  margin-bottom: 10px;
+  padding-left: 15px;
+}
+
+.day-card .transport-mode {
+  font-size: 1.1rem;
+  color: #616161;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.day-card .transport-mode svg {
+  margin-right: 8px;
+}
+
+.day-card .hotel-info {
+  font-size: 1rem;
+  color: #424242;
+  font-style: italic;
+  padding-left: 15px;
+}
+
+.day-card .activities {
+  margin-top: 15px;
+  padding-left: 15px;
+}
+
+.activity-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item svg {
+  margin-right: 10px;
+  color: #1a237e;
+}
+
+.activity-item .time {
+  font-weight: 600;
+}
+
+.activity-item .location {
+  font-style: italic;
+  color: #757575;
+}
+
+/* Book Button */
+.book-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 30px auto 0;
+  padding: 15px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #3f51b5;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.book-button:hover {
+  background-color: #5c6bc0;
+  transform: scale(1.05);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .trip-hero {
+    height: 300px;
+  }
+
   .trip-hero h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    font-size: 2.5rem;
   }
-  
-  /* Content Section */
-  .trip-content {
-    padding: 40px 20px;
-    background-color: #fff;
-  }
-  
-  .trip-details-header {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  
-  .trip-details-header h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #283593;
-  }
-  
-  .trip-details-header p {
-    font-size: 1.1rem;
-    color: #777;
-  }
-  
-  .trip-summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .trip-summary .price {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #f56d7f;
-  }
-  
+
+  .trip-summary .price,
   .trip-summary .duration {
-    font-size: 1.2rem;
-    color: #555;
+    font-size: 1.8rem;
   }
-  
-  .trip-itinerary {
-    margin-top: 40px;
-  }
-  
-  .day-card {
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f7f7f7;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .day-card h4 {
-    font-size: 1.5rem;
-    color: #283593;
-  }
-  
-  .day-card .transport-mode {
-    font-size: 1.1rem;
-    color: #555;
-    margin-top: 10px;
-  }
-  
-  .day-card .activities {
-    margin-top: 15px;
-  }
-  
-  .activity-item {
-    margin-bottom: 10px;
-  }
-  
-  .activity-item .time {
-    font-weight: 600;
-  }
-  
-  .activity-item .location {
-    font-style: italic;
-    color: #888;
-  }
-  
-  /* Button */
-  .book-button {
-    display: block;
-    margin-top: 30px;
-    background-color: #283593;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    text-align: center;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .book-button:hover {
-    background-color: #f56d7f;
-  }
-  
+}
