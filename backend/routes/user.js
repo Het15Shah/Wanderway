@@ -13,8 +13,11 @@ router.get("/signup",userSignup);
 router.get("/signin",userSignin);
 
 router.post("/signup", async (req,res) => {
-    const {userId,fullName, email, password} = req.body;
+    const {userId,fullName, email, password,confirmPassword} = req.body;
     console.log(req.body);
+    if(password !== confirmPassword ){
+        return res.send({ error: "Password Not Matched "}).redirect("/user/signup");
+    }
     const result = await User.create({
         userId,
         fullName,
@@ -43,7 +46,7 @@ router.post("/signin", async (req,res) => {
         res.cookie('token',token,{
            domain: 'localhost',
            httpOnly: true,
-           maxAge: 60*1000, 
+           maxAge: 60*1000,
         });
         res.redirect("/");
     }

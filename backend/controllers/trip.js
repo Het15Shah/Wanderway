@@ -1,4 +1,4 @@
-const Trip = require('../model/trip') 
+const Trip = require('../models/trip');
 
 async function addNewTrip(req, res) {
     try {
@@ -11,6 +11,7 @@ async function addNewTrip(req, res) {
   }
 
 async function getAllTrip(req, res) {
+  // console.log("Hello from getAllTrips");
     try {
       const trips = await Trip.find();
       res.json(trips);
@@ -31,6 +32,7 @@ async function getTripById (req, res) {
   }
 
 async function searchTrip (req, res)  {
+  console.log(req.query);
     const { destination, minDays, maxDays, minBudget, maxBudget } = req.query;
   
     // Build query object based on filters
@@ -38,6 +40,7 @@ async function searchTrip (req, res)  {
   
     // Filter by destination if provided
     if (destination) {
+      console.log("Searching For ",destination);
       query.destination = destination;
     }
   

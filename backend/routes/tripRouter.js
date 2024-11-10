@@ -1,16 +1,15 @@
-
 const express = require('express');
 const router = express.Router();
-const Trip = require('../model/trip');
-const ensureAdmin = require('../middleware/ensureAdmin')
+const Trip = require('../models/trip');
+const ensureAdmin = require('../middlewares/ensureAdmin')
 
 const {addNewTrip,
   searchTrip,
   deleteTripById,
   getAllTrip,
-  getTripById} = require('../controller/router')
-// Create a new trip
-router.post('/',ensureAdmin ,addNewTrip);
+  getTripById} = require('../controllers/trip');
+// Create a new trip (Only Admin Will Be Able to Add New Trips)
+router.post('/',addNewTrip);
 
 // Get all trips
 router.get('/', getAllTrip);
@@ -20,7 +19,7 @@ router.get('/', getAllTrip);
 router.get('/:id', getTripById);
 
 
-router.get('/', searchTrip);
+router.get('/searchTrip/:query', searchTrip);
 
 
 // Delete a trip by ID

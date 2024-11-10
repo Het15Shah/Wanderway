@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const ensureAdmin = require('../middleware/ensureAdmin')
+const ensureAdmin = require('../middlewares/ensureAdmin');
 const {addReview,
   getAllReviewByTripId,
   deleteReviewById
-} = require('../controller/reviews')
+} = require('../controllers/reviews');
 
 // 1. Create a Review
 router.post('/:tripId', addReview);

@@ -4,6 +4,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const userRoute = require("./routes/user");
+const tripRouter = require("./routes/tripRouter");
+const reviewRouter = require("./routes/reviewRouter");
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const {checkForAuthentication} = require("./middlewares/auth");
@@ -37,7 +39,11 @@ app.set("views",path.resolve("./views"));
 app.get("/",(req,res)=> {
     return res.render("home");
 });
+
+// Router Specification
 app.use("/user",userRoute);
+app.use("/trip",tripRouter);
+app.use("/review",reviewRouter);
 
 app.listen(PORT,()=>{
     console.log("Server Started at PORT: ",PORT);

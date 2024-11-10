@@ -1,7 +1,7 @@
 
-const Review = require('../model/review');
-const Trip = require('../model/trip');
-const User = require('../Clone Project/Wanderway/backend/models/user');
+const Review = require('../models/review');
+const Trip = require('../models/trip');
+const User = require('../models/user');
 
 
 async function addReview (req, res){
