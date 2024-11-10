@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
+import { Toaster } from "react-hot-toast";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -13,6 +14,16 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
+      <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              zIndex: 9999,
+              fontFamily: "Quicksand",
+              fontWeight: "600",
+            },
+          }}
+        />
     </BrowserRouter>
   </React.StrictMode>
 );

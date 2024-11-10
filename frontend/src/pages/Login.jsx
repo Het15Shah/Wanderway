@@ -1,9 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Grid, TextField, Button, Typography, Paper, Checkbox, FormControlLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import useAPI from '../hooks/useAPI';
+import { toast } from "react-hot-toast";
+import { isValidEmail } from "../utils/validators"
 
 function LoginPage() {
-    const nevigate = useNavigate();
+    const navigate = useNavigate();
+    const { POST } = useAPI();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [justVerify, setJustVerify] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        setJustVerify(true);
+
+        if(!isValidEmail(email) || password.length < 8) return;
+
+        setLoading(true);
+
+        const loginCredentials = { email, password }  
+
+        try {
+            const response = await POST('/api/user/signin', loginCredentials);
+
+            if (response.data.success === true) {
+                toast.success(response.data.message);
+                navigate("/");
+            }
+            else{
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.error('There was an error signing up:', error);
+            toast.error('Signup failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Grid container component="main" sx={{ height: '100vh', justifyContent: 'center', alignItems: 'center', bgcolor: '#f0f2f5' }}>
             <Paper elevation={3} sx={{ width: '80%', maxWidth: 900, p: 4, display: 'flex', borderRadius: 2 }}>
@@ -13,13 +52,17 @@ function LoginPage() {
                         Login
                     </Typography>
 
-                    <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
                             fullWidth
                             label="Email"
                             type="email"
+                            value={email}
+                            onChange={(e)=>setEmail(e.target.value)}
+                            error={justVerify && !isValidEmail(email)}
+                            helperText={justVerify && !isValidEmail(email) && "Email is not valid"}
                             variant="outlined"
                             sx={{ bgcolor: 'background.default', borderRadius: 1 }}
                         />
@@ -30,15 +73,12 @@ function LoginPage() {
                             label="Password"
                             type="password"
                             variant="outlined"
+                            value={password}
+                            error={justVerify && password.length < 8}
+                            helperText={justVerify && password.length < 8 && "passoword must contain atleast 8 characters"}
+                            onChange={(e)=>setPassword(e.target.value)}
                             sx={{ bgcolor: 'background.default', borderRadius: 1 }}
                         />
-
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                            sx={{ mt: 2 }}
-                        />
-
                         <Button
                             type="submit"
                             fullWidth
@@ -52,10 +92,10 @@ function LoginPage() {
                                 '&:hover': { bgcolor: 'primary.dark' },
                             }}
                         >
-                            Login
+                            {loading ? "Login...": "Login"}
                         </Button>
                         <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-                            Don't have an account? <Button variant="text" color="primary" onClick={()=>{nevigate("/signup")}}>Sign Up</Button>
+                            Don't have an account? <Button variant="text" color="primary" onClick={()=>navigate("/signup")}>Sign Up</Button>
                         </Typography>
                     </Box>
                 </Box>

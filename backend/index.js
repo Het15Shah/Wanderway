@@ -8,12 +8,22 @@ const tripRouter = require("./routes/tripRouter");
 const reviewRouter = require("./routes/reviewRouter");
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const Trip = require("./models/trip");
+
 const {checkForAuthentication} = require("./middlewares/auth");
 const PORT = 8000;
 
 const app = express();
-
-
+app.use(
+    cors({
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+    })
+);
+  
 // Connection
 mongoose.connect("mongodb://localhost:27017/userprofile").then(() => {
     console.log("Connected to MongoDB");
@@ -26,24 +36,19 @@ mongoose.connect("mongodb://localhost:27017/userprofile").then(() => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.json());
+
 // app.use(checkForAuthentication('token'));
 app.use(express.static(path.resolve("./public")));
 app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.urlencoded({extended: true}));
 // app.use(express.json());
 
-// Set View-Engine
-app.set("view engine","ejs");
-app.set("views",path.resolve("./views"));
-
-app.get("/",(req,res)=> {
-    return res.render("home");
-});
 
 // Router Specification
-app.use("/user",userRoute);
-app.use("/trip",tripRouter);
-app.use("/review",reviewRouter);
+app.use("/api/user",userRoute);
+app.use("/api/trip",tripRouter);
+app.use("/api/review",reviewRouter);
 
 app.listen(PORT,()=>{
     console.log("Server Started at PORT: ",PORT);

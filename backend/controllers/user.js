@@ -13,12 +13,10 @@ async function getUserProfile(req, res) {
         }
         // console.log('Hmm');
         
-        return res.render("userProfile", {
-            user,
-        });
+        return res.status(200).json({success:true, user});
     } catch (error) {
         console.error("Error fetching user profile:", error);
-        return res.status(500).send("Internal Server Error");
+        return res.status(500).send({success:false,message:"Internal Server Error"});
     }
 }
 
@@ -26,6 +24,7 @@ async function setUserProfile(req, res) {
     try {
         // Extract data from the request body
         console.log(req.body);
+        // res.status(200).json({success:true, message:"niece"});
         
         const { fullName, email, phoneNumber, address, gender, profileImageURL, role } = req.body;
         console.log("FullName",fullName);
@@ -65,22 +64,12 @@ async function setUserProfile(req, res) {
     }
 }
 
-async function handleEditProfile(req,res) {
-    return res.render("editProfile");
-}
 
-async function userSignup(req,res) {
-    return res.render("signup");
-}
-
-async function userSignin(req,res) {
-    return res.render("signin");
-}
 
 module.exports = {
     getUserProfile,
     setUserProfile,
-    handleEditProfile,
-    userSignup,
-    userSignin, 
+    // handleEditProfile,
+    // userSignup,
+    // userSignin, 
 };

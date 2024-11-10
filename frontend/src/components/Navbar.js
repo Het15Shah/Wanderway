@@ -2,11 +2,27 @@ import React,{ memo,useState, useEffect } from "react";
 import { AppBar, Toolbar, Typography, Button, Box, Slide } from "@mui/material";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Cookies from "js-cookie"
+import { useNavigate } from "react-router-dom";
+import Avatar from '@mui/material/Avatar';
+
+
 
 const Navbar = memo(() => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+
+  useEffect(() => {
+    const validateUser = () => {
+      const authToken = Cookies.get("token");
+      console.log(authToken,"authToken");
+      if (authToken) navigate("/");
+    };
+
+    validateUser();
+  }, []);
 
   // Track scrolling direction to toggle the navbar visibility
   useEffect(() => {
@@ -91,30 +107,34 @@ const Navbar = memo(() => {
             >
               About Us
             </Button>
-            <Button
-              component={Link}
-              to="#login"
-              variant="text"
-              color="inherit"
-              sx={{
-                fontSize: "18px",
-                textTransform: "none",
-                color: "#fff",
-                "&:hover": {
-                  color: "#FF8C00",
-                  transform: "scale(1.1)",
-                  transition: "transform 0.3s ease",
-                  textShadow: "0px 0px 10px rgba(255, 255, 255, 0.8)",
+
+           { Cookies.get("token") ? (<Avatar onClick={()=>navigate("/profile")} src="/broken-image.jpg" sx={{cursor:"pointer"}}/>) : (
+            <>
+             <Button
+             component={Link}
+             to="/login"
+             variant="text"
+             color="inherit"
+             sx={{
+               fontSize: "18px",
+               textTransform: "none",
+               color: "#fff",
+               "&:hover": {
+                 color: "#FF8C00",
+                 transform: "scale(1.1)",
+                 transition: "transform 0.3s ease",
+                 textShadow: "0px 0px 10px rgba(255, 255, 255, 0.8)",
                 },
               }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-            >
+              
+              >
               Login
             </Button>
             <Button
-              component={Link}
-              to="#signup"
+            component={Link}
+            to="/signup"
               variant="contained"
               sx={{
                 backgroundColor: "#FF8C00", // Lighter yellow-orange color
@@ -133,9 +153,12 @@ const Navbar = memo(() => {
               }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-            >
+              
+              >
               Sign Up
             </Button>
+            </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

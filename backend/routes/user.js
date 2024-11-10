@@ -8,16 +8,24 @@ const { createHmac, randomBytes } = require("crypto");
 
 router.get("/myProfile",checkForAuthentication,getUserProfile);
 router.post("/edit",setUserProfile);
-router.get("/edi",handleEditProfile);
-router.get("/signup",userSignup);
-router.get("/signin",userSignin);
+
 
 router.post("/signup", async (req,res) => {
-    const {userId,fullName, email, password,confirmPassword} = req.body;
+    const {userId,fullName, email, password} = req.body;
     console.log(req.body);
-    if(password !== confirmPassword ){
-        return res.send({ error: "Password Not Matched "}).redirect("/user/signup");
+
+    let userExist;
+    try {
+        userExist = await User.findOne({email:email});
+    } catch (error) {
+        console.log(error);
     }
+
+    if(userExist)
+    {
+        return res.status(200).json({success:false, message:"user already exist"});
+    }
+  
     const result = await User.create({
         userId,
         fullName,
@@ -27,7 +35,8 @@ router.post("/signup", async (req,res) => {
 
     console.log("Created User ",result);
 
-    return res.redirect("/");
+    return res.status(200).json({success:true, message:"user Signup Successfully"});
+
 });
 
 router.post("/signin", async (req,res) => {
@@ -39,21 +48,20 @@ router.post("/signin", async (req,res) => {
         // console.log("Email and password");
         // console.log("email",email);
         // console.log("password",password);
+
         const token = await User.matchPasswordAndGenerateToken(email,password);
         // console.log(req.body);
         // console.log("token ",token);
         // return res.cookie("token",token).redirect("/");
         res.cookie('token',token,{
            domain: 'localhost',
-           httpOnly: true,
-           maxAge: 60*1000,
+           maxAge: 24 * 60 * 60 * 1000, 
         });
-        res.redirect("/");
+
+        return res.status(200).json({success:true, message:"user Signup Successfully"});
     }
     catch(err){
-        return res.render("signin",{
-            error: "Invalid Email or Password",
-        });
+        return res.status(200).json({success:false, message:err.message});
     }
 });
 
@@ -72,9 +80,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // PUT request to update user information
-router.post("/update/:userId", upload.single('profileImage'), async (req, res) => {
+router.post("/update", upload.single('profileImage'), async (req, res) => {
     try {
-        const { userId } = req.params;
+        const { userId } = req.query;
         const updateData = req.body;
         // console.log(userId);
         // Find the user by ID and update fields
@@ -106,9 +114,9 @@ router.post("/update/:userId", upload.single('profileImage'), async (req, res) =
         // Save the updated user
         await user.save();
         console.log("Updated User ",user);
-        res.json({ message: "User updated successfully", user });
+       return res.status(200).json({ message: "User updated successfully", user });
     } catch (error) {
-        res.status(500).json({ message: "Error updating user", error: error.message });
+       return res.status(500).json({ message: "Error updating user", error: error.message });
     }
 });
 

@@ -20,7 +20,7 @@ import LocationOn from "@mui/icons-material/LocationOn";
 import useAPI from "../hooks/useAPI";
 
 const TravelProfilePage = () => {
-  const { POST } = useAPI();
+  const { GET, POST } = useAPI();
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
@@ -56,10 +56,7 @@ const TravelProfilePage = () => {
   const updateProfile = async () => {
     if (
       name === "" ||
-      address === "" ||
-      location === "" ||
       phoneNumber.length !== 10 ||
-      birthdate === "" ||
       address === "" ||
       gender === ""
     ) {
@@ -69,10 +66,8 @@ const TravelProfilePage = () => {
     setLoading(true);
 
     const profileData = {
-      name,
-      username: userName,
-      email,
-      contact: phoneNumber,
+      fullName: name,
+      phoneNumber,
       address,
       gender,
       profileImage,
@@ -94,18 +89,14 @@ const TravelProfilePage = () => {
 
     try {
       
-      const response = await POST("/update-profile", profileData);
+      const response = await POST("/api/user/update", profileData, { userId: userName });
 
       // const response = await fetch("/update-profile", {
       //   method: "POST",
       //   body: formData,
       // });
 
-      if (response.ok) {
         toast.success("Profile updated successfully!");
-      } else {
-        toast.error("Failed to update profile.");
-      }
     } catch (err) {
       console.log("Error ->", err);
       toast.error("Server Problem, Failed to Update user data.");
@@ -116,19 +107,23 @@ const TravelProfilePage = () => {
 
   const getUser = async () => {
     try {
-      const response = await fetch("/profile", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-        },
-      });
 
-      if (response.ok) {
-        const { user } = await response.json();
-        setName(user?.name || "");
-        setUserName(user?.username || "");
+      const response = await GET("/api/user/myProfile");
+      console.log(response.data);
+
+      // const response = await fetch("/profile", {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+      //   },
+      // });
+
+      if (response.data.success) {
+        const { user } = await response.data;
+        setName(user?.fullName || "");
+        setUserName(user?.userId || "");
         setEmail(user?.email || "");
-        setPhoneNumber(user?.contact || "");
+        setPhoneNumber(user?.phoneNumber || "");
         setAddress(user?.address || "");
         setLocation(user?.location || "");
         setIsWorking(user?.working || true);
@@ -305,6 +300,9 @@ const TravelProfilePage = () => {
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 sx={{ mb: 2 }}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
               <TextField
                 label="Email Address"
@@ -313,6 +311,9 @@ const TravelProfilePage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 sx={{ mb: 2 }}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
               <TextField
                 label="Phone Number"

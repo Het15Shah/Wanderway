@@ -3,13 +3,16 @@ import axios from 'axios';
 import { Grid, TextField, Button, Typography, Checkbox, FormControlLabel, Link, Box, Paper } from '@mui/material';
 import { Person, Email, Lock } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { isValidEmail } from "../utils/validators";
+import useAPI from '../hooks/useAPI';
+import { toast } from "react-hot-toast";
 
 function SignUpPage() {
-
+    const { POST } = useAPI();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
-        name: '',
+        fullName: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -26,27 +29,46 @@ function SignUpPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(!isValidEmail(formData.email)) return;
+
         if (formData.password !== formData.confirmPassword) {
             alert('Passwords do not match');
             return;
         }
-        
+
+        const signUpCredentials = {
+            userId: formData.username,
+            fullName: formData.fullName,
+            email: formData.email,
+            password: formData.password,
+        }  
 
         try {
-            const response = await axios.post('http://localhost:8000/api/user/signup', {
-                username: formData.username,
-                name: formData.name,
-                email: formData.email,
-                password: formData.password,
-            });
 
-            if (response.status === 201) {
-                alert('Signup successful!');
-                // Handle further actions, like redirecting or resetting the form
+            // const response = await axios.post('http://localhost:8000/api/user/signup', {
+            //     userId: formData.username,
+            //     fullName: formData.name,
+            //     email: formData.email,
+            //     password: formData.password,
+            //     // userId: "lskf",
+            //     // fullName: "lskf",
+            //     // email: "lskf",
+            //     // password: "lskf",
+            // });
+
+            const response = await POST('/api/user/signup', signUpCredentials);
+
+            if (response.data.success === true) {
+                toast.success(response.data.message);
+                navigate("/login");
+            }
+            else{
+                toast.error(response.data.message);
             }
         } catch (error) {
             console.error('There was an error signing up:', error);
-            alert('Signup failed. Please try again.');
+            toast.error('Signup failed. Please try again.');
         }
     };
 
@@ -73,7 +95,7 @@ function SignUpPage() {
                             }}
                         />
                         <TextField
-                            name="name"
+                            name="fullName"
                             margin="normal"
                             required
                             fullWidth
@@ -96,6 +118,7 @@ function SignUpPage() {
                             variant="outlined"
                             value={formData.email}
                             onChange={handleChange}
+                            error={!isValidEmail(formData.email)}
                             InputProps={{
                                 startAdornment: <Email sx={{ mr: 1 }} />,
                             }}
@@ -188,3 +211,4 @@ function SignUpPage() {
 }
 
 export default SignUpPage;
+
