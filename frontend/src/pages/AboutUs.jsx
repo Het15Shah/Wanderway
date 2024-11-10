@@ -1,85 +1,367 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+// AboutUs.js
 
-const styles = {
-  section: {
-    background: "linear-gradient(135deg, #e0eafc, #cfdef3)",
-    padding: "60px 20px",
-    borderRadius: "20px",
-    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-    maxWidth: "850px",
-    margin: "40px auto",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    position: "relative",
-    overflow: "hidden",
-  },
-  heading: {
-    fontSize: "2.8rem",
-    color: "#2c3e50",
-    marginBottom: "25px",
-    fontFamily: "'Poppins', sans-serif",
-    fontWeight: "600",
-  },
-  paragraph: {
-    fontSize: "1.2rem",
-    color: "#6c757d",
-    lineHeight: "1.7",
-    marginBottom: "35px",
-    fontFamily: "'Roboto', sans-serif",
-  },
-  button: {
-    padding: "12px 35px",
-    background: "linear-gradient(135deg, #6dd5ed, #2193b0)",
-    color: "#fff",
-    border: "none",
-    borderRadius: "30px",
-    fontSize: "1.1rem",
-    fontWeight: "500",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    transition:
-      "background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
-  },
-  buttonHover: {
-    background: "linear-gradient(135deg, #2193b0, #6dd5ed)",
-    transform: "scale(1.1)",
-  },
+import React from 'react';
+import './AboutUs.css';
+import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+import Neel from './Team Photos/Neel.jpg' 
+import het from './Team Photos/het.jpg'
+import kavit from './Team Photos/kavit.jpg'
+import ram from './Team Photos/ram.jpg'
+import shrey from './Team Photos/shrey.jpg'
+import darpan from './Team Photos/shrey.jpg'
+import jinay from './Team Photos/jinay.jpg'
+import divy from './Team Photos/divy.jpg'
+import meet from './Team Photos/meet.jpg'
+import priyank from './Team Photos/shrey.jpg'
+
+import photo1 from "../assets/photo1.jpg";
+import photo2 from "../assets/photo2.jpg";
+import photo3 from "../assets/photo3.jpg";
+import photo4 from "../assets/photo4.jpg";
+import photo5 from "../assets/photo5.jpg";
+import photo6 from "../assets/photo6.jpg";
+
+const teamData = {
+  team: [
+
+    {
+      name: 'Kavit Patel',
+      id: '202201290',
+      photo: kavit, 
+      instagram: 'https://instagram.com/kavit007',
+      github: 'https://github.com/alicesmith',
+      linkedin: 'https://linkedin.com/in/kavit-patel-78a4b1268/',
+    },
+
+    {
+      name: 'Darpan Lunagariya',
+      id: '202201462',
+      photo: darpan,
+      instagram: 'https://instagram.com/darpan_1405',
+      github: 'https://github.com/bobjones',
+      linkedin: 'https://linkedin.com/in/darpan-lunagariya-264481288/',
+    },
+
+    {
+      name: 'Jinay Vora',
+      id: '202201473',
+      photo: jinay,
+      instagram: 'https://instagram.com/jinayvora_',
+      github: 'https://github.com/Jinay-Vora123',
+      linkedin: 'https://linkedin.com/in/colewright22',
+    },
+
+
+    {
+      name: 'Shrey Bhavishi',
+      id: '202201478',
+      photo: shrey,
+      instagram: 'https://instagram.com/shrey.bavishi',
+      github: 'https://github.com/ShreyBavishi',
+      linkedin: 'https://linkedin.com/in/bobjones',
+    },
+
+
+    {
+      name: 'Meet Zalavadiya',
+      id: '202201482',
+      photo: meet,
+      instagram: 'https://instagram.com/meet.patel6154',
+      github: 'https://github.com/Meet-Zalavadiya',
+      linkedin: 'https://linkedin.com/in/meet-zalavadiya-45270b284/',
+    },
+
+    {
+      name: 'Neel Patel',
+      id: '202201494',
+      photo: Neel, 
+      instagram: 'https://instagram.com/_neel_05__',
+      github: 'https://github.com/Neel075',
+      linkedin: 'https://linkedin.com/in/neel-patel-550493253/',
+    },
+
+    {
+      name: 'Divy Patel',
+      id: '202201495',
+      photo: divy,
+      instagram: 'https://instagram.com/divypatel473',
+      github: 'https://github.com/ddpatel123',
+      linkedin: 'https://linkedin.com/in/divy-patel-1a1b32250/',
+    },
+
+    {
+      name: 'Priyank Ramani',
+      id: '202201497',
+      photo: priyank,
+      instagram: 'https://instagram.com/priyank.ramani',
+      github: 'https://github.com/priyankramani',
+      linkedin: 'https://linkedin.com/in/priyank-ramani-1',
+    },
+
+    {
+      name: 'Ram Patel',
+      id: '202201509',
+      photo: ram,
+      instagram: 'https://instagram.com/bobjones',
+      github: 'https://github.com/bobjones',
+      linkedin: 'https://linkedin.com/in/ram-patel-5a8607257/',
+    },
+
+    {
+      name: 'Het Shah',
+      id: '202201515',
+      photo: het, 
+      instagram: 'https://instagram.com/hetshah_3030',
+      github: 'https://github.com/Het15Shah',
+      linkedin: 'https://linkedin.com/in/het-shah-867893242/',
+    },
+  ],
 };
 
 const AboutUs = () => {
-  const [buttonHovered, setButtonHovered] = React.useState(false);
+  const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <section
-        className="text-center p-4"
-        style={{
-          ...styles.section,
-          transform: buttonHovered ? "scale(1.05)" : "scale(1)",
-          boxShadow: buttonHovered
-            ? "0 12px 36px rgba(0, 0, 0, 0.3)"
-            : styles.section.boxShadow,
-        }}
-      >
-        <h2 style={styles.heading}>About Us</h2>
-        <p style={styles.paragraph}>
+    <div className="about-us-page">
+      <header className="navbar">
+        <h1>About Us</h1>
+        <button onClick={() => navigate('/')} className="back-home-button">Back to Home</button>
+      </header>
+
+      {/* Card for About Website */}
+      <div className="card about-website">
+        <h2>About the Website</h2>
+        <p>
           We help you find the best travel plans and experiences tailored to
           your budget and preferences. Whether you're looking for adventure,
           relaxation, or cultural immersion, we have something for everyone.
         </p>
-        <button
-          style={{
-            ...styles.button,
-            ...(buttonHovered ? styles.buttonHover : {}),
-          }}
-          onMouseEnter={() => setButtonHovered(true)}
-          onMouseLeave={() => setButtonHovered(false)}
-        >
-          Learn More
-        </button>
-      </section>
+      </div>
+
+      {/* Card for About Team */}
+      <div className="card about-team">
+        <h2>Meet Our Team</h2>
+
+        {/*The Team*/}
+        <div className='team-grid'>
+          {teamData.team.map((member, index) => (
+            <TeamCard key={index} member={member} />
+          ))}
+        </div>
+
+      </div>
+
+      <footer className="footer" style={styles.footer}>
+      <div className="container">
+        <div className="row">
+          {/* Company Section */}
+
+          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
+            <h5 style={styles.heading}>Company</h5>
+
+            <ul style={styles.list}>
+              {/* Updated About Us Link */}
+
+              <li>
+                <Link to="/about-us" style={styles.link}>
+                  About Us
+                </Link>
+              </li>
+
+              <li>
+                <a href="#" style={styles.link}>
+                  FAQs & Help
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Section */}
+
+          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
+            <h5 style={styles.heading}>Contact us</h5>
+
+            <p style={styles.text}>
+              <i className="fas fa-map-marker-alt"></i> DA-IICT, Gandhinagar,
+              India
+              <br />
+              <i className="fas fa-phone"></i> +123 456 7890
+              <br />
+              <i className="fas fa-envelope"></i> daiict.ac.in
+            </p>
+            <div style={styles.socialMedia}>
+              <a href="https://x.com/i/flow/login?redirect_after_login=%2Fdaiictofficial" target="_blank" rel="noopener noreferrer">
+                <i
+                  className="fab fa-twitter"
+                  style={{ ...styles.icon, marginRight: "10px" }}
+                >
+                  {" "}
+                </i>
+              </a>
+              <a href="https://www.facebook.com/DAIICT/" target="_blank" rel="noopener noreferrer">
+                <i
+                  className="fab fa-facebook-f"
+                  style={{ ...styles.icon, marginRight: "10px" }}
+                >
+                  {" "}
+                </i>
+              </a>
+              <a href="https://www.instagram.com/daiictofficial/?hl=en" target="_blank" rel="noopener noreferrer">
+                <i
+                  className="fab fa-instagram"
+                  style={{ ...styles.icon, marginRight: "10px" }}
+                >
+                  {" "}
+                </i>
+              </a>
+              <a href="https://in.linkedin.com/school/dhirubhai-ambani-institute-of-information-and-communication-technology/" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-linkedin-in" style={styles.icon}>
+                  {" "}
+                </i>
+              </a>
+            </div>
+          </div>
+
+          {/* Gallery Section */}
+
+          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
+            <h5 style={styles.heading}>Gallery</h5>
+
+            <div style={styles.galleryImages}>
+              {/* Updated to use imported images */}
+
+              <img
+                src={photo1}
+                alt="Gallery Image 1"
+                style={styles.galleryImage}
+              />
+              <img
+                src={photo2}
+                alt="Gallery Image 2"
+                style={styles.galleryImage}
+              />
+              <img
+                src={photo3}
+                alt="Gallery Image 3"
+                style={styles.galleryImage}
+              />
+              <img
+                src={photo4}
+                alt="Gallery Image 4"
+                style={styles.galleryImage}
+              />
+              <img
+                src={photo5}
+                alt="Gallery Image 5"
+                style={styles.galleryImage}
+              />
+              <img
+                src={photo6}
+                alt="Gallery Image 6"
+                style={styles.galleryImage}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={styles.footerBottom}>
+        <p style={styles.footerText}>&copy; Wanderways, All Rights Reserved.</p>
+
+        <a href="#top" style={styles.backToTop}>
+          ↑
+        </a>
+      </div>
+    </footer>
     </div>
   );
+};
+
+const TeamCard = ({ member }) => (
+  <div className="team-card">
+    <img src={member.photo} alt={member.name} className="team-photo" />
+    <h3>{member.name}</h3>
+    <h3>{member.id}</h3>
+    <div className="social-links">
+      <a href={member.instagram} target="_blank" rel="noopener noreferrer" className="social-link instagram">Instagram</a>
+      <a href={member.github} target="_blank" rel="noopener noreferrer" className="social-link github">GitHub</a>
+      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="social-link linkedin">LinkedIn</a>
+    </div>
+  </div>
+);
+
+const styles = {
+  footer: {
+    backgroundColor: "#111",
+    color: "#fff",
+    padding: "40px 0",
+  },
+
+  footerSection: {
+    padding: "0 15px",
+    marginBottom: "30px", // Added margin for spacing between sections
+  },
+
+  heading: {
+    fontSize: "1.25rem",
+    fontWeight: "700",
+    color: "#fff",
+    marginBottom: "1rem",
+  },
+
+  list: {
+    listStyle: "none",
+    padding: 0,
+    margin: 0,
+  },
+
+  link: {
+    color: "#ddd",
+    textDecoration: "none",
+    display: "block",
+    padding: "5px 0",
+  },
+
+  text: {
+    color: "#bbb",
+    fontSize: "0.9rem",
+    lineHeight: "1.5",
+  },
+
+  galleryImages: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: "10px", // Reduced gap for a more compact layout
+  },
+
+  galleryImage: {
+    width: "100%",
+    height: "80px", // Decreased height of images
+    objectFit: "cover", // Ensures images fill the space without distortion
+    borderRadius: "5px",
+  },
+
+  footerBottom: {
+    borderTop: "1px solid #444",
+    paddingTop: "15px",
+    textAlign: "center",
+    marginTop: "10px",
+    marginBottom: "-40px", // Adjusted margin for spacing
+  },
+
+  footerText: {
+    fontSize: "0.9rem",
+    color: "#bbb",
+  },
+
+  backToTop: {
+    color: "#28a745",
+    fontSize: "1.2rem",
+    textDecoration: "none",
+    marginLeft: "10px",
+  },
 };
 
 export default AboutUs;
