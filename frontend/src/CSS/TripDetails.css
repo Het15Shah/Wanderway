@@ -1,0 +1,119 @@
+/* TripDetails.css */
+
+/* Hero Section */
+.trip-hero {
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+  
+  .trip-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Content Section */
+  .trip-content {
+    padding: 40px 20px;
+    background-color: #fff;
+  }
+  
+  .trip-details-header {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .trip-details-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #283593;
+  }
+  
+  .trip-details-header p {
+    font-size: 1.1rem;
+    color: #777;
+  }
+  
+  .trip-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .trip-summary .price {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #f56d7f;
+  }
+  
+  .trip-summary .duration {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .trip-itinerary {
+    margin-top: 40px;
+  }
+  
+  .day-card {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .day-card h4 {
+    font-size: 1.5rem;
+    color: #283593;
+  }
+  
+  .day-card .transport-mode {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 10px;
+  }
+  
+  .day-card .activities {
+    margin-top: 15px;
+  }
+  
+  .activity-item {
+    margin-bottom: 10px;
+  }
+  
+  .activity-item .time {
+    font-weight: 600;
+  }
+  
+  .activity-item .location {
+    font-style: italic;
+    color: #888;
+  }
+  
+  /* Button */
+  .book-button {
+    display: block;
+    margin-top: 30px;
+    background-color: #283593;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-button:hover {
+    background-color: #f56d7f;
+  }
+  

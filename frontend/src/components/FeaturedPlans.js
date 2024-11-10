@@ -4,48 +4,55 @@ import {
   Card,
   Typography,
   Grid,
-  IconButton,
 } from "@mui/material";
-import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
-import india from "../assets/india.jpg";
-import japan from "../assets/japan.jpg";
-import bali from "../assets/bali.jpg";
-import maldives from "../assets/maldivas.jpg";
-import paris from "../assets/paris.jpg";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedPlans = () => {
+  const navigate = useNavigate();
+  
+  // Array of trips with unique IDs
   const plans = [
     {
+      id: 1,
       title: "Paris Getaway",
       price: "$1500",
       duration: "5 Days",
-      imageUrl: paris,
+      imageUrl: "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
     },
     {
+      id: 2,
       title: "Adventure in Bali",
       price: "$1200",
       duration: "7 Days",
-      imageUrl: bali,
+      imageUrl: "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     },
     {
+      id: 3,
       title: "Explore Japan",
       price: "$1800",
       duration: "6 Days",
-      imageUrl: japan,
+      imageUrl: "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
     },
     {
+      id: 4,
       title: "Maldives Escape",
       price: "$2000",
       duration: "4 Days",
-      imageUrl: maldives,
+      imageUrl: "https://krishnendu.org/wp-content/uploads/pexels-asad-photo-maldives-3601425-1-scaled.jpg",
     },
     {
+      id: 5,
       title: "Cultural India",
       price: "$1000",
       duration: "8 Days",
-      imageUrl: india,
+      imageUrl: "https://images.pexels.com/photos/3947637/pexels-photo-3947637.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
     },
   ];
+
+  const handleCardClick = (id) => {
+    navigate(`/trip/${id}`); // Redirect to the trip details page with the trip ID
+  };
 
   return (
     <Box
@@ -68,12 +75,13 @@ const FeaturedPlans = () => {
         Popular Travel Plans
       </Typography>
       <Grid container spacing={2}>
-        {plans.map((plan, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+        {plans.map((plan) => (
+          <Grid item xs={12} sm={6} md={4} key={plan.id}>
             <Card
+              onClick={() => handleCardClick(plan.id)} // Call the navigation function on click
               sx={{
                 position: "relative",
-                height: "250px", // Control card height for a rectangular shape
+                height: "250px",
                 borderRadius: "16px",
                 overflow: "hidden",
                 boxShadow: 3,
@@ -83,8 +91,9 @@ const FeaturedPlans = () => {
                 justifyContent: "center",
                 textAlign: "center",
                 backgroundImage: `url(${plan.imageUrl})`,
-                backgroundSize: "cover", // Ensures full image coverage
+                backgroundSize: "cover",
                 backgroundPosition: "center",
+                cursor: "pointer",
               }}
             >
               <Box
@@ -94,7 +103,7 @@ const FeaturedPlans = () => {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)", // Dark overlay for readability
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",

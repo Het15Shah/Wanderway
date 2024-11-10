@@ -1,213 +1,69 @@
-import React from "react";
-
+import React, { memo } from "react";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../CSS/Footer.css"; // Import external CSS file
 
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+const photo1 = "https://images.pexels.com/photos/2144326/pexels-photo-2144326.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+const photo2 = "https://images.pexels.com/photos/2577274/pexels-photo-2577274.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+const photo3 = "https://images.pexels.com/photos/1721637/pexels-photo-1721637.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+const photo4 =  "https://images.unsplash.com/photo-1598190896090-9dc5c70361d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8aW5kaWElMjB0cmF2ZWx8fDB8fHx8MTYzMTY3NTgyMQ&ixlib=rb-1.2.1&q=80&w=1080"
+const photo5 = "https://i.pinimg.com/originals/9c/6b/44/9c6b44a17bad86390cc565285f6a934a.jpg"
+const photo6 = "https://img.traveltriangle.com/blog/wp-content/uploads/2020/01/cover-for-Places-To-Visit-In-Gujarat-In-May_30th-Jan.jpg"
+// Social media links
+const socialLinks = [
+  { href: "https://x.com/i/flow/login?redirect_after_login=%2Fdaiictofficial", icon: "fab fa-twitter" },
+  { href: "https://www.facebook.com/DAIICT/", icon: "fab fa-facebook-f" },
+  { href: "https://www.instagram.com/daiictofficial/?hl=en", icon: "fab fa-instagram" },
+  { href: "https://in.linkedin.com/school/dhirubhai-ambani-institute-of-information-and-communication-technology/", icon: "fab fa-linkedin-in" },
+];
 
-import photo1 from "../assets/photo1.jpg";
-import photo2 from "../assets/photo2.jpg";
-import photo3 from "../assets/photo3.jpg";
-import photo4 from "../assets/photo4.jpg";
-import photo5 from "../assets/photo5.jpg";
-import photo6 from "../assets/photo6.jpg";
+const Footer = memo(() => (
+  <footer className="footer">
+    <div className="container">
+      <div className="row">
+        {/* Company Section */}
+        <div className="col-lg-3 col-md-6 mb-4 footer-section">
+          <h5 className="footer-heading">Company</h5>
+          <ul className="footer-list">
+            <li><Link to="/about-us" className="footer-link">About Us</Link></li>
+            <li><a href="#" className="footer-link">FAQs & Help</a></li>
+          </ul>
+        </div>
 
-const Footer = () => {
-  return (
-    <footer className="footer" style={styles.footer}>
-      <div className="container">
-        <div className="row">
-          {/* Company Section */}
-
-          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
-            <h5 style={styles.heading}>Company</h5>
-
-            <ul style={styles.list}>
-              {/* Updated About Us Link */}
-
-              <li>
-                <Link to="/about-us" style={styles.link}>
-                  About Us
-                </Link>
-              </li>
-
-              <li>
-                <a href="#" style={styles.link}>
-                  FAQs & Help
-                </a>
-              </li>
-            </ul>
+        {/* Contact Section */}
+        <div className="col-lg-3 col-md-6 mb-4 footer-section">
+          <h5 className="footer-heading">Contact us</h5>
+          <p className="footer-text">
+            <i className="fas fa-map-marker-alt"></i> DA-IICT, Gandhinagar, India <br />
+            <i className="fas fa-phone"></i> +123 456 7890 <br />
+            <i className="fas fa-envelope"></i> daiict.ac.in
+          </p>
+          <div className="social-media">
+            {socialLinks.map(({ href, icon }) => (
+              <a key={href} href={href} target="_blank" rel="noopener noreferrer">
+                <i className={icon}></i>
+              </a>
+            ))}
           </div>
+        </div>
 
-          {/* Contact Section */}
-
-          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
-            <h5 style={styles.heading}>Contact us</h5>
-
-            <p style={styles.text}>
-              <i className="fas fa-map-marker-alt"></i> DA-IICT, Gandhinagar,
-              India
-              <br />
-              <i className="fas fa-phone"></i> +123 456 7890
-              <br />
-              <i className="fas fa-envelope"></i> daiict.ac.in
-            </p>
-            <div style={styles.socialMedia}>
-              <a href="https://x.com/i/flow/login?redirect_after_login=%2Fdaiictofficial" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fab fa-twitter"
-                  style={{ ...styles.icon, marginRight: "10px" }}
-                >
-                  {" "}
-                </i>
-              </a>
-              <a href="https://www.facebook.com/DAIICT/" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fab fa-facebook-f"
-                  style={{ ...styles.icon, marginRight: "10px" }}
-                >
-                  {" "}
-                </i>
-              </a>
-              <a href="https://www.instagram.com/daiictofficial/?hl=en" target="_blank" rel="noopener noreferrer">
-                <i
-                  className="fab fa-instagram"
-                  style={{ ...styles.icon, marginRight: "10px" }}
-                >
-                  {" "}
-                </i>
-              </a>
-              <a href="https://in.linkedin.com/school/dhirubhai-ambani-institute-of-information-and-communication-technology/" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-linkedin-in" style={styles.icon}>
-                  {" "}
-                </i>
-              </a>
-            </div>
-          </div>
-
-          {/* Gallery Section */}
-
-          <div className="col-lg-3 col-md-6 mb-4" style={styles.footerSection}>
-            <h5 style={styles.heading}>Gallery</h5>
-
-            <div style={styles.galleryImages}>
-              {/* Updated to use imported images */}
-
-              <img
-                src={photo1}
-                alt="Gallery Image 1"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo2}
-                alt="Gallery Image 2"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo3}
-                alt="Gallery Image 3"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo4}
-                alt="Gallery Image 4"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo5}
-                alt="Gallery Image 5"
-                style={styles.galleryImage}
-              />
-              <img
-                src={photo6}
-                alt="Gallery Image 6"
-                style={styles.galleryImage}
-              />
-            </div>
+        {/* Gallery Section */}
+        <div className="col-lg-3 col-md-6 mb-4 footer-section">
+          <h5 className="footer-heading">Gallery</h5>
+          <div className="gallery-images">
+            {[photo1, photo2, photo3, photo4, photo5, photo6].map((photo, index) => (
+              <img key={index} src={photo} alt={`Gallery Image ${index + 1}`} className="gallery-image" loading="lazy" />
+            ))}
           </div>
         </div>
       </div>
+    </div>
 
-      <div style={styles.footerBottom}>
-        <p style={styles.footerText}>&copy; Wanderways, All Rights Reserved.</p>
-
-        <a href="#top" style={styles.backToTop}>
-          ↑
-        </a>
-      </div>
-    </footer>
-  );
-};
-
-const styles = {
-  footer: {
-    backgroundColor: "#111",
-    color: "#fff",
-    padding: "40px 0",
-  },
-
-  footerSection: {
-    padding: "0 15px",
-    marginBottom: "30px", // Added margin for spacing between sections
-  },
-
-  heading: {
-    fontSize: "1.25rem",
-    fontWeight: "700",
-    color: "#fff",
-    marginBottom: "1rem",
-  },
-
-  list: {
-    listStyle: "none",
-    padding: 0,
-    margin: 0,
-  },
-
-  link: {
-    color: "#ddd",
-    textDecoration: "none",
-    display: "block",
-    padding: "5px 0",
-  },
-
-  text: {
-    color: "#bbb",
-    fontSize: "0.9rem",
-    lineHeight: "1.5",
-  },
-
-  galleryImages: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "10px", // Reduced gap for a more compact layout
-  },
-
-  galleryImage: {
-    width: "100%",
-    height: "80px", // Decreased height of images
-    objectFit: "cover", // Ensures images fill the space without distortion
-    borderRadius: "5px",
-  },
-
-  footerBottom: {
-    borderTop: "1px solid #444",
-    paddingTop: "15px",
-    textAlign: "center",
-    marginTop: "10px",
-    marginBottom: "-40px", // Adjusted margin for spacing
-  },
-
-  footerText: {
-    fontSize: "0.9rem",
-    color: "#bbb",
-  },
-
-  backToTop: {
-    color: "#28a745",
-    fontSize: "1.2rem",
-    textDecoration: "none",
-    marginLeft: "10px",
-  },
-};
+    <div className="footer-bottom">
+      <p className="footer-text">&copy; Wanderways, All Rights Reserved.</p>
+      <a href="#top" className="back-to-top">↑</a>
+    </div>
+  </footer>
+));
 
 export default Footer;

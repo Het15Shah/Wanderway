@@ -1,0 +1,65 @@
+/* FeaturedPlans.css */
+.container {
+    padding: 50px 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f5f7fa;
+  }
+  
+  .title {
+    margin-bottom: 30px;
+    color: #283593;
+    font-weight: 700;
+  }
+  
+  .cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .card {
+    position: relative;
+    height: 250px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cardTitle {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .cardInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .cardPrice {
+    font-weight: bold;
+  }
+  
