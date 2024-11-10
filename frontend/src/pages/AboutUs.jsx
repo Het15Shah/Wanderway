@@ -1,27 +1,21 @@
 // AboutUs.js
 
 import React from 'react';
-import './AboutUs.css';
+import '../CSS/AboutUs.css';
 import { useNavigate } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import Neel from './Team Photos/Neel.jpg' 
-import het from './Team Photos/het.jpg'
-import kavit from './Team Photos/kavit.jpg'
-import ram from './Team Photos/ram.jpg'
-import shrey from './Team Photos/shrey.jpg'
-import darpan from './Team Photos/shrey.jpg'
-import jinay from './Team Photos/jinay.jpg'
-import divy from './Team Photos/divy.jpg'
-import meet from './Team Photos/meet.jpg'
-import priyank from './Team Photos/shrey.jpg'
+import Neel from '../assets/Team Photos/Neel.jpg' 
+import het from '../assets/Team Photos/het.jpg'
+import kavit from '../assets/Team Photos/kavit.jpg'
+import ram from '../assets/Team Photos/ram.jpg'
+import shrey from '../assets/Team Photos/shrey.jpg'
+import darpan from '../assets/Team Photos/shrey.jpg'
+import jinay from '../assets/Team Photos/jinay.jpg'
+import divy from '../assets/Team Photos/divy.jpg'
+import meet from '../assets/Team Photos/meet.jpg'
+import priyank from '../assets/Team Photos/shrey.jpg'
 
-import photo1 from "../assets/photo1.jpg";
-import photo2 from "../assets/photo2.jpg";
-import photo3 from "../assets/photo3.jpg";
-import photo4 from "../assets/photo4.jpg";
-import photo5 from "../assets/photo5.jpg";
-import photo6 from "../assets/photo6.jpg";
 
 const teamData = {
   team: [
@@ -162,11 +156,18 @@ const TeamCard = ({ member }) => (
   <div className="team-card">
     <img src={member.photo} alt={member.name} className="team-photo" />
     <h3>{member.name}</h3>
-    <h3>{member.id}</h3>
     <div className="social-links">
-      <a href={member.instagram} target="_blank" rel="noopener noreferrer" className="social-link instagram">Instagram</a>
-      <a href={member.github} target="_blank" rel="noopener noreferrer" className="social-link github">GitHub</a>
-      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="social-link linkedin">LinkedIn</a>
+      <a href={member.instagram} target="_blank" rel="noopener noreferrer" className="social-link instagram">
+        <i className="fab fa-instagram"></i>
+      </a>
+
+      <a href={member.github} target="_blank" rel="noopener noreferrer" className="social-link github">
+        <i className="fab fa-github"></i>
+      </a>
+
+      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="social-link linkedin">
+        <i className="fab fa-linkedin"></i>
+      </a>
     </div>
   </div>
 );
