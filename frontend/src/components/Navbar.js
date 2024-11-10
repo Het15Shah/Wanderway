@@ -1,4 +1,4 @@
-import React,{ memo,useState, useEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { AppBar, Toolbar, Typography, Button, Box, Slide } from "@mui/material";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -29,7 +29,7 @@ const Navbar = memo(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       const isScrollingUp = prevScrollPos > currentScrollPos;
-      
+
       // Show navbar when scrolling up, hide it when scrolling down
       setShowNavbar(isScrollingUp || currentScrollPos < 100);
       setPrevScrollPos(currentScrollPos);
@@ -107,7 +107,6 @@ const Navbar = memo(() => {
             >
               About Us
             </Button>
-
            { Cookies.get("token") ? (<Avatar onClick={()=>navigate("/profile")} src="/broken-image.jpg" sx={{cursor:"pointer"}}/>) : (
             <>
              <Button
