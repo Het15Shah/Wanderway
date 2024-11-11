@@ -9,7 +9,7 @@ const reviewRouter = require("./routes/reviewRouter");
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const Trip = require("./models/trip");
+const myTripRouter = require("./routes/myTripRoute");
 
 const {checkForAuthentication} = require("./middlewares/auth");
 const PORT = 8000;
@@ -44,11 +44,11 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.urlencoded({extended: true}));
 // app.use(express.json());
 
-
 // Router Specification
 app.use("/api/user",userRoute);
 app.use("/api/trip",tripRouter);
 app.use("/api/review",reviewRouter);
+app.use("/api/myTrip",myTripRouter);
 
 app.listen(PORT,()=>{
     console.log("Server Started at PORT: ",PORT);
