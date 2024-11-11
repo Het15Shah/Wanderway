@@ -4,23 +4,7 @@
   background-color: #E3F2FD; /* Background color for cohesion */
 }
 
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  margin-bottom: 20px;
-  background-color: white;
-  color: #333;
-  border-bottom: 2px solid #BBDEFB;
-}
 
-.navbar h1 {
-  font-size: 1.8rem;
-  margin: 0;
-  color: #0077b5;
-}
 
 .back-home-button {
   background-color: #e0b730;
@@ -148,14 +132,3 @@
 }
 
 /* Footer Section */
-.footer {
-  background-color: #BBDEFB;
-  color: #333;
-  padding: 2rem 0;
-  text-align: center;
-}
-
-.footer p {
-  font-size: 0.9rem;
-  color: #555;
-}
