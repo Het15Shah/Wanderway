@@ -1,221 +1,252 @@
-/* Hero Section */
-.trip-hero {
-  width: 100%;
-  height: 400px;
+/* Overall page background */
+.luxury-trip-details {
+  background-color: #FFF8DC;
+  min-height: 100vh;
+  padding-bottom: 8rem;
+  background-image: linear-gradient(rgba(255, 248, 220, 0.9), rgba(255, 248, 220, 0.9)), url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill='%23D4AF37' fill-opacity='0.1'/%3E%3C/svg%3E");
   background-size: cover;
   background-position: center;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  border-bottom: 5px solid #e65100;
+  font-family: 'Poppins', sans-serif;
 }
 
-.trip-hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Hero Section Styling */
+.hero-section {
+  position: relative;
+  height: 90vh;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
-  z-index: 1;
-}
-
-.trip-hero h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-  position: relative;
-  z-index: 2;
-  animation: fadeInDown 1s ease;
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Content Section */
-.trip-content {
-  padding: 50px 30px;
-  max-width: 900px;
-  margin: -50px auto 0;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  z-index: 10;
-  position: relative;
-}
-
-/* Trip Details Header */
-.trip-details-header {
-  margin-bottom: 30px;
-  text-align: center;
-  border-bottom: 2px solid #e65100;
-  padding-bottom: 15px;
-}
-
-.trip-details-header h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a237e;
-}
-
-.trip-details-header p {
-  font-size: 1.2rem;
-  color: #757575;
-  margin-top: 10px;
-}
-
-/* Trip Summary Section */
-.trip-summary {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-bottom: 30px;
-  background: linear-gradient(to right, #e3f2fd, #ffebee);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.trip-summary .price {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #e65100;
-}
-
-.trip-summary .duration {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1a237e;
-}
-
-/* Trip Itinerary Section */
-.trip-itinerary {
-  margin-top: 40px;
-}
-
-.day-card {
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  background: linear-gradient(to right, #e3f2fd, #ffebee);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
   overflow: hidden;
 }
 
-.day-card::before {
-  content: "";
+.hero-background {
   position: absolute;
   top: 0;
   left: 0;
-  width: 5px;
-  height: 100%;
-  background: #e65100;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.8);
+  transition: filter 0.3s ease-in-out;
 }
 
-.day-card h4 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #1a237e;
-  margin-bottom: 10px;
-  padding-left: 15px;
-}
-
-.day-card .transport-mode {
-  font-size: 1.1rem;
-  color: #616161;
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
-}
-
-.day-card .transport-mode svg {
-  margin-right: 8px;
-}
-
-.day-card .hotel-info {
-  font-size: 1rem;
-  color: #424242;
-  font-style: italic;
-  padding-left: 15px;
-}
-
-.day-card .activities {
-  margin-top: 15px;
-  padding-left: 15px;
-}
-
-.activity-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-}
-
-.activity-item:last-child {
-  border-bottom: none;
-}
-
-.activity-item svg {
-  margin-right: 10px;
-  color: #1a237e;
-}
-
-.activity-item .time {
-  font-weight: 600;
-}
-
-.activity-item .location {
-  font-style: italic;
-  color: #757575;
-}
-
-/* Book Button */
-.book-button {
-  display: block;
-  width: 100%;
-  max-width: 300px;
-  margin: 30px auto 0;
-  padding: 15px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #fff;
-  background-color: #3f51b5;
-  border-radius: 8px;
-  text-align: center;
-  transition: background-color 0.3s, transform 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.book-button:hover {
-  background-color: #5c6bc0;
+.hero-background:hover {
+  filter: brightness(0.7);
   transform: scale(1.05);
 }
 
-/* Responsiveness */
-@media (max-width: 768px) {
-  .trip-hero {
-    height: 300px;
-  }
+.hero-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  color: white;
+  padding: 0 2rem;
+}
 
-  .trip-hero h1 {
-    font-size: 2.5rem;
-  }
+.hero-title {
+  font-size: 3rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1.5rem;
+  color: #FFD700;
+}
 
-  .trip-summary .price,
-  .trip-summary .duration {
-    font-size: 1.8rem;
-  }
+.hero-subtitle {
+  font-size: 1.4rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Rating Box */
+.rating-box {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1.5rem 2rem;
+  border-radius: 2rem;
+  max-width: fit-content;
+  margin: 2rem auto;
+}
+
+.rating-box .MuiRating-iconFilled {
+  color: #FFD700;
+}
+
+/* Quick Info Card */
+.quick-info-card, .highlights-card, .itinerary-card, .booking-card {
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #FFF8DC 100%);
+  border: 1px solid #D4AF37;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Quick Info Item */
+.quick-info-item {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.quick-info-item .MuiSvgIcon-root {
+  font-size: 40px;
+  margin-bottom: 1rem;
+}
+
+.quick-info-item .MuiTypography-h6 {
+  font-weight: bold;
+  color: #8B0000;
+}
+
+.quick-info-item .MuiTypography-h5 {
+  font-weight: 600;
+  color: #4B0082;
+}
+
+/* Highlights Section */
+.highlights-title {
+  color: #8B0000;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  border-bottom: 2px solid #D4AF37;
+  padding-bottom: 1rem;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: rgba(212, 175, 55, 0.1);
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.highlight-item:hover {
+  background-color: rgba(212, 175, 55, 0.15);
+  transform: translateX(5px);
+}
+
+.highlight-item .MuiSvgIcon-root {
+  color: #D4AF37;
+}
+
+/* Itinerary Section */
+.itinerary-title {
+  color: #8B0000;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  border-bottom: 2px solid #D4AF37;
+  padding-bottom: 1rem;
+}
+
+.itinerary-stepper {
+  margin-top: 2rem;
+}
+
+/* Stepper Label */
+.step-label {
+  cursor: pointer;
+}
+
+.step-label .MuiStepLabel-label {
+  font-family: 'Playfair Display', serif;
+}
+
+.step-title {
+  color: #8B0000;
+  font-family: 'Playfair Display', serif;
+}
+
+.step-details {
+  margin-left: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.step-details-paper {
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 1.5rem;
+}
+
+/* Booking Section */
+.booking-price {
+  color: #8B0000;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.booking-price .MuiTypography-h6 {
+  color: #666;
+  font-family: 'Poppins', sans-serif;
+}
+
+.booking-divider {
+  margin: 2rem 0;
+  border-color: #D4AF37;
+}
+
+.booking-divider::before,
+.booking-divider::after {
+  border-color: #D4AF37;
+}
+
+.booking-button {
+  background-color: #8B0000;
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+}
+
+.booking-button:hover {
+  background-color: #6B0000;
+  transform: scale(1.05);
+}
+
+.share-button {
+  margin-bottom: 2rem;
+  border-color: #D4AF37;
+  color: #8B0000;
+}
+
+.share-button:hover {
+  border-color: #8B0000;
+  background-color: rgba(139, 0, 0, 0.1);
+}
+
+.wishlist-button {
+  color: #8B0000;
+  border-color: #8B0000;
+}
+
+.wishlist-button:hover {
+  border-color: #6B0000;
+  background-color: rgba(139, 0, 0, 0.05);
+}
+
+.footer-note {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.footer-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  color: #666;
 }

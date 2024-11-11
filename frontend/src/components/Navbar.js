@@ -67,7 +67,7 @@ const Navbar = memo(() => {
           >
             <Button
               component={Link}
-              to="#home"
+              to="/"
               variant="text"
               color="inherit"
               sx={{

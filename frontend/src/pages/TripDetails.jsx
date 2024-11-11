@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -7,6 +7,11 @@ import {
   List,
   ListItem,
   ListItemText,
+  Grid,
+  Paper,
+  Chip,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -17,106 +22,165 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+import DirectionsCar from "@mui/icons-material/DirectionsCar";
+import Train from "@mui/icons-material/Train";
+import DirectionsBus from "@mui/icons-material/DirectionsBus";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const TripDetails = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [hoveredHighlight, setHoveredHighlight] = useState(null);
 
   const trip = {
-    title: "Paris Getaway",
-    destination: "Paris, France",
-    startDate: "2024-12-01",
-    endDate: "2024-12-05",
-    price: "1500",
+    title: "Cultural India Exploration",
+    destination: "India",
+    startDate: "2024-12-10",
+    endDate: "2024-12-15",
+    price: "2000",
     imageUrl:
-      "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
+      "https://www.bontravelindia.com/wp-content/uploads/2021/10/Taj-Mahal-Heritage-Tourism-India-scaled.jpg",
+    highlights: [
+      "Explore the grandeur of Taj Mahal and Agra Fort",
+      "Private guided tour of Jaipur’s palaces and forts",
+      "Witness traditional Indian dance and music performances",
+      "Camel ride and desert safari in Rajasthan",
+      "Participate in a local Diwali celebration",
+    ],
+    includedServices: [
+      "5-star luxury accommodation",
+      "Private transfers",
+      "Local expert guides",
+      "Traditional Indian meals",
+      "Entrance fees to all attractions",
+      "Cultural performances",
+      "24/7 concierge",
+    ],
     itinerary: [
       {
         day: 1,
         modeOfTransportation: "plane",
-        hotel: { name: "Le Paris Hotel", location: "Paris City Center" },
+        hotel: { name: "Taj Palace Hotel", location: "New Delhi" },
         activities: [
           {
-            time: "10:00 AM",
-            description: "Visit Eiffel Tower",
-            location: "Eiffel Tower",
+            time: "9:00 AM",
+            description: "Visit the Red Fort",
+            location: "Red Fort, Delhi",
             type: "sightseeing",
           },
           {
-            time: "2:00 PM",
-            description: "Lunch at Le Jules Verne",
-            location: "Champ de Mars",
+            time: "1:00 PM",
+            description: "Lunch at a traditional Indian restaurant",
+            location: "New Delhi",
             type: "dining",
+          },
+          {
+            time: "3:00 PM",
+            description: "Explore India Gate and Rashtrapati Bhavan",
+            location: "Central Delhi",
+            type: "sightseeing",
           },
         ],
       },
       {
         day: 2,
-        modeOfTransportation: "walking",
-        hotel: { name: "Le Paris Hotel", location: "Paris City Center" },
+        modeOfTransportation: "train",
+        hotel: { name: "Oberoi Amarvilas", location: "Agra" },
         activities: [
           {
-            time: "9:00 AM",
-            description: "Louvre Museum tour",
-            location: "Louvre Museum",
+            time: "6:00 AM",
+            description: "Visit Taj Mahal at sunrise",
+            location: "Taj Mahal",
+            type: "sightseeing",
+          },
+          {
+            time: "11:00 AM",
+            description: "Tour Agra Fort",
+            location: "Agra Fort",
             type: "sightseeing",
           },
           {
             time: "1:00 PM",
-            description: "Seine River Cruise",
-            location: "Seine River",
-            type: "sightseeing",
+            description: "Lunch at a rooftop restaurant with a view of Taj Mahal",
+            location: "Agra",
+            type: "dining",
           },
         ],
       },
       {
         day: 3,
-        modeOfTransportation: "walking",
-        hotel: { name: "Le Paris Hotel", location: "Paris City Center" },
+        modeOfTransportation: "train",
+        hotel: { name: "Trident Jaipur", location: "Jaipur" },
         activities: [
           {
-            time: "10:00 AM",
-            description: "Montmartre art tour",
-            location: "Montmartre",
+            time: "9:00 AM",
+            description: "Visit Amber Fort and enjoy an elephant ride",
+            location: "Amber Fort",
             type: "sightseeing",
           },
           {
-            time: "3:00 PM",
-            description: "Visit Sacré-Cœur Basilica",
-            location: "Sacré-Cœur",
+            time: "1:00 PM",
+            description: "Lunch at a traditional Rajasthani restaurant",
+            location: "Jaipur",
+            type: "dining",
+          },
+          {
+            time: "4:00 PM",
+            description: "Explore the City Palace and Jantar Mantar",
+            location: "Jaipur",
             type: "sightseeing",
           },
         ],
       },
       {
         day: 4,
-        modeOfTransportation: "walking",
-        hotel: { name: "Le Paris Hotel", location: "Paris City Center" },
+        modeOfTransportation: "car",
+        hotel: { name: "Samode Palace", location: "Rajasthan Desert" },
         activities: [
           {
-            time: "11:00 AM",
-            description: "Shopping at Champs-Élysées",
-            location: "Champs-Élysées",
-            type: "shopping",
+            time: "10:00 AM",
+            description: "Camel ride through the Rajasthan desert",
+            location: "Thar Desert",
+            type: "adventure",
+          },
+          {
+            time: "1:00 PM",
+            description: "Traditional lunch in a desert village",
+            location: "Rajasthan Desert",
+            type: "dining",
           },
           {
             time: "4:00 PM",
-            description: "Relax at Tuileries Garden",
-            location: "Tuileries Garden",
-            type: "sightseeing",
+            description: "Watch a traditional Rajasthani dance performance",
+            location: "Rajasthan Desert",
+            type: "cultural",
           },
         ],
       },
       {
         day: 5,
         modeOfTransportation: "plane",
+        hotel: { name: "The Leela Palace", location: "New Delhi" },
         activities: [
           {
             time: "10:00 AM",
-            description: "Free time and departure",
-            location: "Paris Airport",
+            description: "Participate in a Diwali celebration at a local temple",
+            location: "Delhi Temple",
+            type: "cultural",
+          },
+          {
+            time: "3:00 PM",
+            description: "Free time for shopping and relaxation",
+            location: "New Delhi",
+            type: "shopping",
+          },
+          {
+            time: "7:00 PM",
+            description: "Departure",
+            location: "Delhi Airport",
             type: "general",
           },
         ],
@@ -137,26 +201,35 @@ const TripDetails = () => {
     setTimeout(() => navigate("/booking"), 3100);
   };
 
-  // Function to render activity icons based on activity type
   const getActivityIcon = (type) => {
     switch (type) {
       case "sightseeing":
-        return <LocalActivityIcon sx={{ marginRight: "5px" }} />;
+        return <LocalActivityIcon sx={{ marginRight: "5px", color: "#ff7043" }} />;
       case "dining":
-        return <RestaurantIcon sx={{ marginRight: "5px" }} />;
+        return <RestaurantIcon sx={{ marginRight: "5px", color: "#ff9800" }} />;
       case "shopping":
-        return <ShoppingCartIcon sx={{ marginRight: "5px" }} />;
+        return <ShoppingCartIcon sx={{ marginRight: "5px", color: "#4caf50" }} />;
+      case "adventure":
+        return <DirectionsWalkIcon sx={{ marginRight: "5px", color: "#2196f3" }} />;
+      case "cultural":
+        return <HotelIcon sx={{ marginRight: "5px", color: "#9c27b0" }} />;
       default:
-        return <LocationOnIcon sx={{ marginRight: "5px" }} />;
+        return <LocationOnIcon sx={{ marginRight: "5px", color: "#2196f3" }} />;
     }
   };
 
   const renderIcon = (mode) => {
     switch (mode) {
       case "plane":
-        return <FlightTakeoffIcon />;
+        return <FlightTakeoffIcon sx={{ color: "#ff5722" }} />;
       case "walking":
-        return <DirectionsWalkIcon />;
+        return <DirectionsWalkIcon sx={{ color: "#2196f3" }} />;
+      case "train":
+        return <Train sx={{ color: "#ff9800" }} />;
+      case "car":
+        return <DirectionsCar sx={{ color: "#4caf50" }} />;
+      case "bus":
+        return <DirectionsBus sx={{ color: "#ff7043" }} />;
       default:
         return null;
     }
@@ -164,37 +237,30 @@ const TripDetails = () => {
 
   return (
     <Box sx={{ padding: "0", backgroundColor: "#f4f7fc" }}>
+      {/* Hero Section */}
       <Box
         className="trip-hero"
         sx={{
           backgroundImage: `url(${trip.imageUrl})`,
           width: "100%",
-          height: "500px",
+          height: isMobile ? "300px" : "500px",
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           position: "relative",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           color: "#fff",
           borderBottom: "5px solid #e65100",
+          backgroundBlendMode: "overlay",
+          backgroundColor: "rgba(0,0,0,0.6)",
         }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-            zIndex: 1,
-          }}
-        />
         <Typography
           variant="h1"
           sx={{
-            fontSize: "4rem",
+            fontSize: isMobile ? "2rem" : "4rem",
             fontWeight: 800,
             textShadow: "2px 2px 10px rgba(0, 0, 0, 0.8)",
             zIndex: 2,
@@ -205,12 +271,13 @@ const TripDetails = () => {
         </Typography>
       </Box>
 
+      {/* Trip Content */}
       <Box
         className="trip-content"
         sx={{
-          padding: "50px 30px",
-          maxWidth: "900px",
-          margin: "-100px auto 0",
+          padding: isMobile ? "20px 10px" : "50px 30px",
+          maxWidth: "1200px",
+          margin: isMobile ? "-50px auto 0" : "-100px auto 0",
           backgroundColor: "#fff",
           borderRadius: "12px",
           boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)",
@@ -229,19 +296,20 @@ const TripDetails = () => {
         >
           <Typography
             variant="h2"
-            sx={{ fontSize: "3rem", fontWeight: 700, color: "#1a237e" }}
+            sx={{ fontSize: isMobile ? "2rem" : "3rem", fontWeight: 700, color: "#1a237e" }}
           >
             {trip.destination}
           </Typography>
           <Typography
             variant="body1"
-            sx={{ fontSize: "1.5rem", color: "#757575", marginTop: "10px" }}
+            sx={{ fontSize: isMobile ? "1rem" : "1.5rem", color: "#757575", marginTop: "10px" }}
           >
             <CalendarTodayIcon sx={{ marginRight: "10px" }} />
             {trip.startDate} - {trip.endDate}
           </Typography>
         </Box>
 
+        {/* Price & Duration */}
         <Box
           className="trip-summary"
           sx={{
@@ -257,108 +325,214 @@ const TripDetails = () => {
         >
           <Typography
             className="price"
-            sx={{ fontSize: "2.5rem", fontWeight: 700, color: "#e65100" }}
+            sx={{ fontSize: isMobile ? "1.5rem" : "2.5rem", fontWeight: 700, color: "#e65100" }}
           >
             <AttachMoneyIcon sx={{ marginRight: "5px" }} />
             {trip.price}
           </Typography>
           <Typography
             className="duration"
-            sx={{ fontSize: "1.5rem", fontWeight: 600, color: "#1a237e" }}
+            sx={{ fontSize: isMobile ? "1rem" : "1.5rem", fontWeight: 600, color: "#1a237e" }}
           >
             <FlightTakeoffIcon sx={{ marginRight: "5px" }} />
             {trip.itinerary.length} Days
           </Typography>
         </Box>
 
-        <Box className="trip-itinerary" sx={{ marginTop: "40px" }}>
-          {trip.itinerary.map((dayPlan, index) => (
-            <Card
-              key={index}
-              className="day-card"
+        <Grid container spacing={4}>
+          {/* Itinerary */}
+          <Grid item xs={12} md={8}>
+            <Box className="trip-itinerary" sx={{ marginTop: "40px" }}>
+              {trip.itinerary.map((dayPlan, index) => (
+                <Card
+                  key={index}
+                  className="day-card"
+                  sx={{
+                    marginBottom: "20px",
+                    padding: "20px",
+                    borderRadius: "10px",
+                    background: "linear-gradient(to right, #e3f2fd, #ffebee)",
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                    position: "relative",
+                    overflow: "hidden",
+                    transition: "transform 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: isMobile ? "1.2rem" : "1.8rem",
+                      fontWeight: "bold",
+                      color: "#1a237e",
+                      marginBottom: "10px",
+                      paddingLeft: "15px",
+                    }}
+                  >
+                    Day {dayPlan.day}
+                  </Typography>
+                  <Typography
+                    className="transport-mode"
+                    sx={{ fontSize: isMobile ? "1rem" : "1.2rem", marginBottom: "20px", color: "#757575" }}
+                  >
+                    {renderIcon(dayPlan.modeOfTransportation)} Transportation:
+                    {dayPlan.modeOfTransportation}
+                  </Typography>
+
+                  <List>
+                    {dayPlan.activities.map((activity, activityIndex) => (
+                      <ListItem key={activityIndex}>
+                        {getActivityIcon(activity.type)}
+                        <ListItemText
+                          primary={activity.description}
+                          secondary={`Time: ${activity.time} | Location: ${activity.location}`}
+                          sx={{ color: "#424242" }}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Card>
+              ))}
+            </Box>
+          </Grid>
+
+          {/* Sidebar */}
+          <Grid item xs={12} md={4}>
+            <Paper
+              elevation={4}
               sx={{
-                marginBottom: "20px",
-                padding: "20px",
-                borderRadius: "10px",
-                background: "linear-gradient,to right, #e3f2fd, #ffebee",
-                marginBottom: "20px",
-                padding: "20px",
-                borderRadius: "10px",
-                background: "linear-gradient(to right, #e3f2fd, #ffebee)",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                position: "relative",
-                overflow: "hidden",
-                transition: "transform 0.3s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                },
+                p: 4,
+                borderRadius: 3,
+                bgcolor: "white",
+                position: "sticky",
+                top: 24,
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
               }}
             >
               <Typography
-                variant="h4"
+                variant="h5"
                 sx={{
-                  fontSize: "1.8rem",
-                  fontWeight: "bold",
+                  fontWeight: 700,
                   color: "#1a237e",
-                  marginBottom: "10px",
-                  paddingLeft: "15px",
-                }}
-              >
-                Day {dayPlan.day}
-              </Typography>
-              <Typography
-                className="transport-mode"
-                sx={{
-                  fontSize: "1.1rem",
-                  color: "#616161",
-                  marginTop: "10px",
+                  mb: 3,
                   display: "flex",
                   alignItems: "center",
-                  paddingLeft: "15px",
+                  gap: 1,
                 }}
               >
-                {renderIcon(dayPlan.modeOfTransportation)}{" "}
-                {dayPlan.modeOfTransportation}
+                ✨ Trip Highlights
               </Typography>
-
-              <List
-                className="activities"
-                sx={{ marginTop: "15px", marginLeft: "20px", paddingLeft: "20px" }}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                }}
               >
-                {dayPlan.activities.map((activity, idx) => (
-                  <ListItem key={idx}>
-                    <ListItemText
-                      primary={
-                        <Typography sx={{ display: "flex", alignItems: "center" }}>
-                          {getActivityIcon(activity.type)} {activity.time} -{" "}
-                          {activity.description} at {activity.location}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
+                {trip.highlights.map((highlight, index) => (
+                  <Box
+                    key={index}
+                    onMouseEnter={() => setHoveredHighlight(index)}
+                    onMouseLeave={() => setHoveredHighlight(null)}
+                    sx={{
+                      position: "relative",
+                      p: 2,
+                      borderRadius: 2,
+                      bgcolor:
+                        hoveredHighlight === index
+                          ? "rgba(99, 102, 241, 0.1)"
+                          : "rgba(240, 240, 240, 0.5)",
+                      border: "1px solid",
+                      borderColor:
+                        hoveredHighlight === index
+                          ? "rgba(99, 102, 241, 0.3)"
+                          : "rgba(226, 232, 240, 0.8)",
+                      transform:
+                        hoveredHighlight === index
+                          ? "translateX(8px)"
+                          : "translateX(0)",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                      "&:hover": {
+                        bgcolor: "rgba(99, 102, 241, 0.1)",
+                        borderColor: "rgba(99, 102, 241, 0.3)",
+                      },
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#1a237e",
+                        fontWeight: hoveredHighlight === index ? 600 : 500,
+                        fontSize: isMobile ? "0.9rem" : "1.1rem",
+                      }}
+                    >
+                      {highlight}
+                    </Typography>
+                  </Box>
                 ))}
-              </List>
-            </Card>
-          ))}
-        </Box>
+              </Box>
+              <Box sx={{ mt: 4 }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 700,
+                    color: "#1a237e",
+                    mb: 3,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                  }}
+                >
+                  🏷️ Included Services
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 1,
+                  }}
+                >
+                  {trip.includedServices.map((service, index) => (
+                    <Chip
+                      key={index}
+                      label={service}
+                      sx={{
+                        bgcolor: "rgba(99, 102, 241, 0.1)",
+                        color: "#1a237e",
+                        fontWeight: 500,
+                        "&:hover": {
+                          bgcolor: "rgba(99, 102, 241, 0.2)",
+                        },
+                      }}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
 
-        <Box sx={{ textAlign: "center", marginTop: "50px" }}>
+        {/* Booking Button */}
+        <Box sx={{ textAlign: "center", marginTop: "40px" }}>
           <Button
             variant="contained"
-            color="primary"
+            size="large"
+            onClick={handleBooking}
             sx={{
-              fontSize: "1.2rem",
-              padding: "10px 25px",
-              borderRadius: "30px",
-              transition: "background-color 0.3s, transform 0.2s",
+              padding: "10px 30px",
+              fontSize: isMobile ? "1rem" : "1.5rem",
+              fontWeight: 600,
+              textTransform: "capitalize",
+              borderRadius: "8px",
+              background: "#ff5722",
               "&:hover": {
-                backgroundColor: "#5c6bc0",
-                transform: "scale(1.05)",
+                backgroundColor: "#e64a19",
               },
             }}
-            onClick={handleBooking}
           >
-            Book Your Trip
+            Book Your Trip Now
           </Button>
         </Box>
       </Box>

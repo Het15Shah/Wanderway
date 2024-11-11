@@ -13,15 +13,25 @@ import {
   Select,
   FormControl,
   InputLabel,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import Camera from "@mui/icons-material/Camera";
 import Phone from "@mui/icons-material/Phone";
 import LocationOn from "@mui/icons-material/LocationOn";
+import Home from "@mui/icons-material/Home";
+import LogoutIcon from "@mui/icons-material/Logout";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import ClearIcon from "@mui/icons-material/Clear";
 import useAPI from "../hooks/useAPI";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import VpnKey from "@mui/icons-material/VpnKey";
+import ExitToApp from "@mui/icons-material/ExitToApp";
 
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
-
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
@@ -44,12 +54,15 @@ const TravelProfilePage = () => {
     }
   };
 
+  const handleRemoveImage = () => {
+    setPreviewImage("");
+    setProfileImage(null);
+  };
+
   const handlePhoneNumber = (e) => {
     const input = e.target.value;
-    if (/^\d*$/.test(input)) {
-      if (input.length <= 10) {
-        setPhoneNumber(input);
-      }
+    if (/^\d*$/.test(input) && input.length <= 10) {
+      setPhoneNumber(input);
     }
   };
 
@@ -62,9 +75,7 @@ const TravelProfilePage = () => {
     ) {
       return;
     }
-
     setLoading(true);
-
     const profileData = {
       fullName: name,
       phoneNumber,
@@ -72,60 +83,28 @@ const TravelProfilePage = () => {
       gender,
       profileImage,
     };
-
-    // const formData = new FormData();
-    // formData.append("name", name);
-    // formData.append("username", userName);
-    // formData.append("email", email);
-    // formData.append("contact", phoneNumber);
-    // formData.append("address", address);
-    // formData.append("location", location);
-    // formData.append("birthdate", birthdate);
-    // formData.append("gender", gender);
-
-    // if (profileImage) {
-    //   formData.append("profileImage", profileImage);
-    // }
-
     try {
-      
-      const response = await POST("/api/user/update", profileData, { userId: userName });
-
-      // const response = await fetch("/update-profile", {
-      //   method: "POST",
-      //   body: formData,
-      // });
-
-        toast.success("Profile updated successfully!");
+      const response = await POST("/api/user/update", profileData, {
+        userId: userName,
+      });
+      toast.success("Profile updated successfully!");
     } catch (err) {
       console.log("Error ->", err);
       toast.error("Server Problem, Failed to Update user data.");
     }
-
     setLoading(false);
   };
 
   const getUser = async () => {
     try {
-
       const response = await GET("/api/user/myProfile");
-      console.log(response.data);
-
-      // const response = await fetch("/profile", {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-      //   },
-      // });
-
       if (response.data.success) {
-        const { user } = await response.data;
+        const { user } = response.data;
         setName(user?.fullName || "");
         setUserName(user?.userId || "");
         setEmail(user?.email || "");
         setPhoneNumber(user?.phoneNumber || "");
         setAddress(user?.address || "");
-        setLocation(user?.location || "");
         setIsWorking(user?.working || true);
         setBirthdate(user?.birthdate || "");
         setGender(user?.gender || "");
@@ -148,226 +127,350 @@ const TravelProfilePage = () => {
       sx={{
         minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2rem",
-        backgroundImage:
-          "url('https://source.unsplash.com/1600x900/?nature,travel')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backdropFilter: "blur(8px)",
-        transition: "background 0.5s ease",
+        bgcolor: "#f8f9fa",
       }}
     >
+      {/* Sidebar */}
       <Box
         sx={{
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
-          padding: "3rem",
-          borderRadius: "20px",
-          boxShadow: "0 6px 12px rgba(0, 0, 0, 0.3)",
-          backdropFilter: "blur(10px)",
-          width: "100%",
-          maxWidth: "1200px",
+          width: "280px",
+          bgcolor: "#f8f9fa",
         }}
       >
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Card
-              sx={{
-                bgcolor: "#ffffff",
-                borderRadius: "16px",
-                boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)",
-                padding: "2rem",
-                textAlign: "center",
-                transition: "all 0.3s ease-in-out",
-                "&:hover": {
-                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.15)",
-                  transform: "scale(1.02)",
-                },
-              }}
-            >
-              <label htmlFor="icon-button-file">
-                <input
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  id="icon-button-file"
-                  type="file"
-                  onChange={handleImageUpload}
-                />
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                  sx={{
-                    transition: "all 0.3s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.2)",
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      position: "relative",
-                      width: "120px",
-                      height: "120px",
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                      border: "4px solid #FF5A5F",
-                      margin: "0 auto",
-                      transition: "all 0.3s ease-in-out",
-                      "&:hover": {
-                        transform: "scale(1.1)",
-                      },
-                    }}
-                  >
-                    <img
-                      src={previewImage || "https://via.placeholder.com/120"}
-                      alt="profile"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    />
-                  </Box>
-                </IconButton>
-              </label>
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: "bold", mt: 2, color: "#333" }}
+        <Box sx={{ p: 3, textAlign: "center" }}>
+          <Box
+            sx={{
+              position: "relative",
+              width: 100,
+              height: 100,
+              margin: "0 auto",
+              mb: 2,
+            }}
+          >
+            <label htmlFor="icon-button-file">
+              <input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleImageUpload}
+              />
+              <Box
+                component="img"
+                src={previewImage || "https://i.pinimg.com/originals/0b/92/d1/0b92d122704719c982d182c0f19f4513.png"}
+                sx={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  border: "1px solid #e9ecef",
+                }}
+              />
+            </label>
+            {previewImage && (
+              <IconButton
+                size="small"
+                sx={{
+                  position: "absolute",
+                  top: -8,
+                  right: -8,
+                  bgcolor: "white",
+                  border: "1px solid #e9ecef",
+                  "&:hover": { bgcolor: "#f8f9fa" },
+                }}
+                onClick={handleRemoveImage}
               >
-                {name || "No Name"}
-              </Typography>
-              <Typography variant="body1" color="textSecondary" sx={{ mt: 1 }}>
-                {userName}
-              </Typography>
-              <Typography variant="body1" color="textSecondary" sx={{ mt: 1 }}>
-                {email}
-              </Typography>
-              <Typography variant="body1" color="textSecondary" sx={{ mt: 1 }}>
-                <Phone /> {phoneNumber ? `+91 ${phoneNumber}` : ""}
-              </Typography>
-              {address && (
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  sx={{ mt: 1 }}
-                >
-                  <LocationOn /> {address}
-                </Typography>
-              )}
-            </Card>
-          </Grid>
+                <ClearIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Box>
+          <Typography sx={{ fontWeight: 500, color: "#495057" }}>
+            {name || "John Doe"}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "#6c757d", mt: 0.5 }}>
+            {email || "john@example.com"}
+          </Typography>
+        </Box>
 
-          <Grid item xs={12} md={8}>
-            <Card
-              sx={{
-                bgcolor: "#ffffff",
-                borderRadius: "16px",
-                boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)",
-                padding: "2rem",
-                transition: "all 0.3s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.02)",
+        <List sx={{ p: 2 }}>
+          <ListItem
+            button
+            component="a"
+            href="/"
+            sx={{
+              bgcolor: "#fff",
+              boxShadow: "none",
+              border: "1px solid #e9ecef",
+              borderRadius: "8px",
+              mb: 1,
+              // borderRadius: 1,
+              color: "#495057",
+              bgcolor: "#fff",
+              fontSize: "1rem",
+              fontWeight: "500",
+              padding: "10px 20px",
+              display: "flex",
+              alignItems: "center",
+              "&.Mui-selected, &:hover": {
+                bgcolor: "#007bff",
+                color: "white",
+                "& .MuiListItemIcon-root": {
+                  color: "white",
                 },
-              }}
-            >
-              <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
-                Update Profile
-              </Typography>
+              },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 40, color: "#007bff" }}>
+              <Home fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Homepage" />
+          </ListItem>
 
+          <ListItem
+            button
+            component="a"
+            href="/login"
+            sx={{
+              mb: 1,
+              bgcolor: "#fff",
+              boxShadow: "none",
+              border: "1px solid #e9ecef",
+              borderRadius: "8px",
+              color: "#495057",
+              bgcolor: "#fff",
+              fontSize: "1rem",
+              fontWeight: "500",
+              padding: "10px 20px",
+              display: "flex",
+              alignItems: "center",
+              "&.Mui-selected, &:hover": {
+                bgcolor: "#007bff",
+                color: "white",
+                "& .MuiListItemIcon-root": {
+                  color: "white",
+                },
+              },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 40, color: "#1976d2" }}>
+              <LogoutIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+
+          {/* <ListItem
+            button
+            component="a"
+            href="/change-password"
+            sx={{
+              mb: 1,
+              borderRadius: 1,
+              color: "#495057",
+              bgcolor: "#f0f0f0",
+              fontSize: "1rem",
+              fontWeight: "500",
+              padding: "10px 20px",
+              display: "flex",
+              alignItems: "center",
+              "&.Mui-selected, &:hover": {
+                bgcolor: "#007bff",
+                color: "white",
+                "& .MuiListItemIcon-root": {
+                  color: "white",
+                },
+              },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 40, color: "#007bff" }}>
+              <VpnKey fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Change Password" />
+          </ListItem> */}
+
+          <ListItem
+            button
+            component="a"
+            href="/signup"
+            sx={{
+              mb: 1,
+              bgcolor: "#fff",
+              boxShadow: "none",
+              border: "1px solid #e9ecef",
+              borderRadius: "8px",
+              color: "#495057",
+              bgcolor: "#fff",
+              fontSize: "1rem",
+              fontWeight: "500",
+              padding: "10px 20px",
+              display: "flex",
+              alignItems: "center",
+              "&.Mui-selected, &:hover": {
+                bgcolor: "#007bff",
+                color: "white",
+                "& .MuiListItemIcon-root": {
+                  color: "white",
+                },
+              },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 40, color: "#1976d2" }}>
+              <DeleteForeverIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Delete Account" />
+          </ListItem>
+        </List>
+      </Box>
+
+      {/* Main Content */}
+      <Box sx={{ flex: 1, p: 3 }}>
+        <Card
+          sx={{
+            p: 3,
+            bgcolor: "#fff",
+            boxShadow: "none",
+            border: "1px solid #e9ecef",
+            borderRadius: "8px",
+          }}
+        >
+          <Typography variant="h6" sx={{ mb: 4, color: "#495057" }}>
+            Update Profile
+          </Typography>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
               <TextField
-                label="Full Name"
-                variant="outlined"
                 fullWidth
+                label="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                variant="outlined"
+                size="small"
                 sx={{
-                  mb: 2,
                   "& .MuiOutlinedInput-root": {
-                    transition: "all 0.3s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.02)",
+                    borderRadius: 1,
+                    "&:hover fieldset": {
+                      borderColor: "#1976d2",
                     },
                   },
                 }}
               />
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <TextField
+                fullWidth
                 label="Username"
-                variant="outlined"
-                fullWidth
                 value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                sx={{ mb: 2 }}
-                InputProps={{
-                  readOnly: true,
+                variant="outlined"
+                size="small"
+                InputProps={{ readOnly: true }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 1,
+                    bgcolor: "#f8f9fa",
+                  },
                 }}
               />
+            </Grid>
+            <Grid item xs={12}>
               <TextField
+                fullWidth
                 label="Email Address"
-                variant="outlined"
-                fullWidth
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                sx={{ mb: 2 }}
-                InputProps={{
-                  readOnly: true,
+                variant="outlined"
+                size="small"
+                InputProps={{ readOnly: true }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 1,
+                    bgcolor: "#f8f9fa",
+                  },
                 }}
               />
+            </Grid>
+            <Grid item xs={12}>
               <TextField
-                label="Phone Number"
-                variant="outlined"
                 fullWidth
+                label="Phone Number"
                 value={phoneNumber}
                 onChange={handlePhoneNumber}
-                sx={{ mb: 2 }}
+                variant="outlined"
+                size="small"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">+91</InputAdornment>
                   ),
                 }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 1,
+                    "&:hover fieldset": {
+                      borderColor: "#1976d2",
+                    },
+                  },
+                }}
               />
+            </Grid>
+            <Grid item xs={12}>
               <TextField
-                label="Address"
-                variant="outlined"
                 fullWidth
+                label="Address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                sx={{ mb: 2 }}
+                variant="outlined"
+                size="small"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 1,
+                    height: "130px",
+                    "&:hover fieldset": {
+                      borderColor: "#1976d2",
+                    },
+                  },
+                }}
               />
-              <FormControl fullWidth sx={{ mb: 2 }}>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth size="small">
                 <InputLabel>Gender</InputLabel>
                 <Select
-                  label="Gender"
                   value={gender}
+                  label="Gender"
                   onChange={(e) => setGender(e.target.value)}
+                  sx={{
+                    borderRadius: 1,
+                    "&:hover fieldset": {
+                      borderColor: "#1976d2",
+                    },
+                  }}
                 >
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>
                   <MenuItem value="Other">Other</MenuItem>
                 </Select>
               </FormControl>
-
+            </Grid>
+            <Grid item xs={12}>
               <Button
+                fullWidth
                 variant="contained"
-                color="primary"
                 onClick={updateProfile}
                 disabled={loading}
                 sx={{
-                  mt: 2,
-                  transition: "all 0.3s ease-in-out",
+                  bgcolor: "#1976d2",
+                  color: "white",
+                  textTransform: "none",
+                  py: 1,
+                  borderRadius: 1,
                   "&:hover": {
-                    transform: "scale(1.05)",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    bgcolor: "#1565c0",
                   },
                 }}
               >
                 {loading ? "Updating..." : "Update Profile"}
               </Button>
-            </Card>
+            </Grid>
           </Grid>
-        </Grid>
+        </Card>
       </Box>
     </Box>
   );
