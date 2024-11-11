@@ -127,14 +127,16 @@ const TravelProfilePage = () => {
       sx={{
         minHeight: "100vh",
         display: "flex",
-        bgcolor: "#f8f9fa",
+        // bgcolor: "#f8f9fa",
+        bgcolor: "#BBDEFB",
       }}
     >
       {/* Sidebar */}
       <Box
         sx={{
           width: "280px",
-          bgcolor: "#f8f9fa",
+          // bgcolor: "#f8f9fa",
+          bgcolor: "#E3F2FD",
         }}
       >
         <Box sx={{ p: 3, textAlign: "center" }}>
