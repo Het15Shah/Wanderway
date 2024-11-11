@@ -84,6 +84,7 @@ router.post("/update", upload.single('profileImage'), async (req, res) => {
     try {
         const { userId } = req.query;
         const updateData = req.body;
+        console.log("bODY",req.body.profileImageURL);
         // console.log(userId);
         // Find the user by ID and update fields
         const user = await User.findOne({ userId });
