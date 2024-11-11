@@ -82,7 +82,7 @@
 .team-card {
   width: 250px;
   padding: 1rem;
-  background: #b4eceb;
+  background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -147,11 +147,3 @@
   background-color: #0077b5;
 }
 
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #333;
-  color: white;
-  margin-top: 2rem;
-}
