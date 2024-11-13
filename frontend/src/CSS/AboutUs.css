@@ -1,23 +1,10 @@
 .about-us-page {
   font-family: Arial, sans-serif;
   padding: 2rem;
+  background-color: #E3F2FD; /* Background color for cohesion */
 }
 
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  margin-bottom: 20px;
-  background-color: white;
-  color: black;
-}
 
-.navbar h1 {
-  font-size: 1.8rem;
-  margin: 0;
-}
 
 .back-home-button {
   background-color: #e0b730;
@@ -30,14 +17,14 @@
 }
 
 .back-home-button:hover {
-  background-color:lightskyblue;
+  background-color: lightskyblue;
 }
 
 /* Card Style */
 .card {
-  background:aliceblue;
+  background: aliceblue;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   margin-bottom: 2rem;
   text-align: center;
@@ -48,7 +35,7 @@
   font-size: 1.8rem;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
-  background-color: lightseagreen;
+  background-color: #0077b5;
   padding: 1rem;
   border-radius: 5px;
   text-align: center;
@@ -65,13 +52,14 @@
   font-size: 1.8rem;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
-  background-color: lightseagreen;
+  background-color: #0077b5;
   padding: 1rem;
   border-radius: 5px;
   text-align: center;
   margin-bottom: 1.5rem;
 }
 
+/* Team Grid Layout */
 .team-grid {
   display: flex;
   gap: 2rem;
@@ -79,6 +67,7 @@
   justify-content: center;
 }
 
+/* Individual Team Card */
 .team-card {
   width: 250px;
   padding: 1rem;
@@ -86,20 +75,22 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .team-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .team-photo {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   margin-bottom: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .team-card h3 {
@@ -108,6 +99,7 @@
   margin-bottom: 1rem;
 }
 
+/* Social Links Styling */
 .social-links {
   display: flex;
   gap: 0.5rem;
@@ -115,24 +107,16 @@
 }
 
 .social-link {
-  color: #fff;
+  color: white;
   text-decoration: none;
   padding: 0.3rem 0.6rem;
   border-radius: 5px;
-  font-size: 0.9rem;
-  transition: background-color 0.3s;
+  font-size: 1rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.social-link.instagram:hover {
-  background-color: #E1306C;
-}
-
-.social-link.github:hover {
-  background-color: #333;
-}
-
-.social-link.linkedin:hover {
-  background-color: #0077b5;
+.social-link:hover {
+  transform: scale(1.1);
 }
 
 .instagram {
@@ -147,3 +131,4 @@
   background-color: #0077b5;
 }
 
+/* Footer Section */

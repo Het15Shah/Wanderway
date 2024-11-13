@@ -127,14 +127,16 @@ const TravelProfilePage = () => {
       sx={{
         minHeight: "100vh",
         display: "flex",
-        bgcolor: "#f8f9fa",
+        // bgcolor: "#f8f9fa",
+        bgcolor: "#BBDEFB",
       }}
     >
       {/* Sidebar */}
       <Box
         sx={{
           width: "280px",
-          bgcolor: "#f8f9fa",
+          // bgcolor: "#f8f9fa",
+          bgcolor: "#E3F2FD",
         }}
       >
         <Box sx={{ p: 3, textAlign: "center" }}>
@@ -163,6 +165,8 @@ const TravelProfilePage = () => {
                   height: 100,
                   borderRadius: "50%",
                   cursor: "pointer",
+                  objectFit:"contain",
+                  bgcolor: "#fff",
                   border: "1px solid #e9ecef",
                 }}
               />
@@ -322,7 +326,7 @@ const TravelProfilePage = () => {
       </Box>
 
       {/* Main Content */}
-      <Box sx={{ flex: 1, p: 3 }}>
+      <Box sx={{display:"flex",width:"100%",height:"100vh", flex: 1, p: 3 }}>
         <Card
           sx={{
             p: 3,
@@ -337,7 +341,7 @@ const TravelProfilePage = () => {
           </Typography>
 
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
                 label="Full Name"
@@ -355,7 +359,7 @@ const TravelProfilePage = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
                 label="Username"
@@ -418,10 +422,12 @@ const TravelProfilePage = () => {
                 onChange={(e) => setAddress(e.target.value)}
                 variant="outlined"
                 size="small"
+                multiline
+                rows={4}
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     borderRadius: 1,
-                    height: "130px",
+                    
                     "&:hover fieldset": {
                       borderColor: "#1976d2",
                     },
