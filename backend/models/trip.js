@@ -42,6 +42,15 @@ const tripSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  highlights: {
+    type: [String], // Array of strings for highlights
+  },
+  includedServices: {
+    type: [String], // Array of strings for services included
+  },
+  imageURL: {
+    type: String, // URL string to store an image link
+  },
   created_at: {
     type: Date,
     default: Date.now,
