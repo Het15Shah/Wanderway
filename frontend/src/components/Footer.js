@@ -27,6 +27,7 @@ const Footer = memo(() => (
           <ul className="footer-list">
             <li><Link to="/about-us" className="footer-link">About Us</Link></li>
             <li><a href="#" className="footer-link">FAQs & Help</a></li>
+            <li><Link to="/review" className="footer-link">Reviews</Link></li>
           </ul>
         </div>
 
