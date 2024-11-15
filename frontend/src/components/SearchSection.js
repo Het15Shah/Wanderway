@@ -1,6 +1,28 @@
 import React from 'react';
 import { Box, TextField, Button, Grid, Typography } from '@mui/material';
 import { blue, orange, grey } from '@mui/material/colors';
+import { useNavigate } from "react-router-dom";
+import useAPI from '../hooks/useAPI';
+import { useEffect } from "react";
+
+// const searchedPlans = () => {
+//   const {GET,POST} = useAPI();
+//   const navigate = useNavigate();
+//   const [plans, setPlans] = useState([]);
+//   useEffect(()=>{
+//     const getSearchedPlans = async () =>{
+//       try{
+//         const {data} = await GET("/api/trip");
+//         console.log("Data:- ",data);
+//         setPlans(data);
+//       }
+//       catch(err){
+//         console.log("Error:- ",err);
+//       }
+//     }
+//     getSearchedPlans();
+//   },[]);
+// }
 
 const SearchSection = () => {
   return (

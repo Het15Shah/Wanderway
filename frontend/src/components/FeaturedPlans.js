@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -7,48 +7,64 @@ import {
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import { useNavigate } from "react-router-dom";
+import useAPI from '../hooks/useAPI';
+import { useEffect } from "react";
 
 const FeaturedPlans = () => {
+  const {GET,POST} = useAPI();
   const navigate = useNavigate();
-  
+  const [plans, setPlans] = useState([]);
+  useEffect(()=>{
+    const getAllFeaturePlans = async () =>{
+      try{
+        const {data} = await GET("/api/trip");
+        console.log("Data:- ",data);
+        setPlans(data);
+      }
+      catch(err){
+        console.log("Error:- ",err);
+      }
+    }
+    getAllFeaturePlans();
+  },[]);
   // Array of trips with unique IDs
-  const plans = [
-    {
-      id: 1,
-      title: "Paris Getaway",
-      price: "$1500",
-      duration: "5 Days",
-      imageUrl: "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
-    },
-    {
-      id: 2,
-      title: "Adventure in Bali",
-      price: "$1200",
-      duration: "7 Days",
-      imageUrl: "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    },
-    {
-      id: 3,
-      title: "Explore Japan",
-      price: "$1800",
-      duration: "6 Days",
-      imageUrl: "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-    },
-    {
-      id: 4,
-      title: "Maldives Escape",
-      price: "$2000",
-      duration: "4 Days",
-      imageUrl: "https://krishnendu.org/wp-content/uploads/pexels-asad-photo-maldives-3601425-1-scaled.jpg",
-    },
-    {
-      id: 5,
-      title: "Cultural India",
-      price: "$1000",
-      duration: "8 Days",
-      imageUrl: "https://images.pexels.com/photos/3947637/pexels-photo-3947637.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-    },
-  ];
+  // const plans = [
+  //   {
+  //     id: 1,
+  //     title: "Paris Getaway",
+  //     price: "$1500",
+  //     duration: "5 Days",
+  //     imageUrl: "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Adventure in Bali",
+  //     price: "$1200",
+  //     duration: "7 Days",
+  //     imageUrl: "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Explore Japan",
+  //     price: "$1800",
+  //     duration: "6 Days",
+  //     imageUrl: "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Maldives Escape",
+  //     price: "$2000",
+  //     duration: "4 Days",
+  //     imageUrl: "https://krishnendu.org/wp-content/uploads/pexels-asad-photo-maldives-3601425-1-scaled.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Cultural India",
+  //     price: "$1000",
+  //     duration: "8 Days",
+  //     imageUrl: "https://images.pexels.com/photos/3947637/pexels-photo-3947637.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+  //   },
+  // ];
 
   const handleCardClick = (id) => {
     navigate(`/trip/${id}`); // Redirect to the trip details page with the trip ID
@@ -78,7 +94,7 @@ const FeaturedPlans = () => {
         {plans.map((plan) => (
           <Grid item xs={12} sm={6} md={4} key={plan.id}>
             <Card
-              onClick={() => handleCardClick(plan.id)} // Call the navigation function on click
+              onClick={() => handleCardClick(plan._id)} // Call the navigation function on click
               sx={{
                 position: "relative",
                 height: "250px",

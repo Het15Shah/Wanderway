@@ -25,7 +25,8 @@ app.use(
 );
   
 // Connection
-mongoose.connect("mongodb+srv://shahhet525:UWvWpIIhwWWslp0S@cluster0.ex1lr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+// mongoose.connect("mongodb+srv://shahhet525:UWvWpIIhwWWslp0S@cluster0.ex1lr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+mongoose.connect("mongodb://127.0.0.1:27017/userprofile").then(() => {
     console.log("Connected to MongoDB");
 }).catch((error) => {
     console.error("MongoDB connection error:", error);
