@@ -7,7 +7,9 @@ import FeaturedPlans from "../components/FeaturedPlans";
 // import AboutUs from '../components/AboutUs';
 import Footer from "../components/Footer";
 
+
 const HomePage = () => {
+  
   return (
     <div>
       <Navbar />

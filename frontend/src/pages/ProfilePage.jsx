@@ -18,17 +18,17 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import Camera from "@mui/icons-material/Camera";
-import Phone from "@mui/icons-material/Phone";
-import LocationOn from "@mui/icons-material/LocationOn";
+// import Camera from "@mui/icons-material/Camera";
+// import Phone from "@mui/icons-material/Phone";
+// import LocationOn from "@mui/icons-material/LocationOn";
 import Home from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ClearIcon from "@mui/icons-material/Clear";
 import useAPI from "../hooks/useAPI";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import VpnKey from "@mui/icons-material/VpnKey";
-import ExitToApp from "@mui/icons-material/ExitToApp";
+// import AccountCircle from "@mui/icons-material/AccountCircle";
+// import VpnKey from "@mui/icons-material/VpnKey";
+// import ExitToApp from "@mui/icons-material/ExitToApp";
 import Footer from "../components/Footer";
 
 const TravelProfilePage = () => {
@@ -39,9 +39,8 @@ const TravelProfilePage = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [location, setLocation] = useState("");
-  const [birthdate, setBirthdate] = useState(null);
-  const [isWorking, setIsWorking] = useState(true);
+  
+  
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
   const [gender, setGender] = useState("");
@@ -106,8 +105,7 @@ const TravelProfilePage = () => {
         setEmail(user?.email || "");
         setPhoneNumber(user?.phoneNumber || "");
         setAddress(user?.address || "");
-        setIsWorking(user?.working || true);
-        setBirthdate(user?.birthdate || "");
+        
         setGender(user?.gender || "");
         setPreviewImage(user?.profileImage || "");
       } else {
@@ -134,31 +132,31 @@ const TravelProfilePage = () => {
         boxShadow: "0 0 100px rgba(255, 204, 0, 0.6)",
         "& > fieldset": {
           borderColor: "#ffcc00 !important",
-        }
+        },
       },
       "&.Mui-focused": {
         boxShadow: "0 0 100px rgba(255, 204, 0, 0.6)",
         "& > fieldset": {
           borderColor: "#ffcc00 !important",
           borderWidth: "2px",
-        }
-      }
+        },
+      },
     },
     "& .MuiInputLabel-root": {
       color: "#666666",
       "&.Mui-focused": {
         color: "#000000",
-      }
+      },
     },
     "& .MuiOutlinedInput-notchedOutline": {
       borderColor: "transparent",
-    }
+    },
   };
 
   return (
     <Box
       sx={{
-       height:"auto",
+        height: "auto",
       }}
     >
       <Box
@@ -168,7 +166,6 @@ const TravelProfilePage = () => {
           display: "flex",
           bgcolor: "#f8f9fa",
           // bgcolor:"red",
-
         }}
       >
         {/* Sidebar */}
@@ -258,7 +255,7 @@ const TravelProfilePage = () => {
                 display: "flex",
                 alignItems: "center",
                 "&.Mui-selected, &:hover": {
-                  bgcolor: "#007bff",
+                  bgcolor: "#e6b800",
                   color: "white",
                   "& .MuiListItemIcon-root": {
                     color: "white",
@@ -266,7 +263,7 @@ const TravelProfilePage = () => {
                 },
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40, color: "#007bff" }}>
+              <ListItemIcon sx={{ minWidth: 40, color: "#ffcc00" }}>
                 <Home fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Homepage" />
@@ -289,7 +286,7 @@ const TravelProfilePage = () => {
                 display: "flex",
                 alignItems: "center",
                 "&.Mui-selected, &:hover": {
-                  bgcolor: "#007bff",
+                  bgcolor: "#e6b800",
                   color: "white",
                   "& .MuiListItemIcon-root": {
                     color: "white",
@@ -297,7 +294,7 @@ const TravelProfilePage = () => {
                 },
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40, color: "#1976d2" }}>
+              <ListItemIcon sx={{ minWidth: 40, color: "#ffcc00" }}>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Logout" />
@@ -320,7 +317,7 @@ const TravelProfilePage = () => {
                 display: "flex",
                 alignItems: "center",
                 "&.Mui-selected, &:hover": {
-                  bgcolor: "#007bff",
+                  bgcolor: "#e6b800",
                   color: "white",
                   "& .MuiListItemIcon-root": {
                     color: "white",
@@ -328,7 +325,7 @@ const TravelProfilePage = () => {
                 },
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40, color: "#1976d2" }}>
+              <ListItemIcon sx={{ minWidth: 40, color: "#ffcc00" }}>
                 <DeleteForeverIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Delete Account" />
@@ -338,13 +335,19 @@ const TravelProfilePage = () => {
 
         {/* Main Content */}
         <Box
-          sx={{ display: "flex", width: "100%", height: "700px", flex: 1, p: 3 }}
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "700px",
+            flex: 1,
+            p: 3,
+          }}
         >
           <Card
             sx={{
               p: 3,
               width: "100%",
-              bgcolor: "#fff",
+              // bgcolor: "#fff",
               boxShadow: "none",
               border: "1px solid #e9ecef",
               borderRadius: "8px",

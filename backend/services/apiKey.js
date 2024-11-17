@@ -4,19 +4,18 @@ const genAI = new GoogleGenerativeAI('AIzaSyD96FD_zb1LWMXrjFLD6maLmkJjGKaTz5Q');
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 async function generateResponse(prompt) {
-    console.log(prompt)
-    try {
-      const result = await model.generateContent(prompt);
-      console.log(result.response.text());
-    } catch (error) {
-      console.error('Error generating content:', error);
-    }
+  try {
+    const result = await model.generateContent(prompt);
+    return result.response.json();
+  } catch (error) {
+    return error;
   }
-  
+}
+
 const destination = "Paris";
-const activity = ['Effile Tower','Muesum']
-generateResponse(`Create a custom itinary for ${destination} which involves follwing activity ${activity}. Give day wise brief description with hotel stay and mode of transportation for each day and small description of activity as well. The trip should involve activity mentioned in ${activity} only, no other activities,
-Response shoule be according to following mongoose Schema 
+const activity = ['Effile Tower', 'Museum'];
+generateResponse(`Create a custom itinerary for ${destination} which involves following activities ${activity}. Give day wise brief description with hotel stay and mode of transportation for each day and small description of activity as well. The trip should involve activities mentioned in ${activity} only, no other activities.
+Response should be according to the following mongoose Schema:
 const tripSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -75,4 +74,6 @@ const tripSchema = new mongoose.Schema({
 });
 `);
 
-  
+module.exports = {
+  generateResponse,
+};

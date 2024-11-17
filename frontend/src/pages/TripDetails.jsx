@@ -28,12 +28,22 @@ import DirectionsBus from "@mui/icons-material/DirectionsBus";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import axios from "axios";
 
 const TripDetails = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [hoveredHighlight, setHoveredHighlight] = useState(null);
+  // const [user, setUser] = useState(null); // Check if user is logged in
+
+  // useEffect(() => {
+  //   // Simulate a user authentication check
+  //   axios.get("/api/auth/me")
+  //     .then(response => setUser(response.data.user))
+  //     .catch(() => navigate("/login")); // Redirect to login if not authenticated
+  // }, []);
 
   const trip = {
     title: "Cultural India Exploration",
@@ -104,7 +114,8 @@ const TripDetails = () => {
           },
           {
             time: "1:00 PM",
-            description: "Lunch at a rooftop restaurant with a view of Taj Mahal",
+            description:
+              "Lunch at a rooftop restaurant with a view of Taj Mahal",
             location: "Agra",
             type: "dining",
           },
@@ -167,7 +178,8 @@ const TripDetails = () => {
         activities: [
           {
             time: "10:00 AM",
-            description: "Participate in a Diwali celebration at a local temple",
+            description:
+              "Participate in a Diwali celebration at a local temple",
             location: "Delhi Temple",
             type: "cultural",
           },
@@ -204,13 +216,19 @@ const TripDetails = () => {
   const getActivityIcon = (type) => {
     switch (type) {
       case "sightseeing":
-        return <LocalActivityIcon sx={{ marginRight: "5px", color: "#ff7043" }} />;
+        return (
+          <LocalActivityIcon sx={{ marginRight: "5px", color: "#ff7043" }} />
+        );
       case "dining":
         return <RestaurantIcon sx={{ marginRight: "5px", color: "#ff9800" }} />;
       case "shopping":
-        return <ShoppingCartIcon sx={{ marginRight: "5px", color: "#4caf50" }} />;
+        return (
+          <ShoppingCartIcon sx={{ marginRight: "5px", color: "#4caf50" }} />
+        );
       case "adventure":
-        return <DirectionsWalkIcon sx={{ marginRight: "5px", color: "#2196f3" }} />;
+        return (
+          <DirectionsWalkIcon sx={{ marginRight: "5px", color: "#2196f3" }} />
+        );
       case "cultural":
         return <HotelIcon sx={{ marginRight: "5px", color: "#9c27b0" }} />;
       default:
@@ -296,13 +314,21 @@ const TripDetails = () => {
         >
           <Typography
             variant="h2"
-            sx={{ fontSize: isMobile ? "2rem" : "3rem", fontWeight: 700, color: "#1a237e" }}
+            sx={{
+              fontSize: isMobile ? "2rem" : "3rem",
+              fontWeight: 700,
+              color: "#1a237e",
+            }}
           >
             {trip.destination}
           </Typography>
           <Typography
             variant="body1"
-            sx={{ fontSize: isMobile ? "1rem" : "1.5rem", color: "#757575", marginTop: "10px" }}
+            sx={{
+              fontSize: isMobile ? "1rem" : "1.5rem",
+              color: "#757575",
+              marginTop: "10px",
+            }}
           >
             <CalendarTodayIcon sx={{ marginRight: "10px" }} />
             {trip.startDate} - {trip.endDate}
@@ -325,14 +351,22 @@ const TripDetails = () => {
         >
           <Typography
             className="price"
-            sx={{ fontSize: isMobile ? "1.5rem" : "2.5rem", fontWeight: 700, color: "#e65100" }}
+            sx={{
+              fontSize: isMobile ? "1.5rem" : "2.5rem",
+              fontWeight: 700,
+              color: "#e65100",
+            }}
           >
             <AttachMoneyIcon sx={{ marginRight: "5px" }} />
             {trip.price}
           </Typography>
           <Typography
             className="duration"
-            sx={{ fontSize: isMobile ? "1rem" : "1.5rem", fontWeight: 600, color: "#1a237e" }}
+            sx={{
+              fontSize: isMobile ? "1rem" : "1.5rem",
+              fontWeight: 600,
+              color: "#1a237e",
+            }}
           >
             <FlightTakeoffIcon sx={{ marginRight: "5px" }} />
             {trip.itinerary.length} Days
@@ -375,7 +409,11 @@ const TripDetails = () => {
                   </Typography>
                   <Typography
                     className="transport-mode"
-                    sx={{ fontSize: isMobile ? "1rem" : "1.2rem", marginBottom: "20px", color: "#757575" }}
+                    sx={{
+                      fontSize: isMobile ? "1rem" : "1.2rem",
+                      marginBottom: "20px",
+                      color: "#757575",
+                    }}
                   >
                     {renderIcon(dayPlan.modeOfTransportation)} Transportation:
                     {dayPlan.modeOfTransportation}
