@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import Footer from "../components/Footer";
 import {
   Box,
   Button,
@@ -29,7 +30,7 @@ import useAPI from "../hooks/useAPI";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKey from "@mui/icons-material/VpnKey";
 import ExitToApp from "@mui/icons-material/ExitToApp";
-import Footer from "../components/Footer";
+import axios from "axios";
 
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
@@ -77,18 +78,29 @@ const TravelProfilePage = () => {
       return;
     }
     setLoading(true);
-    const profileData = {
-      fullName: name,
-      phoneNumber,
-      address,
-      gender,
-      profileImage,
+    // const profileData = {
+    //   fullName: name,
+    //   phoneNumber,
+    //   address,
+    //   gender,
+    //   profileImage,
+    // };
+
+    const userData = new FormData();
+    userData.append("fullName", name);
+    userData.append("phoneNumber", phoneNumber);
+    userData.append("address", address);
+    userData.append("gender", gender);
+    userData.append("profileImage", profileImage);
+
+    const headers = {
+      "Content-Type":  "multipart/form-data",
     };
+
     try {
-      const response = await POST("/api/user/update", profileData, {
-        userId: userName,
-      });
+      const response = await axios.post(`http://localhost:8000/api/user/update?userId=${userName}`, userData, { headers });
       toast.success("Profile updated successfully!");
+      console.log("response", response);
     } catch (err) {
       console.log("Error ->", err);
       toast.error("Server Problem, Failed to Update user data.");
@@ -109,7 +121,7 @@ const TravelProfilePage = () => {
         setIsWorking(user?.working || true);
         setBirthdate(user?.birthdate || "");
         setGender(user?.gender || "");
-        setPreviewImage(user?.profileImage || "");
+        setPreviewImage(user?.profileImageURL || "");
       } else {
         toast.error("Invalid Credentials");
       }
