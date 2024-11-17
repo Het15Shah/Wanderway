@@ -6,6 +6,8 @@ const path = require("path");
 const userRoute = require("./routes/user");
 const tripRouter = require("./routes/tripRouter");
 const reviewRouter = require("./routes/reviewRouter");
+const customTripRouter = require("./routes/customTrip")
+const searchTripRouter = require("./routes/searchTrip")
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -25,7 +27,7 @@ app.use(
 );
   
 // Connection
-mongoose.connect("mongodb+srv://shahhet525:UWvWpIIhwWWslp0S@cluster0.ex1lr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+mongoose.connect("mongodb://localhost:27017/Wanderway").then(() => {
     console.log("Connected to MongoDB");
 }).catch((error) => {
     console.error("MongoDB connection error:", error);
@@ -49,6 +51,8 @@ app.use("/api/user",userRoute);
 app.use("/api/trip",tripRouter);
 app.use("/api/review",reviewRouter);
 app.use("/api/myTrip",myTripRouter);
+app.use("/api/customTrip",customTripRouter)
+app.use("/api/searchTrip" , searchTripRouter)
 
 app.listen(PORT,()=>{
     console.log("Server Started at PORT: ",PORT);
