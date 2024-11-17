@@ -4,7 +4,6 @@ const Trip = require('../models/trip');
 const ensureAdmin = require('../middlewares/ensureAdmin')
 
 const {addNewTrip,
-  searchTrip,
   deleteTripById,
   getAllTrip,
   getTripById} = require('../controllers/trip');
@@ -19,7 +18,6 @@ router.get('/', getAllTrip);
 router.get('/:id', getTripById);
 
 
-router.get('/searchTrip/:query', searchTrip);
 
 
 // Delete a trip by ID

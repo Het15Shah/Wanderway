@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import Footer from "../components/Footer";
 import {
   Box,
   Button,
@@ -18,18 +19,18 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-// import Camera from "@mui/icons-material/Camera";
-// import Phone from "@mui/icons-material/Phone";
-// import LocationOn from "@mui/icons-material/LocationOn";
+import Camera from "@mui/icons-material/Camera";
+import Phone from "@mui/icons-material/Phone";
+import LocationOn from "@mui/icons-material/LocationOn";
 import Home from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ClearIcon from "@mui/icons-material/Clear";
 import useAPI from "../hooks/useAPI";
-// import AccountCircle from "@mui/icons-material/AccountCircle";
-// import VpnKey from "@mui/icons-material/VpnKey";
-// import ExitToApp from "@mui/icons-material/ExitToApp";
-import Footer from "../components/Footer";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import VpnKey from "@mui/icons-material/VpnKey";
+import ExitToApp from "@mui/icons-material/ExitToApp";
+import axios from "axios";
 
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
@@ -39,8 +40,9 @@ const TravelProfilePage = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  
-  
+  const [location, setLocation] = useState("");
+  const [birthdate, setBirthdate] = useState(null);
+  const [isWorking, setIsWorking] = useState(true);
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
   const [gender, setGender] = useState("");
@@ -76,18 +78,33 @@ const TravelProfilePage = () => {
       return;
     }
     setLoading(true);
-    const profileData = {
-      fullName: name,
-      phoneNumber,
-      address,
-      gender,
-      profileImage,
+    // const profileData = {
+    //   fullName: name,
+    //   phoneNumber,
+    //   address,
+    //   gender,
+    //   profileImage,
+    // };
+
+    const userData = new FormData();
+    userData.append("fullName", name);
+    userData.append("phoneNumber", phoneNumber);
+    userData.append("address", address);
+    userData.append("gender", gender);
+    userData.append("profileImage", profileImage);
+
+    const headers = {
+      "Content-Type": "multipart/form-data",
     };
+
     try {
-      const response = await POST("/api/user/update", profileData, {
-        userId: userName,
-      });
+      const response = await axios.post(
+        `http://localhost:8000/api/user/update?userId=${userName}`,
+        userData,
+        { headers }
+      );
       toast.success("Profile updated successfully!");
+      console.log("response", response);
     } catch (err) {
       console.log("Error ->", err);
       toast.error("Server Problem, Failed to Update user data.");
@@ -105,9 +122,10 @@ const TravelProfilePage = () => {
         setEmail(user?.email || "");
         setPhoneNumber(user?.phoneNumber || "");
         setAddress(user?.address || "");
-        
+        setIsWorking(user?.working || true);
+        setBirthdate(user?.birthdate || "");
         setGender(user?.gender || "");
-        setPreviewImage(user?.profileImage || "");
+        setPreviewImage(user?.profileImageURL || "");
       } else {
         toast.error("Invalid Credentials");
       }
@@ -255,7 +273,7 @@ const TravelProfilePage = () => {
                 display: "flex",
                 alignItems: "center",
                 "&.Mui-selected, &:hover": {
-                  bgcolor: "#e6b800",
+                  bgcolor: "#007bff",
                   color: "white",
                   "& .MuiListItemIcon-root": {
                     color: "white",
@@ -263,7 +281,7 @@ const TravelProfilePage = () => {
                 },
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40, color: "#ffcc00" }}>
+              <ListItemIcon sx={{ minWidth: 40, color: "#007bff" }}>
                 <Home fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Homepage" />
@@ -286,7 +304,7 @@ const TravelProfilePage = () => {
                 display: "flex",
                 alignItems: "center",
                 "&.Mui-selected, &:hover": {
-                  bgcolor: "#e6b800",
+                  bgcolor: "#007bff",
                   color: "white",
                   "& .MuiListItemIcon-root": {
                     color: "white",
@@ -294,7 +312,7 @@ const TravelProfilePage = () => {
                 },
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40, color: "#ffcc00" }}>
+              <ListItemIcon sx={{ minWidth: 40, color: "#1976d2" }}>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Logout" />
@@ -317,7 +335,7 @@ const TravelProfilePage = () => {
                 display: "flex",
                 alignItems: "center",
                 "&.Mui-selected, &:hover": {
-                  bgcolor: "#e6b800",
+                  bgcolor: "#007bff",
                   color: "white",
                   "& .MuiListItemIcon-root": {
                     color: "white",
@@ -325,7 +343,7 @@ const TravelProfilePage = () => {
                 },
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40, color: "#ffcc00" }}>
+              <ListItemIcon sx={{ minWidth: 40, color: "#1976d2" }}>
                 <DeleteForeverIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Delete Account" />
@@ -347,7 +365,7 @@ const TravelProfilePage = () => {
             sx={{
               p: 3,
               width: "100%",
-              // bgcolor: "#fff",
+              bgcolor: "#fff",
               boxShadow: "none",
               border: "1px solid #e9ecef",
               borderRadius: "8px",

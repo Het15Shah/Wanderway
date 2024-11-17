@@ -6,7 +6,13 @@ const path = require("path");
 const userRoute = require("./routes/user");
 const tripRouter = require("./routes/tripRouter");
 const reviewRouter = require("./routes/reviewRouter");
+<<<<<<< HEAD
 const bodyParser = require("body-parser");
+=======
+const customTripRouter = require("./routes/customTrip")
+const searchTripRouter = require("./routes/searchTrip")
+const bodyParser = require('body-parser');
+>>>>>>> 65b1a9d3f3e4576679ae89b08cf60b44db469f76
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const myTripRouter = require("./routes/myTripRoute");
@@ -50,11 +56,20 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.json());
 
 // Router Specification
+<<<<<<< HEAD
 app.use("/api/user", userRoute);
 app.use("/api/trip", tripRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/myTrip", myTripRouter);
 // app.use("/api/customtrip", customtripRouter);
+=======
+app.use("/api/user",userRoute);
+app.use("/api/trip",tripRouter);
+app.use("/api/review",reviewRouter);
+app.use("/api/myTrip",myTripRouter);
+app.use("/api/customTrip",customTripRouter)
+app.use("/api/searchTrip" , searchTripRouter)
+>>>>>>> 65b1a9d3f3e4576679ae89b08cf60b44db469f76
 
 app.listen(PORT, () => {
   console.log("Server Started at PORT: ", PORT);

@@ -22,7 +22,7 @@ const tripSchema = new mongoose.Schema({
       day: Number,
       modeOfTransportation: {
         type: String,
-        enum: ['car', 'bus', 'train', 'plane', 'boat', 'walking', 'other'],
+        // enum: ['car', 'bus', 'train', 'plane', 'boat', 'walking', 'other'],
         required: true,
       },
       hotel: {

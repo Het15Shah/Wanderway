@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("../models/user");
+const uploadOnCloudinary = require("../utils/cloudinary");
 
 async function userSignUp (req,res) {
     const {userId,fullName, email, password} = req.body;
@@ -35,7 +36,9 @@ async function userUpdate (req, res)  {
     try {
         const { userId } = req.query;
         const updateData = req.body;
-        console.log("bODY",req.body.profileImageURL);
+        console.log("file: ", req.file);
+        console.log("body: ", req.body);
+        // console.log("body",req.file.profileImageURL);
         // console.log(userId);
         // Find the user by ID and update fields
         const user = await User.findOne({ userId });
@@ -47,7 +50,17 @@ async function userUpdate (req, res)  {
         if (updateData.fullName) user.fullName = updateData.fullName;
         if (updateData.email) user.email = updateData.email;
         if (updateData.phoneNumber) user.phoneNumber = updateData.phoneNumber;
-        if (updateData.profileImageURL) user.profileImageURL = `/uploads/${req.file.filename}`;
+        if (req.file){
+            // console.log("I am in Image Upload Section");
+            user.profileImageURL = `/uploads/${req.file.filename}`;
+            // cloudinary.uploader.upload(req.file.path,(err,res) => {
+            //     if(err){
+            //         console.log("This is error ",err);
+            //         return res.status(500).json({ success: false, message: "Error"});
+            //     }
+            // });
+            user.profileImageURL = await uploadOnCloudinary(user.profileImageURL);
+        }
         if (updateData.address) user.address = updateData.address;
         if (updateData.gender) user.gender = updateData.gender;
         if (updateData.role) user.role = updateData.role;

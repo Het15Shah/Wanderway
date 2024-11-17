@@ -9,12 +9,13 @@ async function addReview (req, res){
     const { userId, rating, comment } = req.body;
   
     try {
-  
+      // Fetch trip from Trip database by Id
       const trip = await Trip.findById(tripId);
       if (!trip) {
         return res.status(404).json({ message: 'Trip not found' });
       }
-  
+      
+      // Fetch user from 
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
