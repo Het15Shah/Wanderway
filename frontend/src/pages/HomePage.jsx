@@ -1,11 +1,11 @@
 // src/pages/HomePage.js
-import React from 'react';
-import Navbar from '../components/Navbar';
-import HeroSection from '../components/HeroSection';
-import SearchSection from '../components/SearchSection';
-import FeaturedPlans from '../components/FeaturedPlans';
+import React from "react";
+import Navbar from "../components/Navbar";
+import HeroSection from "../components/HeroSection";
+import SearchSection from "../components/SearchSection";
+import FeaturedPlans from "../components/FeaturedPlans";
 // import AboutUs from '../components/AboutUs';
-import Footer from '../components/Footer';
+import Footer from "../components/Footer";
 
 const HomePage = () => {
   return (
