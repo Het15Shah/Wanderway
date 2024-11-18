@@ -3,8 +3,9 @@ const Trip = require("../models/trip");
 const User = require("../models/user");
 
 async function addReview(req, res) {
+  // console.log("asfd");
   const { rating, comment } = req.body;
-
+  // console.log(req.body);
   const userId = req.user._id; // Get the user ID from the request
   try {
     // Fetch trip from Trip database by Id
@@ -23,8 +24,10 @@ async function addReview(req, res) {
     });
 
     await review.save();
+    // console.log(`review`, review);
     res.status(201).json({ message: "Review created successfully", review });
   } catch (error) {
+    // console.log("error", error);
     res.status(500).json({ message: error.message });
   }
 }

@@ -33,10 +33,10 @@ import {
 } from "react-share";
 import useAPI from "../hooks/useAPI";
 import { useEffect } from "react";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 const MyTrips = () => {
-  const { GET,POST } = useAPI();
+  const { GET, POST } = useAPI();
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
@@ -63,10 +63,8 @@ const MyTrips = () => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   const handleCancelTrip = async (id) => {
-
     const { data } = await POST(`/api/myTrip/cancel/${id}`);
     console.log("Data:", data);
-
 
     setTrips(
       trips.map((trip) =>
@@ -160,6 +158,7 @@ const MyTrips = () => {
                     sx={{ fontWeight: "bold", marginBottom: "12px" }}
                   >
                     {trip.title}
+                    {trip.updatedAt}
                   </Typography>
                   <Box
                     sx={{ display: "flex", alignItems: "center", gap: "12px" }}
@@ -173,7 +172,7 @@ const MyTrips = () => {
                   <Typography variant="body2" sx={{ marginTop: "12px" }}>
                     Status: {trip.status}
                   </Typography>
-                  {trip.status === "Upcoming" && (
+                  {trip.status === "booked" && (
                     <Button
                       variant="contained"
                       color="error"

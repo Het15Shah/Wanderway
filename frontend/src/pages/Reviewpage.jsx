@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import useAPI from "../hooks/useAPI";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Box } from "@mui/system";
 
 export default function ReviewPage() {
   const [name, setName] = useState("");
@@ -31,34 +32,8 @@ export default function ReviewPage() {
   });
   const { GET, POST } = useAPI();
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await GET("/api/review");
-        console.log("Reviews:", response);
-        setReviews(response.data);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-        toast.error("Failed to fetch reviews. Please try again.");
-      }
-    };
-
-    fetchReviews();
-  }, []);
-  // Handle form input changes
-  const handleReviewChange = (e) => {
-    const { name, value } = e.target;
-    setReview((prevReview) => ({ ...prevReview, [name]: value }));
-  };
-
-  // Handle star rating
-  const setRating = (rating) => {
-    setReview((prevReview) => ({ ...prevReview, rating }));
-  };
-
-  // Submit review and clear form
   const submitReview = async (e) => {
-    // e.preventDefault(); // Prevent form default submission behavior
+    e.preventDefault(); // Prevent form default submission behavior
     try {
       const reviewData = {
         name: review.name,
@@ -66,9 +41,9 @@ export default function ReviewPage() {
         comment: review.comment,
         rating: review.rating,
       };
-      // console.log("Review data:", reviewData);
+      console.log("Review data:", reviewData);
       const response = await POST("/api/review", reviewData);
-      console.log("Review submitted:", response);
+      // console.log("Review submitted:", response);
       toast.success("Review submitted successfully!");
       // Clear the form
       setReview({
@@ -82,6 +57,33 @@ export default function ReviewPage() {
       toast.error("Failed to submit review. Please try again.");
     }
   };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await GET("/api/review");
+        // console.log("Reviews:", response);
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        toast.error("Failed to fetch reviews. Please try again.");
+      }
+    };
+
+    fetchReviews();
+  }, [submitReview]);
+  // Handle form input changes
+  const handleReviewChange = (e) => {
+    const { name, value } = e.target;
+    setReview((prevReview) => ({ ...prevReview, [name]: value }));
+  };
+
+  // Handle star rating
+  const setRating = (rating) => {
+    setReview((prevReview) => ({ ...prevReview, rating }));
+  };
+
+  // Submit review and clear form
 
   // const fetchReviews = async () => {
   //   try {
@@ -104,18 +106,103 @@ export default function ReviewPage() {
     <>
       <MDBContainer className="py-5" style={{ backgroundColor: "#ffffff" }}>
         {/* Back to Home Button */}
-        <button
-          className="Button_submit"
-          style={{
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            transition: "background-color 0.3s ease",
-          }}
-          onClick={() => (window.location.href = "/")}
-        >
-          Back to Home
-        </button>
+
+        {/* Add Review Form in a Card */}
+        <MDBRow className="justify-content-center my-5">
+          <MDBCol md="6">
+            <MDBCard style={{ backgroundColor: "#fff5e6" }}>
+              <MDBCardBody>
+                <h4 className="text-center mb-4" style={{ color: "#ffcc00" }}>
+                  Add Your Review
+                </h4>
+                <form onSubmit={submitReview}>
+                  {/* Name Field */}
+                  <h6>Your Name</h6>
+                  <MDBInput
+                    name="name"
+                    value={review.name}
+                    onChange={handleReviewChange}
+                    className="mb-3"
+                    required
+                    style={{
+                      backgroundColor: "#ffffff",
+                      border: "2px solid #ffcc00",
+                      borderRadius: "5px",
+                      padding: "5px",
+                    }}
+                  />
+
+                  {/* Email Field */}
+                  <h6>Your Email</h6>
+                  <MDBInput
+                    name="email"
+                    type="email"
+                    value={review.email}
+                    onChange={handleReviewChange}
+                    className="mb-3"
+                    required
+                    style={{
+                      backgroundColor: "#ffffff",
+                      border: "2px solid #ffcc00",
+                      borderRadius: "5px",
+                      padding: "5px",
+                    }}
+                  />
+
+                  {/* Comment Field */}
+                  <h6>Your Comment</h6>
+                  <MDBInput
+                    name="comment"
+                    value={review.comment}
+                    onChange={handleReviewChange}
+                    className="mb-3"
+                    textarea="true"
+                    rows={3}
+                    required
+                    style={{
+                      backgroundColor: "#ffffff",
+                      border: "2px solid #ffcc00",
+                      borderRadius: "5px",
+                      padding: "5px",
+                    }}
+                  />
+
+                  {/* Star Rating Selection */}
+                  <div className="star-rating mb-3 text-center">
+                    <span>Rating:</span>
+                    {[...Array(5)].map((_, i) => (
+                      <MDBIcon
+                        key={i}
+                        fas
+                        icon="star"
+                        onClick={() => setRating(i + 1)}
+                        className={`star ${
+                          i < review.rating ? "text-warning" : "text-muted"
+                        }`}
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "8px",
+                          fontSize: "20px",
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <button className="Button_submit" type="submit">
+                      Submit Review
+                    </button>
+                  </Box>
+                </form>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
 
         {/* Review Section */}
         <h3 className="text-center fw-bold mb-4" style={{ color: "#ffcc00" }}>
@@ -182,101 +269,6 @@ export default function ReviewPage() {
         </MDBRow>
 
         {/* Add Review Form in a Card */}
-        <MDBRow className="justify-content-center my-5">
-          <MDBCol md="6">
-            <MDBCard style={{ backgroundColor: "#fff5e6" }}>
-              <MDBCardBody>
-                <h4 className="text-center mb-4" style={{ color: "#ffcc00" }}>
-                  Add Your Review
-                </h4>
-                <form onSubmit={submitReview}>
-                  {/* Name Field */}
-                  <h6>Your Name</h6>
-                  <MDBInput
-                    name="name"
-                    value={review.name}
-                    onChange={handleReviewChange}
-                    className="mb-3"
-                    required
-                    style={{
-                      backgroundColor: "#ffffff",
-                      border: "2px solid #ffcc00",
-                      borderRadius: "5px",
-                      padding: "5px",
-                    }}
-                  />
-
-                  {/* Email Field */}
-                  <h6>Your Email</h6>
-                  <MDBInput
-                    name="email"
-                    type="email"
-                    value={review.email}
-                    onChange={handleReviewChange}
-                    className="mb-3"
-                    required
-                    style={{
-                      backgroundColor: "#ffffff",
-                      border: "2px solid #ffcc00",
-                      borderRadius: "5px",
-                      padding: "5px",
-                    }}
-                  />
-
-                  {/* Comment Field */}
-                  <h6>Your Comment</h6>
-                  <MDBInput
-                    name="comment"
-                    value={review.comment}
-                    onChange={handleReviewChange}
-                    className="mb-3"
-                    textarea
-                    rows={3}
-                    required
-                    style={{
-                      backgroundColor: "#ffffff",
-                      border: "2px solid #ffcc00",
-                      borderRadius: "5px",
-                      padding: "5px",
-                    }}
-                  />
-
-                  {/* Star Rating Selection */}
-                  <div className="star-rating mb-3 text-center">
-                    <span>Rating:</span>
-                    {[...Array(5)].map((_, i) => (
-                      <MDBIcon
-                        key={i}
-                        fas
-                        icon="star"
-                        onClick={() => setRating(i + 1)}
-                        className={`star ${
-                          i < review.rating ? "text-warning" : "text-muted"
-                        }`}
-                        style={{
-                          cursor: "pointer",
-                          marginLeft: "8px",
-                          fontSize: "20px",
-                        }}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    className="Button_submit"
-                    type="submit"
-                    onClick={() => {
-                      submitReview();
-                    }}
-                  >
-                    Submit Review
-                  </button>
-                </form>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
       </MDBContainer>
       <Footer />
     </>
