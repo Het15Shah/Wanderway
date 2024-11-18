@@ -86,10 +86,16 @@ async function userUpdate (req, res)  {
 }
 
 async function userSignIn (req,res)  {
-    try{
-        console.log("I am in the signin POST Request");
-        
+    try{        
         const {email,password} = req.body;
+
+        if (email == undefined){
+            return res.status(200).json({success: false, message: "email cannot be missing"});
+        }
+
+        if (password == undefined){
+            return res.status(200).json({success: false, message: "password cannot be missing"});
+        }
 
         // console.log("Email and password");
         // console.log("email",email);
@@ -104,7 +110,7 @@ async function userSignIn (req,res)  {
            maxAge: 24 * 60 * 60 * 1000, 
         });
 
-        return res.status(200).json({success:true, message:"user Signup Successfully"});
+        return res.status(200).json({success:true, message:"User Signed In Successfully"});
     }
     catch(err){
         return res.status(200).json({success:false, message:err.message});
