@@ -1,15 +1,14 @@
-const express = require('express');
-const {generateResponse} = require('../services/generateTrip')
+const express = require("express");
+const { generateResponse } = require("../services/generateTrip");
 const router = express.Router();
 
-router.get('/',async (req,res)=>{
+router.post("/", async (req, res) => {
+  const { destination, activities, budget } = req.body;
+  console.log("Destination ", destination);
+  console.log("Activities ", activities);
+  console.log("Budget ", budget);
 
-    const destination = req.query.destination // fetching destination from input given by user
-    const activity = req.query.activity // feteching activites from input 
-    const budget = req.query.budget;
-    console.log("Destination ",destination);
-    
-    const prompt = `Create  a ${budget} custom itinary for ${destination} which involves follwing activity ${activity}. Give day wise brief description with hotel stay and mode of transportation for each day and small description of activity as well. The trip should involve activity mentioned in ${activity} only, no other activities,
+  const prompt = `Create  a ${budget} custom itinary for ${destination} which involves follwing activities ${activities}. Give day wise brief description with hotel stay and mode of transportation for each day and small description of activities as well. The trip should involve activities mentioned in ${activities} only, no other activities,
 Response shoule be according to following mongoose Schema 
 const tripSchema = new mongoose.Schema({
   title: {
@@ -69,9 +68,9 @@ const tripSchema = new mongoose.Schema({
 });
 An return respone in json format
 Ensure that if trip is cheap budget should not be greater than $2000, for affordbale it should be in between $2000 to $4000, expensive should be witin $10000 
-`
-const trip = await generateResponse(prompt);
-return res.status(200).json({success: true , trip: trip})
-})
+`;
+  const trip = await generateResponse(prompt);
+  return res.status(200).json({ success: true, trip: trip });
+});
 
-module.exports = router
+module.exports = router;

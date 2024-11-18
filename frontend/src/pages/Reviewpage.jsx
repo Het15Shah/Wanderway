@@ -11,8 +11,17 @@ import {
 } from "mdb-react-ui-kit";
 import "../CSS/ReviewPage.css";
 import Footer from "../components/Footer";
+import { useEffect } from "react";
+import useAPI from "../hooks/useAPI";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function ReviewPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
+  // const [rating, setRating] = useState(0);
+
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState({
     name: "",
@@ -20,7 +29,22 @@ export default function ReviewPage() {
     comment: "",
     rating: 0,
   });
+  const { GET, POST } = useAPI();
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await GET("/api/review");
+        console.log("Reviews:", response);
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        toast.error("Failed to fetch reviews. Please try again.");
+      }
+    };
+
+    fetchReviews();
+  }, []);
   // Handle form input changes
   const handleReviewChange = (e) => {
     const { name, value } = e.target;
@@ -33,11 +57,41 @@ export default function ReviewPage() {
   };
 
   // Submit review and clear form
-  const submitReview = (e) => {
-    e.preventDefault();
-    setReviews((prevReviews) => [...prevReviews, review]);
-    setReview({ name: "", email: "", comment: "", rating: 0 }); // Reset form
+  const submitReview = async (e) => {
+    // e.preventDefault(); // Prevent form default submission behavior
+    try {
+      const reviewData = {
+        name: review.name,
+        email: review.email,
+        comment: review.comment,
+        rating: review.rating,
+      };
+      // console.log("Review data:", reviewData);
+      const response = await POST("/api/review", reviewData);
+      console.log("Review submitted:", response);
+      toast.success("Review submitted successfully!");
+      // Clear the form
+      setReview({
+        name: "",
+        email: "",
+        comment: "",
+        rating: 0,
+      });
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      toast.error("Failed to submit review. Please try again.");
+    }
   };
+
+  // const fetchReviews = async () => {
+  //   try {
+  //     const response = await GET("/api/review");
+  //     console.log("Reviews:", response);
+  //     setReviews(response);
+  //   } catch (error) {
+  //     console.error("Error fetching reviews:", error);
+  //   }
+  // };
 
   // Delete review by index
   const deleteReview = (indexToDelete) => {
@@ -95,7 +149,13 @@ export default function ReviewPage() {
                   />
 
                   <MDBCardBody className="py-4">
-                    <h5 className="font-weight-bold">{rev.name}</h5>
+                    {/* Display User's Name */}
+                    <h5 className="font-weight-bold">
+                      {rev.user?.fullName || "Anonymous"}
+                    </h5>
+                    {/* Fallback to "Anonymous" if name is not available */}
+
+                    {/* Display Star Rating */}
                     <MDBTypography
                       listUnStyled
                       className="d-flex justify-content-center"
@@ -111,6 +171,8 @@ export default function ReviewPage() {
                         />
                       ))}
                     </MDBTypography>
+
+                    {/* Display Review Comment */}
                     <p className="mt-2">{rev.comment}</p>
                   </MDBCardBody>
                 </MDBCard>
@@ -201,7 +263,13 @@ export default function ReviewPage() {
                   </div>
 
                   {/* Submit Button */}
-                  <button className="Button_submit" type="submit">
+                  <button
+                    className="Button_submit"
+                    type="submit"
+                    onClick={() => {
+                      submitReview();
+                    }}
+                  >
                     Submit Review
                   </button>
                 </form>

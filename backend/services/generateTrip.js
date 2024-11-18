@@ -1,15 +1,16 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { response } = require('express');
-const genAI = new GoogleGenerativeAI('AIzaSyD96FD_zb1LWMXrjFLD6maLmkJjGKaTz5Q');
+const config = require('../config');
+const genAI = new GoogleGenerativeAI(config.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 const Trip = require('../models/trip');
 
 
 async function generateResponse(prompt) {
-    console.log(prompt)
+    // console.log(prompt);
     try {
       const result = await model.generateContent(prompt);
-      console.log(result.response.text());
+      // console.log(result.response.text());
       const jsonMatch = result.response.text().match(/```json([\s\S]*?)```/);
         if (!jsonMatch || jsonMatch.length < 2) {
             throw new Error('JSON block not found in the response.');
@@ -20,9 +21,9 @@ async function generateResponse(prompt) {
         let parsedResponse;
         try {
             parsedResponse = JSON.parse(cleanJson);
-            console.log('Parsed Response ',parsedResponse)
+            // console.log('Parsed Response ',parsedResponse)
         } catch (parseError) {
-            console.error('Failed to parse JSON:', parseError);
+            // console.error('Failed to parse JSON:', parseError);
             return;
         }
 
@@ -42,7 +43,7 @@ async function generateResponse(prompt) {
 
       // Save to the database
       await newTrip.save();
-      console.log('New trip saved to database:', newTrip);
+      // console.log('New trip saved to database:', newTrip);
         return newTrip
 
 

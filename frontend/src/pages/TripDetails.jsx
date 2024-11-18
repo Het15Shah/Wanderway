@@ -13,11 +13,14 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import HotelIcon from "@mui/icons-material/Hotel";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -30,187 +33,122 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import useAPI from "../hooks/useAPI";
+import fetchImage from "../utils/fetchimage.js";
+import "react-toastify/dist/ReactToastify.css";
+
+const formate = (date) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
 
 const TripDetails = () => {
+  const { GET, POST } = useAPI();
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [hoveredHighlight, setHoveredHighlight] = useState(null);
-  // const [user, setUser] = useState(null); // Check if user is logged in
+  const { id } = useParams();
+  const [trip, setTrip] = useState({});
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the page loads
+  }, []);
 
-  // useEffect(() => {
-  //   // Simulate a user authentication check
-  //   axios.get("/api/auth/me")
-  //     .then(response => setUser(response.data.user))
-  //     .catch(() => navigate("/login")); // Redirect to login if not authenticated
-  // }, []);
+  const [imageUrl, setImageUrl] = useState("");
+  useEffect(() => {
+    const getTripById = async () => {
+      try {
+        const response = await GET(`/api/trip/${id}`);
+        // console.log("Trip by ID:", response.data);
+        setTrip(response.data);
+        const fetchedImageUrl = await fetchImage(response.data.destination, 5);
+        // console.log("Fetched image URL:", fetchedImageUrl);
+        setImageUrl(fetchedImageUrl[3]); // Update the state with the fetched image URL
+      } catch (error) {
+        console.error("Error fetching trip by ID:", error);
+      }
+    };
 
-  const trip = {
-    title: "Cultural India Exploration",
-    destination: "India",
-    startDate: "2024-12-10",
-    endDate: "2024-12-15",
-    price: "2000",
-    imageUrl:
-      "https://www.bontravelindia.com/wp-content/uploads/2021/10/Taj-Mahal-Heritage-Tourism-India-scaled.jpg",
-    highlights: [
-      "Explore the grandeur of Taj Mahal and Agra Fort",
-      "Private guided tour of Jaipur’s palaces and forts",
-      "Witness traditional Indian dance and music performances",
-      "Camel ride and desert safari in Rajasthan",
-      "Participate in a local Diwali celebration",
-    ],
-    includedServices: [
-      "5-star luxury accommodation",
-      "Private transfers",
-      "Local expert guides",
-      "Traditional Indian meals",
-      "Entrance fees to all attractions",
-      "Cultural performances",
-      "24/7 concierge",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        modeOfTransportation: "plane",
-        hotel: { name: "Taj Palace Hotel", location: "New Delhi" },
-        activities: [
-          {
-            time: "9:00 AM",
-            description: "Visit the Red Fort",
-            location: "Red Fort, Delhi",
-            type: "sightseeing",
-          },
-          {
-            time: "1:00 PM",
-            description: "Lunch at a traditional Indian restaurant",
-            location: "New Delhi",
-            type: "dining",
-          },
-          {
-            time: "3:00 PM",
-            description: "Explore India Gate and Rashtrapati Bhavan",
-            location: "Central Delhi",
-            type: "sightseeing",
-          },
-        ],
-      },
-      {
-        day: 2,
-        modeOfTransportation: "train",
-        hotel: { name: "Oberoi Amarvilas", location: "Agra" },
-        activities: [
-          {
-            time: "6:00 AM",
-            description: "Visit Taj Mahal at sunrise",
-            location: "Taj Mahal",
-            type: "sightseeing",
-          },
-          {
-            time: "11:00 AM",
-            description: "Tour Agra Fort",
-            location: "Agra Fort",
-            type: "sightseeing",
-          },
-          {
-            time: "1:00 PM",
-            description:
-              "Lunch at a rooftop restaurant with a view of Taj Mahal",
-            location: "Agra",
-            type: "dining",
-          },
-        ],
-      },
-      {
-        day: 3,
-        modeOfTransportation: "train",
-        hotel: { name: "Trident Jaipur", location: "Jaipur" },
-        activities: [
-          {
-            time: "9:00 AM",
-            description: "Visit Amber Fort and enjoy an elephant ride",
-            location: "Amber Fort",
-            type: "sightseeing",
-          },
-          {
-            time: "1:00 PM",
-            description: "Lunch at a traditional Rajasthani restaurant",
-            location: "Jaipur",
-            type: "dining",
-          },
-          {
-            time: "4:00 PM",
-            description: "Explore the City Palace and Jantar Mantar",
-            location: "Jaipur",
-            type: "sightseeing",
-          },
-        ],
-      },
-      {
-        day: 4,
-        modeOfTransportation: "car",
-        hotel: { name: "Samode Palace", location: "Rajasthan Desert" },
-        activities: [
-          {
-            time: "10:00 AM",
-            description: "Camel ride through the Rajasthan desert",
-            location: "Thar Desert",
-            type: "adventure",
-          },
-          {
-            time: "1:00 PM",
-            description: "Traditional lunch in a desert village",
-            location: "Rajasthan Desert",
-            type: "dining",
-          },
-          {
-            time: "4:00 PM",
-            description: "Watch a traditional Rajasthani dance performance",
-            location: "Rajasthan Desert",
-            type: "cultural",
-          },
-        ],
-      },
-      {
-        day: 5,
-        modeOfTransportation: "plane",
-        hotel: { name: "The Leela Palace", location: "New Delhi" },
-        activities: [
-          {
-            time: "10:00 AM",
-            description:
-              "Participate in a Diwali celebration at a local temple",
-            location: "Delhi Temple",
-            type: "cultural",
-          },
-          {
-            time: "3:00 PM",
-            description: "Free time for shopping and relaxation",
-            location: "New Delhi",
-            type: "shopping",
-          },
-          {
-            time: "7:00 PM",
-            description: "Departure",
-            location: "Delhi Airport",
-            type: "general",
-          },
-        ],
-      },
-    ],
-  };
+    getTripById();
+  }, [id]);
 
-  const handleBooking = () => {
-    toast.success("Trip booked successfully!", {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "colored",
-    });
-    setTimeout(() => navigate("/booking"), 3100);
+  // const handleBooking = () => {
+  //   toast.success("Trip booked successfully!", {
+  //     position: "top-center",
+  //     autoClose: 3000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     theme: "colored",
+  //   });
+  //   // setTimeout(() => navigate("/booking"), 3100);
+  // };
+
+  const handleBooking = async () => {
+    try {
+      const response = await GET("/api/user/myProfile");
+      // console.log("API Response:", response);
+
+      // Check if the response indicates the user is authenticated
+      if (!response.data.success) {
+        // console.log("User not authenticated");
+        toast.error("Please log in to book the trip", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+        setTimeout(() => navigate("/login"), 3000); // Delay the navigation
+
+        return;
+      }
+      // console.log("User authenticated");
+      // If logged in, proceed with booking
+      await POST(`/api/myTrip/book/${trip._id}`);
+      // console.log("Trip booked successfully!jhbdfdfjbjbf");
+      toast.success("Trip booked successfully!", {
+        position: "top-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      setTimeout(() => navigate("/my-trips"), 3000);
+    } catch (error) {
+      console.error("Error during booking:", error);
+      if (error.response && error.response.status === 401) {
+        toast.error("Please log in to book the trip", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+        navigate("/login");
+      } else {
+        toast.error("Failed to book the trip", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+      }
+    }
   };
 
   const getActivityIcon = (type) => {
@@ -259,7 +197,11 @@ const TripDetails = () => {
       <Box
         className="trip-hero"
         sx={{
-          backgroundImage: `url(${trip.imageUrl})`,
+          backgroundImage: `url(${
+            trip?.imageURL && trip?.imageURL.startsWith("https://example.com")
+              ? imageUrl
+              : trip.imageURL
+          })`,
           width: "100%",
           height: isMobile ? "300px" : "500px",
           backgroundSize: "cover",
@@ -285,7 +227,7 @@ const TripDetails = () => {
             animation: "fadeInDown 1s ease",
           }}
         >
-          {trip.title}
+          {trip?.title}
         </Typography>
       </Box>
 
@@ -320,7 +262,7 @@ const TripDetails = () => {
               color: "#1a237e",
             }}
           >
-            {trip.destination}
+            {trip?.destination}
           </Typography>
           <Typography
             variant="body1"
@@ -331,7 +273,7 @@ const TripDetails = () => {
             }}
           >
             <CalendarTodayIcon sx={{ marginRight: "10px" }} />
-            {trip.startDate} - {trip.endDate}
+            {formate(trip?.startDate)} - {formate(trip?.endDate)}
           </Typography>
         </Box>
 
@@ -352,14 +294,23 @@ const TripDetails = () => {
           <Typography
             className="price"
             sx={{
-              fontSize: isMobile ? "1.5rem" : "2.5rem",
+              fontSize: isMobile ? "1.3rem" : "2.4rem", // Matches the text size
               fontWeight: 700,
               color: "#e65100",
+              display: "flex", // Use flexbox for alignment
+              alignItems: "center", // Align icon and text vertically
             }}
           >
-            <AttachMoneyIcon sx={{ marginRight: "5px" }} />
-            {trip.price}
+            {/* Adjusted Icon Size and Spacing */}
+            <AttachMoneyIcon
+              sx={{
+                fontSize: isMobile ? "1.5rem" : "2.5rem", // Matches typography size
+                marginRight: "-8px", // Spacing between icon and budget value
+              }}
+            />
+            {trip?.budget}
           </Typography>
+
           <Typography
             className="duration"
             sx={{
@@ -368,8 +319,9 @@ const TripDetails = () => {
               color: "#1a237e",
             }}
           >
+            {/* <i class="fa-solid fa-plane"></i> */}
             <FlightTakeoffIcon sx={{ marginRight: "5px" }} />
-            {trip.itinerary.length} Days
+            {trip?.itinerary?.length} Days
           </Typography>
         </Box>
 
@@ -377,7 +329,7 @@ const TripDetails = () => {
           {/* Itinerary */}
           <Grid item xs={12} md={8}>
             <Box className="trip-itinerary" sx={{ marginTop: "40px" }}>
-              {trip.itinerary.map((dayPlan, index) => (
+              {trip?.itinerary?.map((dayPlan, index) => (
                 <Card
                   key={index}
                   className="day-card"
@@ -469,7 +421,7 @@ const TripDetails = () => {
                   gap: 2,
                 }}
               >
-                {trip.highlights.map((highlight, index) => (
+                {trip?.highlights?.map((highlight, index) => (
                   <Box
                     key={index}
                     onMouseEnter={() => setHoveredHighlight(index)}
@@ -532,7 +484,7 @@ const TripDetails = () => {
                     gap: 1,
                   }}
                 >
-                  {trip.includedServices.map((service, index) => (
+                  {trip?.includedServices?.map((service, index) => (
                     <Chip
                       key={index}
                       label={service}

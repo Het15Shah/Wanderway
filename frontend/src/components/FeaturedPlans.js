@@ -14,35 +14,35 @@ const FeaturedPlans = () => {
   // Array of trips with unique IDs
   const plans = [
     {
-      id: 1,
+      id: "673af637da55b864503b0f3f",
       title: "Paris Getaway",
       price: "$1500",
       duration: "5 Days",
       imageUrl: "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
     },
     {
-      id: 2,
+      id: "673af64eda55b864503b0f47",
       title: "Adventure in Bali",
       price: "$1200",
       duration: "7 Days",
       imageUrl: "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     },
     {
-      id: 3,
+      id: "673af65bda55b864503b0f4f",
       title: "Explore Japan",
       price: "$1800",
       duration: "6 Days",
       imageUrl: "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
     },
     {
-      id: 4,
+      id: "673af667da55b864503b0f57",
       title: "Maldives Escape",
       price: "$2000",
       duration: "4 Days",
       imageUrl: "https://krishnendu.org/wp-content/uploads/pexels-asad-photo-maldives-3601425-1-scaled.jpg",
     },
     {
-      id: 5,
+      id: "673af671da55b864503b0f5f",
       title: "Cultural India",
       price: "$1000",
       duration: "8 Days",

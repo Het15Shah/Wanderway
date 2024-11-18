@@ -1,204 +1,3 @@
-// import React, { useState } from "react";
-// import { Box, Card, Typography, Grid, Button, Snackbar } from "@mui/material";
-// import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-// import MuiAlert from "@mui/material/Alert";
-// import axios from "axios";
-// import Footer from "../components/Footer";
-// const MyTrips = () => {
-//   // Dummy data for trips
-//   const [trips, setTrips] = useState([
-//     {
-//       id: 1,
-//       title: "Paris Getaway",
-//       price: "$1500",
-//       duration: "5 Days",
-//       imageUrl:
-//         "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
-//       status: "booked",
-//     },
-//     {
-//       id: 2,
-//       title: "Adventure in Bali",
-//       price: "$1200",
-//       duration: "7 Days",
-//       imageUrl:
-//         "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-//       status: "booked",
-//     },
-//     {
-//       id: 3,
-//       title: "Explore Japan",
-//       price: "$1800",
-//       duration: "6 Days",
-//       imageUrl:
-//         "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-//       status: "canceled",
-//     },
-//   ]);
-
-//   const [snackbar, setSnackbar] = useState({
-//     open: false,
-//     message: "",
-//     severity: "",
-//   });
-
-//   // Handle trip cancellation
-//   // const handleCancelTrip = async (id) => {
-//   //   try {
-//   //     const response = await axios.put(`/api/myTrip/cancel/${id}`);
-
-//   //     if (response.status === 200) {
-//   //       // Update the state to reflect the trip cancellation on the frontend
-//   //       setTrips(
-//   //         trips.map((trip) =>
-//   //           trip.id === id ? { ...trip, status: "canceled" } : trip
-//   //         )
-//   //       );
-//   //       setSnackbar({
-//   //         open: true,
-//   //         message: "Trip canceled successfully",
-//   //         severity: "success",
-//   //       });
-//   //     }
-//   //   } catch (error) {
-//   //     console.error("Error canceling the trip:", error);
-//   //     setSnackbar({
-//   //       open: true,
-//   //       message: "Failed to cancel trip. Please try again.",
-//   //       severity: "error",
-//   //     });
-//   //   }
-//   // };
-//   const handleCancelTrip = (id) => {
-//     setTrips(
-//       trips.map((trip) =>
-//         trip.id === id ? { ...trip, status: "canceled" } : trip
-//       )
-//     );
-//     setSnackbar({
-//       open: true,
-//       message: "Trip canceled successfully",
-//       severity: "success",
-//     });
-//   };
-//   // Snackbar close handler
-//   const handleCloseSnackbar = () => setSnackbar({ ...snackbar, open: false });
-
-//   return (
-//     <Box
-//       sx={{
-
-//         height: "100%",
-//       }}
-//     >
-//     <Box
-//       sx={{
-//         padding: "50px 20px",
-//         textAlign: "center",
-//         fontFamily: "Arial, sans-serif",
-//         color: "#333",
-//         backgroundColor: "#f5f7fa",
-//       }}
-//     >
-//       <Typography
-//         variant="h4"
-//         sx={{
-//           marginBottom: "30px",
-//           color: "#ffcc00",
-//           fontWeight: "900",
-//         }}
-//       >
-//         My Booked Trips
-//       </Typography>
-//       <Grid container spacing={2}>
-//         {trips.map((trip) => (
-//           <Grid item xs={12} sm={6} md={4} key={trip.id}>
-//             <Card
-//               sx={{
-//                 position: "relative",
-//                 height: "250px",
-//                 borderRadius: "16px",
-//                 overflow: "hidden",
-//                 boxShadow: 3,
-//                 color: "#fff",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textAlign: "center",
-//                 backgroundImage: `url(${trip.imageUrl})`,
-//                 backgroundSize: "cover",
-//                 backgroundPosition: "center",
-//                 cursor: "pointer",
-//               }}
-//             >
-//               <Box
-//                 sx={{
-//                   position: "absolute",
-//                   top: 0,
-//                   left: 0,
-//                   width: "100%",
-//                   height: "100%",
-//                   backgroundColor: "rgba(0, 0, 0, 0.5)",
-//                   display: "flex",
-//                   flexDirection: "column",
-//                   justifyContent: "center",
-//                   alignItems: "center",
-//                 }}
-//               >
-//                 <Typography
-//                   variant="h6"
-//                   sx={{ fontWeight: "bold", marginBottom: "8px" }}
-//                 >
-//                   {trip.title}
-//                 </Typography>
-//                 <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-//                   <FlightTakeoffIcon fontSize="small" />
-//                   <Typography variant="body2">{trip.duration}</Typography>
-//                   <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-//                     {trip.price}
-//                   </Typography>
-//                 </Box>
-//                 <Typography variant="body2" sx={{ marginTop: "8px" }}>
-//                   Status: {trip.status === "canceled" ? "Canceled" : "Booked"}
-//                 </Typography>
-//                 {trip.status === "booked" && (
-//                   <Button
-//                     variant="contained"
-//                     color="error"
-//                     sx={{ marginTop: "8px" }}
-//                     onClick={() => handleCancelTrip(trip.id)}
-//                   >
-//                     Cancel Trip
-//                   </Button>
-//                 )}
-//               </Box>
-//             </Card>
-//           </Grid>
-//         ))}
-//       </Grid>
-
-//       {/* Snackbar Notification */}
-//       <Snackbar
-//         open={snackbar.open}
-//         autoHideDuration={3000}
-//         onClose={handleCloseSnackbar}
-//       >
-//         <MuiAlert
-//           elevation={6}
-//           variant="filled"
-//           onClose={handleCloseSnackbar}
-//           severity={snackbar.severity}
-//         >
-//           {snackbar.message}
-//         </MuiAlert>
-//       </Snackbar>
-//     </Box>
-//     <Footer />
-//   </Box>
-//   );
-// };
-
-// export default MyTrips;
 import React, { useState } from "react";
 import {
   Box,
@@ -232,37 +31,28 @@ import {
   PinterestIcon,
   TelegramIcon,
 } from "react-share";
+import useAPI from "../hooks/useAPI";
+import { useEffect } from "react";
+import {toast} from "react-toastify";
 
 const MyTrips = () => {
-  const [trips, setTrips] = useState([
-    {
-      id: 1,
-      title: "Paris Getaway",
-      price: "$1500",
-      duration: "5 Days",
-      imageUrl:
-        "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
-      status: "Upcoming",
-    },
-    {
-      id: 2,
-      title: "Adventure in Bali",
-      price: "$1200",
-      duration: "7 Days",
-      imageUrl:
-        "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      status: "Upcoming",
-    },
-    {
-      id: 3,
-      title: "Explore Japan",
-      price: "$1800",
-      duration: "6 Days",
-      imageUrl:
-        "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-      status: "Past",
-    },
-  ]);
+  const { GET,POST } = useAPI();
+  const [trips, setTrips] = useState([]);
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const response = await GET("/api/myTrip/alltrips");
+        console.log("Response:", response.data);
+        setTrips(response.data);
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+        toast.error("Failed to fetch trips. Please try again.");
+      }
+    };
+
+    fetchTrips();
+  }, []);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -272,10 +62,16 @@ const MyTrips = () => {
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
-  const handleCancelTrip = (id) => {
+  const handleCancelTrip = async (id) => {
+
+    const { data } = await POST(`/api/myTrip/cancel/${id}`);
+    console.log("Data:", data);
+
+
     setTrips(
       trips.map((trip) =>
-        trip.id === id ? { ...trip, status: "Canceled" } : trip
+        // console.log("Trip ID:", trip.id);
+        trip._id === id ? { ...trip, status: "Canceled" } : trip
       )
     );
     setSnackbar({
@@ -313,13 +109,16 @@ const MyTrips = () => {
             You have {trips.length} trips booked
           </Typography>
           <Typography variant="body2" sx={{ color: "#555" }}>
-            Upcoming: {trips.filter((trip) => trip.status === "Upcoming").length} | Past: {trips.filter((trip) => trip.status === "Past").length} | Canceled: {trips.filter((trip) => trip.status === "Canceled").length}
+            Upcoming:{" "}
+            {trips?.filter((trip) => trip.status === "Upcoming").length} | Past:{" "}
+            {trips?.filter((trip) => trip.status === "Past").length} | Canceled:{" "}
+            {trips?.filter((trip) => trip.status === "Canceled").length}
           </Typography>
         </Box>
 
         <Grid container spacing={2}>
-          {trips.map((trip) => (
-            <Grid item xs={12} sm={6} md={4} key={trip.id}>
+          {trips?.map((trip) => (
+            <Grid item xs={12} sm={6} md={4} key={trip._id}>
               <Card
                 sx={{
                   position: "relative",
@@ -332,7 +131,7 @@ const MyTrips = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   textAlign: "center",
-                  backgroundImage: `url(${trip.imageUrl})`,
+                  backgroundImage: `url(${trip.trip.imageURL})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   cursor: "pointer",
@@ -379,7 +178,7 @@ const MyTrips = () => {
                       variant="contained"
                       color="error"
                       sx={{ marginTop: "12px" }}
-                      onClick={() => handleCancelTrip(trip.id)}
+                      onClick={() => handleCancelTrip(trip._id)}
                     >
                       Cancel Trip
                     </Button>

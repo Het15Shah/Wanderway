@@ -1,15 +1,17 @@
 const Trip = require('../models/trip')
 
 async function searchTrip (req, res)  {
+    //  console.log("Search Trip Called");
     console.log(req.query);
-    const { destination, days, maxBudget } = req.query;
-  
+    const { destination, days, maxBudget } = req.query.params;
+  //  console.log("Destination", destination);
+   
     // Build query object based on filters
     let query = {};
   
     // Filter by destination provided
     if (destination) {
-      console.log("Searching For ", destination);
+      // console.log("Searching For ", destination);
       query.destination = destination;
     }
   
@@ -27,7 +29,7 @@ async function searchTrip (req, res)  {
         const targetDays = parseInt(days, 10);
         trips = trips.filter((trip) => trip.itinerary.length <= targetDays);
       }
-  
+      // console.log("Trips", trips);
       res.json(trips);
     } catch (error) {
       res.status(500).json({ message: error.message });
