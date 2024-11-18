@@ -1,7 +1,7 @@
 .about-us-page {
   font-family: Arial, sans-serif;
   padding: 2rem;
-  background-color: #E3F2FD; /* Background color for cohesion */
+  background-color: #ffffff; /* Background color for cohesion */
 }
 
 
@@ -22,9 +22,9 @@
 
 /* Card Style */
 .card {
-  background: aliceblue;
+  background: #fff5e6;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px #fff5e6;
   padding: 2rem;
   margin-bottom: 2rem;
   text-align: center;
@@ -35,7 +35,7 @@
   font-size: 1.8rem;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
-  background-color: #0077b5;
+  background-color: #d3bd63;
   padding: 1rem;
   border-radius: 5px;
   text-align: center;
@@ -52,7 +52,7 @@
   font-size: 1.8rem;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
-  background-color: #0077b5;
+  background-color: #d3bd63;
   padding: 1rem;
   border-radius: 5px;
   text-align: center;
@@ -71,9 +71,9 @@
 .team-card {
   width: 250px;
   padding: 1rem;
-  background: #ffffff;
+  background: #fff5e6;
+  border-style: solid;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   margin-top: 20px;
@@ -120,15 +120,21 @@
 }
 
 .instagram {
-  background-color: #E1306C;
+  color: #E1306C;
+  width: 50px;
+  scale: 1.5;
 }
 
 .github {
-  background-color: #333;
+  color: #333;
+  width: 50px;
+  scale: 1.5;
 }
 
 .linkedin {
-  background-color: #0077b5;
+  color: #0077b5;
+  width: 50px;
+  scale: 1.5;
 }
 
-/* Footer Section */
+
