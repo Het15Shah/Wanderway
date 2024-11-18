@@ -4,17 +4,18 @@ import React from 'react';
 import '../CSS/AboutUs.css';
 import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import FOOTER from '../components/Footer';
 
 import Neel from '../assets/Team Photos/Neel.jpg' 
 import het from '../assets/Team Photos/het.jpg'
 import kavit from '../assets/Team Photos/kavit.jpg'
 import ram from '../assets/Team Photos/ram.jpg'
 import shrey from '../assets/Team Photos/shrey.jpg'
-import darpan from '../assets/Team Photos/shrey.jpg'
+import darpan from '../assets/Team Photos/Darpan.jpg'
 import jinay from '../assets/Team Photos/jinay.jpg'
 import divy from '../assets/Team Photos/divy.jpg'
 import meet from '../assets/Team Photos/meet.jpg'
-import priyank from '../assets/Team Photos/shrey.jpg'
+import priyank from '../assets/Team Photos/ram.jpg'
 
 
 const teamData = {
@@ -148,6 +149,7 @@ const AboutUs = () => {
       </div>
 
       
+      < FOOTER />
     </div>
   );
 };
