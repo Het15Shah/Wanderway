@@ -1,7 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { response } = require('express');
 const config = require('../config');
-const genAI = new GoogleGenerativeAI(config.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI("AIzaSyD96FD_zb1LWMXrjFLD6maLmkJjGKaTz5Q");
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 const Trip = require('../models/trip');
 

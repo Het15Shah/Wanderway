@@ -31,7 +31,7 @@ app.use(
 
 // Connection
 mongoose
-  .connect(config.MONGODB_URL || "mongodb://localhost:27017/travel-app")
+  .connect("mongodb+srv://shahhet525:UWvWpIIhwWWslp0S@cluster0.ex1lr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     console.log("Connected to MongoDB");
   })
