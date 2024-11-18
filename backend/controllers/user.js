@@ -5,7 +5,7 @@ const uploadOnCloudinary = require("../utils/cloudinary");
 
 async function userSignUp (req,res) {
     const {userId,fullName, email, password} = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     let userExist;
     try {
@@ -16,7 +16,7 @@ async function userSignUp (req,res) {
 
     if(userExist)
     {
-        return res.status(200).json({success:false, message:"user already exist"});
+        return res.status(200).json({success:false, message:"User already exist"});
     }
   
     const result = await User.create({
@@ -26,10 +26,9 @@ async function userSignUp (req,res) {
         password,
     });
 
-    console.log("Created User ",result);
+    // console.log("Created User ",result);
 
-    return res.status(200).json({success:true, message:"user Signup Successfully"});
-
+    return res.status(200).json({success:true, message:"User Signed up Successfully"});
 }
 
 async function userUpdate (req, res)  {
