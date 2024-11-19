@@ -18,6 +18,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Avatar,
 } from "@mui/material";
 import Camera from "@mui/icons-material/Camera";
 import Phone from "@mui/icons-material/Phone";
@@ -31,6 +32,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import VpnKey from "@mui/icons-material/VpnKey";
 import ExitToApp from "@mui/icons-material/ExitToApp";
 import axios from "axios";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
@@ -47,6 +49,7 @@ const TravelProfilePage = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [gender, setGender] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
+  const [sidebarName, setSidebarName] = useState(name);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -104,7 +107,8 @@ const TravelProfilePage = () => {
         { headers }
       );
       toast.success("Profile updated successfully!");
-      console.log("response", response);
+      // console.log("response", response);
+      setSidebarName(name);
     } catch (err) {
       console.log("Error ->", err);
       toast.error("Server Problem, Failed to Update user data.");
@@ -143,19 +147,19 @@ const TravelProfilePage = () => {
   const commonInputStyles = {
     "& .MuiOutlinedInput-root": {
       borderRadius: "5px",
-      backgroundColor: "#ffffff",
-      border: "1px  #ffcc00",
+      backgroundColor: "#f0f4ff",
+      border: "1px solid #cfe2ff",
       transition: "all 0.3s ease",
       "&:hover": {
-        boxShadow: "0 0 100px rgba(255, 204, 0, 0.6)",
+        boxShadow: "0 0 8px rgba(207, 226, 255, 0.6)",
         "& > fieldset": {
-          borderColor: "#ffcc00 !important",
+          borderColor: "#007bff",
         },
       },
       "&.Mui-focused": {
-        boxShadow: "0 0 100px rgba(255, 204, 0, 0.6)",
+        boxShadow: "0 0 8px rgba(207, 226, 255, 0.6)",
         "& > fieldset": {
-          borderColor: "#ffcc00 !important",
+          borderColor: "#007bff",
           borderWidth: "2px",
         },
       },
@@ -182,7 +186,7 @@ const TravelProfilePage = () => {
           // minHeight: "100vh",
           height: "800px",
           display: "flex",
-          bgcolor: "#f8f9fa",
+          bgcolor: "#e9f2ff",
           // bgcolor:"red",
         }}
       >
@@ -190,7 +194,7 @@ const TravelProfilePage = () => {
         <Box
           sx={{
             width: "280px",
-            bgcolor: "transparent",
+            bgcolor: "f0f4ff",
             height: "80vh",
             mt: 5,
           }}
@@ -198,14 +202,16 @@ const TravelProfilePage = () => {
           <Box sx={{ p: 3, textAlign: "center" }}>
             <Box
               sx={{
-                position: "relative",
-                width: 100,
-                height: 100,
-                margin: "0 auto",
-                mb: 2,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                mt: 4,
               }}
             >
-              <label htmlFor="icon-button-file">
+              <label
+                htmlFor="icon-button-file"
+                style={{ position: "relative" }}
+              >
                 <input
                   accept="image/*"
                   id="icon-button-file"
@@ -213,42 +219,51 @@ const TravelProfilePage = () => {
                   style={{ display: "none" }}
                   onChange={handleImageUpload}
                 />
-                <Box
-                  component="img"
+                <Avatar
                   src={
-                    previewImage ||
-                    "https://i.pinimg.com/originals/0b/92/d1/0b92d122704719c982d182c0f19f4513.png"
+                    previewImage 
                   }
                   sx={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: "50%",
+                    width: 150,
+                    height: 150,
+                    border: "4px solid white",
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
                     cursor: "pointer",
-                    objectFit: "cover",
-                    bgcolor: "#fff",
-                    border: "1px solid #e9ecef",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                      boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+                    },
+                    marginBottom: 2,
+                    marginTop: -6
                   }}
                 />
+              
               </label>
               {previewImage && (
                 <IconButton
-                  size="small"
-                  sx={{
-                    position: "absolute",
-                    top: -8,
-                    right: -8,
-                    bgcolor: "white",
-                    border: "1px solid #e9ecef",
-                    "&:hover": { bgcolor: "#f8f9fa" },
-                  }}
                   onClick={handleRemoveImage}
+                  sx={{
+                    position: "relative",
+                    top: -43,
+                    right: 40,
+                    bgcolor: "error.light",
+                    color: "white",
+                    "&:hover": {
+                      bgcolor: "error.main",
+                    },
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                  }}
+                  size="small"
                 >
                   <ClearIcon fontSize="small" />
                 </IconButton>
               )}
+              
             </Box>
+            {/* </Box> */}
             <Typography sx={{ fontWeight: 500, color: "#495057" }}>
-              {name || "John Doe"}
+              {sidebarName || "John Doe"}
             </Typography>
             <Typography variant="body2" sx={{ color: "#6c757d", mt: 0.5 }}>
               {email || "john@example.com"}
@@ -295,7 +310,7 @@ const TravelProfilePage = () => {
                 mb: 1,
                 bgcolor: "#fff",
                 boxShadow: "none",
-                border: "1px solid #e9ecef",
+                // border: "1px solid #e9ecef",
                 borderRadius: "8px",
                 color: "#495057",
                 fontSize: "1rem",
@@ -369,12 +384,17 @@ const TravelProfilePage = () => {
               boxShadow: "none",
               border: "1px solid #e9ecef",
               borderRadius: "8px",
-              bgcolor: "#fff5e6",
+              // bgcolor: "#fff5e6",
             }}
           >
             <Typography
               variant="h4"
-              sx={{ textAlign: "center", mb: 4, color: "#ffcc00" }}
+              sx={{
+                textAlign: "center",
+                mb: 4,
+                color: "#0275d8",
+                fontWeight: "750",
+              }}
             >
               Update Profile
             </Typography>
@@ -444,7 +464,15 @@ const TravelProfilePage = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControl fullWidth size="small">
+                <FormControl
+                  fullWidth
+                  size="small"
+                  style={{
+                    borderRadius: "5px",
+                    backgroundColor: "#f0f4ff",
+                    border: "1px solid #cfe2ff",
+                  }}
+                >
                   <InputLabel sx={{ color: "#666666" }}>Gender</InputLabel>
                   <Select
                     value={gender}
@@ -465,17 +493,17 @@ const TravelProfilePage = () => {
                   onClick={updateProfile}
                   disabled={loading}
                   sx={{
-                    bgcolor: "#ffcc00",
-                    color: "#000000",
+                    bgcolor: "#007bff",
+                    color: "white",
                     textTransform: "none",
-                    py: 1,
-                    borderRadius: 1,
+                    borderRadius: "8px",
+                    padding: "10px 20px",
                     "&:hover": {
-                      bgcolor: "#e6b800",
+                      bgcolor: "#0056b3",
                     },
                   }}
                 >
-                  {loading ? "Updating..." : "Update Profile"}
+                  {loading ? "Saving..." : "Save Changes"}
                 </Button>
               </Grid>
             </Grid>

@@ -31,7 +31,9 @@ app.use(
 
 // Connection
 mongoose
-  .connect("mongodb+srv://shahhet525:UWvWpIIhwWWslp0S@cluster0.ex1lr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  .connect(
+    "mongodb+srv://shahhet525:UWvWpIIhwWWslp0S@cluster0.ex1lr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })

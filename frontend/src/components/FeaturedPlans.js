@@ -1,52 +1,52 @@
 import React from "react";
-import {
-  Box,
-  Card,
-  Typography,
-  Grid,
-} from "@mui/material";
+import { Box, Card, Typography, Grid } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import { useNavigate } from "react-router-dom";
 
 const FeaturedPlans = () => {
   const navigate = useNavigate();
-  
+
   // Array of trips with unique IDs
   const plans = [
     {
-      id: "673af637da55b864503b0f3f",
+      id: "673c7a480a687c4c75e50216",
       title: "Paris Getaway",
       price: "$1500",
       duration: "5 Days",
-      imageUrl: "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
+      imageUrl:
+        "https://static01.nyt.com/images/2023/07/01/travel/22hours-paris-tjzf/22hours-paris-tjzf-videoSixteenByNine3000.jpg",
     },
     {
-      id: "673af64eda55b864503b0f47",
+      id: "673c7a751c4b9fe084d57fdc",
       title: "Adventure in Bali",
       price: "$1200",
-      duration: "7 Days",
-      imageUrl: "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      duration: "4 Days",
+      imageUrl:
+        "https://images.pexels.com/photos/2587004/pexels-photo-2587004.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     },
     {
-      id: "673af65bda55b864503b0f4f",
+      id: "673c7aa21c4b9fe084d57fe6",
       title: "Explore Japan",
       price: "$1800",
       duration: "6 Days",
-      imageUrl: "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+      imageUrl:
+        "https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
     },
     {
-      id: "673af667da55b864503b0f57",
+      id: "673c7bba1c4b9fe084d57ff4",
       title: "Maldives Escape",
       price: "$2000",
       duration: "4 Days",
-      imageUrl: "https://krishnendu.org/wp-content/uploads/pexels-asad-photo-maldives-3601425-1-scaled.jpg",
+      imageUrl:
+        "https://krishnendu.org/wp-content/uploads/pexels-asad-photo-maldives-3601425-1-scaled.jpg",
     },
     {
-      id: "673af671da55b864503b0f5f",
+      id: "673c7bd81c4b9fe084d58000",
       title: "Cultural India",
       price: "$1000",
-      duration: "8 Days",
-      imageUrl: "https://images.pexels.com/photos/3947637/pexels-photo-3947637.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+      duration: "7 Days",
+      imageUrl:
+        "https://images.pexels.com/photos/3947637/pexels-photo-3947637.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
     },
   ];
 
@@ -110,7 +110,10 @@ const FeaturedPlans = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "8px" }}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", marginBottom: "8px" }}
+                >
                   {plan.title}
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>

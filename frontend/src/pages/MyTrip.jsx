@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -6,7 +6,6 @@ import {
   Grid,
   Button,
   Snackbar,
-  Chip,
   Modal,
   TextField,
 } from "@mui/material";
@@ -14,75 +13,74 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import MuiAlert from "@mui/material/Alert";
 import ShareIcon from "@mui/icons-material/Share";
 import AddIcon from "@mui/icons-material/Add";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import Footer from "../components/Footer";
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  EmailShareButton,
-  RedditShareButton,
-  PinterestShareButton,
-  TelegramShareButton,
-  FacebookIcon,
-  TwitterIcon,
-  WhatsappIcon,
-  EmailIcon,
-  RedditIcon,
-  PinterestIcon,
-  TelegramIcon,
-} from "react-share";
-import useAPI from "../hooks/useAPI";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
+import useAPI from "../hooks/useAPI";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import EmailIcon from "@mui/icons-material/Email";
 
 const MyTrips = () => {
   const { GET, POST } = useAPI();
   const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(true); // Add a loading state
+  const [counts, setCounts] = useState({ upcoming: 0, past: 0, canceled: 0 });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [shareLink, setShareLink] = useState("");
 
   useEffect(() => {
     const fetchTrips = async () => {
       try {
         const response = await GET("/api/myTrip/alltrips");
-        console.log("Response:", response.data);
+        console.log(response.data);
+
+        let upcoming = 0;
+        let past = 0;
+        let canceled = 0;
+
+        response.data.forEach((trip) => {
+          const currentDate = new Date();
+          const startDate = new Date(trip.trip.created_at);
+          const updatedAt = new Date(trip.trip.startDate);
+
+          if (trip.status === "canceled") {
+            canceled++;
+          } else if (updatedAt > startDate) {
+            upcoming++;
+          } else if (updatedAt < startDate) {
+            past++;
+          }
+        });
+
+        setCounts({ upcoming, past, canceled });
         setTrips(response.data);
       } catch (error) {
         console.error("Error fetching trips:", error);
         toast.error("Failed to fetch trips. Please try again.");
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
     fetchTrips();
   }, []);
 
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "",
-  });
-
-  const [isShareModalOpen, setShareModalOpen] = useState(false);
-
-  const handleCancelTrip = async (id) => {
-    const { data } = await POST(`/api/myTrip/cancel/${id}`);
-    console.log("Data:", data);
-
-    setTrips(
-      trips.map((trip) =>
-        // console.log("Trip ID:", trip.id);
-        trip._id === id ? { ...trip, status: "Canceled" } : trip
-      )
-    );
-    setSnackbar({
-      open: true,
-      message: "Trip canceled successfully",
-      severity: "success",
-    });
+  const handleOpenShareModal = (tripId) => {
+    setShareLink(`http://yourtriplink.com/share/${tripId}`);
+    setShareModalOpen(true);
   };
 
-  const handleCloseSnackbar = () => setSnackbar({ ...snackbar, open: false });
-
-  const handleOpenShareModal = () => setShareModalOpen(true);
   const handleCloseShareModal = () => setShareModalOpen(false);
+
+  const handleCloseSnackbar = () => setSnackbar({ ...snackbar, open: false });
 
   return (
     <Box sx={{ height: "100%" }}>
@@ -97,112 +95,163 @@ const MyTrips = () => {
       >
         <Typography
           variant="h4"
-          sx={{ marginBottom: "30px", color: "#ffcc00", fontWeight: "900" }}
+          sx={{ marginBottom: "30px", color: "#0275d8", fontWeight: "750" }}
         >
           My Booked Trips
         </Typography>
 
         <Box sx={{ marginBottom: "20px" }}>
           <Typography variant="h5" sx={{ fontWeight: "600", color: "#333" }}>
-            You have {trips.length} trips booked
+            You have {trips?.length} trips booked
           </Typography>
           <Typography variant="body2" sx={{ color: "#555" }}>
-            Upcoming:{" "}
-            {trips?.filter((trip) => trip.status === "Upcoming").length} | Past:{" "}
-            {trips?.filter((trip) => trip.status === "Past").length} | Canceled:{" "}
-            {trips?.filter((trip) => trip.status === "Canceled").length}
+            {counts.upcoming} Upcoming, {counts.past} Past, {counts.canceled}{" "}
+            Canceled
           </Typography>
         </Box>
 
         <Grid container spacing={2}>
-          {trips?.map((trip) => (
-            <Grid item xs={12} sm={6} md={4} key={trip._id}>
-              <Card
+          {loading ? ( // Show loading state while fetching data
+            <Typography variant="body1" sx={{ color: "#555" }}>
+              Loading your trips, please wait...
+            </Typography>
+          ) : trips?.length === 0 ? (
+            <Box
+              sx={{
+                width: "100%",
+                textAlign: "center",
+                padding: "50px 0",
+                color: "#555",
+                fontSize: "18px",
+              }}
+            >
+              <Typography
+                variant="h5"
                 sx={{
-                  position: "relative",
-                  height: "300px",
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  boxShadow: 3,
-                  color: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                  backgroundImage: `url(${trip.trip.imageURL})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  cursor: "pointer",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    transition: "transform 0.3s ease-in-out",
-                  },
+                  color: "#0275d8",
+                  fontWeight: "700",
+                  marginBottom: "20px",
                 }}
               >
-                <Box
+                No Trips Booked Yet
+              </Typography>
+              <Typography variant="body1">
+                Plan your next adventure and create memories to cherish!
+              </Typography>
+              
+            </Box>
+          ) : (
+            trips?.map((trip) => (
+              <Grid item xs={12} sm={6} md={4} key={trip._id}>
+                <Card
                   sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    position: "relative",
+                    height: "300px",
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    boxShadow: 3,
+                    color: "#fff",
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
                     alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    backgroundImage: `url(${trip?.trip?.imageURL})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    cursor: "pointer",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                      transition: "transform 0.3s ease-in-out",
+                    },
                   }}
                 >
-                  <Typography
-                    variant="h5"
-                    sx={{ fontWeight: "bold", marginBottom: "12px" }}
-                  >
-                    {trip.title}
-                    {trip.updatedAt}
-                  </Typography>
                   <Box
-                    sx={{ display: "flex", alignItems: "center", gap: "12px" }}
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
                   >
-                    <FlightTakeoffIcon fontSize="small" />
-                    <Typography variant="body1">{trip.duration}</Typography>
-                    <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                      {trip.price}
-                    </Typography>
-                  </Box>
-                  <Typography variant="body2" sx={{ marginTop: "12px" }}>
-                    Status: {trip.status}
-                  </Typography>
-                  {trip.status === "booked" && (
-                    <Button
-                      variant="contained"
-                      color="error"
-                      sx={{ marginTop: "12px" }}
-                      onClick={() => handleCancelTrip(trip._id)}
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: "bold", marginBottom: "12px" }}
                     >
-                      Cancel Trip
-                    </Button>
-                  )}
+                      {trip.title}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                     <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", marginBottom: "8px" }}
+                >
+                  {trip.trip.title}
+                </Typography>
                 </Box>
-              </Card>
-            </Grid>
-          ))}
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <FlightTakeoffIcon fontSize="small" />
+                  <Typography variant="body2">{trip.trip.itinerary.length} Days</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                    ${trip.trip.budget}
+                  </Typography>
+                </Box>
+                    {trip.status === "booked" && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ marginTop: "12px" }}
+                        onClick={() => handleOpenShareModal(trip._id)}
+                      >
+                        Share Trip
+                      </Button>
+                    )}
+                  </Box>
+                </Card>
+              </Grid>
+            ))
+          )}
         </Grid>
 
-        <Box sx={{ marginTop: "20px" }}>
+        <Box
+          sx={{
+            marginTop: "20px",
+            display: "flex",
+            gap: "16px",
+            justifyContent: "center",
+          }}
+        >
           <Button
             href="/"
             variant="outlined"
-            className="Button_submit"
             startIcon={<AddIcon />}
+            sx={{
+              padding: "10px 20px",
+              textTransform: "capitalize",
+              fontSize: "16px",
+            }}
           >
-            Explore Other Trips
+            Explore Trips
           </Button>
-
           <Button
             variant="contained"
-            className="Button_submit"
             startIcon={<ShareIcon />}
-            onClick={handleOpenShareModal}
+            sx={{
+              padding: "10px 20px",
+              textTransform: "capitalize",
+              fontSize: "16px",
+            }}
+            onClick={() => handleOpenShareModal(null)}
           >
             Share Your Journey
           </Button>
@@ -218,6 +267,8 @@ const MyTrips = () => {
               backgroundColor: "white",
               padding: "20px",
               borderRadius: "8px",
+              width: "350px",
+              textAlign: "center",
             }}
           >
             <Typography variant="h6" sx={{ marginBottom: "10px" }}>
@@ -227,59 +278,59 @@ const MyTrips = () => {
               fullWidth
               variant="outlined"
               label="Shareable Link"
-              value="http://yourtriplink.com"
+              value={shareLink}
+              sx={{ marginBottom: "10px" }}
             />
             <Box
               sx={{
-                marginTop: "10px",
                 display: "flex",
+                justifyContent: "center",
                 gap: "10px",
-                flexWrap: "wrap",
+                marginTop: "10px",
               }}
             >
-              <FacebookShareButton
-                url="http://yourtriplink.com"
-                quote="Check out my amazing trip!"
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${shareLink}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <FacebookIcon size={32} round />
-              </FacebookShareButton>
-              <TwitterShareButton
-                url="http://yourtriplink.com"
-                title="Check out my amazing trip!"
+                <FacebookIcon sx={{ fontSize: "36px", color: "#3b5998" }} />
+              </a>
+              <a
+                href={`https://twitter.com/intent/tweet?url=${shareLink}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <TwitterIcon size={32} round />
-              </TwitterShareButton>
-              <WhatsappShareButton
-                url="http://yourtriplink.com"
-                title="Check out my amazing trip!"
+                <TwitterIcon sx={{ fontSize: "36px", color: "#1DA1F2" }} />
+              </a>
+              <a
+                href={`https://wa.me/?text=${shareLink}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <WhatsappIcon size={32} round />
-              </WhatsappShareButton>
-              <EmailShareButton
-                url="http://yourtriplink.com"
-                subject="Check out my trip!"
-                body="I had an amazing time on my trip! You should check it out."
+                <WhatsAppIcon sx={{ fontSize: "36px", color: "#25D366" }} />
+              </a>
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareLink}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <EmailIcon size={32} round />
-              </EmailShareButton>
-              <RedditShareButton
-                url="http://yourtriplink.com"
-                title="Check out my amazing trip!"
+                <LinkedInIcon sx={{ fontSize: "36px", color: "#0077b5" }} />
+              </a>
+              <a
+                href={`https://pinterest.com/pin/create/button/?url=${shareLink}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <RedditIcon size={32} round />
-              </RedditShareButton>
-              <PinterestShareButton
-                url="http://yourtriplink.com"
-                media="https://via.placeholder.com/150"
+                <PinterestIcon sx={{ fontSize: "36px", color: "#E60023" }} />
+              </a>
+              <a
+                href={`mailto:?subject=Check out my trip&body=${shareLink}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <PinterestIcon size={32} round />
-              </PinterestShareButton>
-              <TelegramShareButton
-                url="http://yourtriplink.com"
-                title="Check out my amazing trip!"
-              >
-                <TelegramIcon size={32} round />
-              </TelegramShareButton>
+                <EmailIcon sx={{ fontSize: "36px", color: "#D44638" }} />
+              </a>
             </Box>
           </Box>
         </Modal>
