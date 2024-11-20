@@ -1,17 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const ensureAdmin = require('../middlewares/ensureAdmin');
-const {addReview,
-  getAllReviewByTripId,
-  deleteReviewById
-} = require('../controllers/reviews');
+const {
+  addReview,
+  getAllReview,
+  deleteReviewById,
+} = require("../controllers/reviews");
+const { checkForAuthentication } = require("../middlewares/auth");
+const ensureAdmin = require("../middlewares/ensureAdmin");
 
 // 1. Create a Review
-router.post('/:tripId', addReview);
+router.post("/", checkForAuthentication, addReview);
 
-// 2. **Get All Reviews for a Trip**
-router.get('/:tripId', getAllReviewByTripId);
+// 2. Get All Reviews for a Trip
+router.get("/", getAllReview);
 
-router.delete('/:reviewId',ensureAdmin ,deleteReviewById);
-  
+// 3. Delete a Review by ID
+router.delete("/:reviewId", ensureAdmin, deleteReviewById);
+
 module.exports = router;

@@ -56,9 +56,9 @@ function SignUpPage() {
             //     // email: "lskf",
             //     // password: "lskf",
             // });
-
+            
             const response = await POST('/api/user/signup', signUpCredentials);
-
+            
             if (response.data.success === true) {
                 toast.success(response.data.message);
                 navigate("/login");

@@ -3,7 +3,7 @@ const multer = require("multer");
 const User = require("../models/user");
 const path = require("path");
 const router = express.Router();
-const { getUserProfile, setUserProfile, userUpdate,userSignIn,userSignUp } = require("../controllers/user");
+const { getUserProfile, setUserProfile, userUpdate,userSignIn,userSignUp,deleteAccount } = require("../controllers/user");
 const { checkForAuthentication } = require("../middlewares/auth");
 const { createHmac, randomBytes } = require("crypto");
 
@@ -14,6 +14,7 @@ router.post("/edit",setUserProfile);
 router.post("/signup", userSignUp);
 
 router.post("/signin", userSignIn);
+router.post("/delete",deleteAccount)
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

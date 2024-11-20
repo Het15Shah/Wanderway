@@ -1,0 +1,159 @@
+.trip-form-container {
+  font-family: Arial, sans-serif;
+  
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f0f8ff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+/* Page title */
+.trip-form-title {
+  font-size: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #46a9de;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form layout */
+.trip-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Label and input styling */
+.trip-form-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+
+.trip-date-budget-group {
+  display: flex;
+  justify-content: start;
+  gap: 50px;
+}
+
+/* Grouping styles */
+.trip-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Button styles */
+.trip-form-button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.trip-form-button:hover {
+  opacity: 0.9;
+}
+
+.add-activity-button {
+  background-color: #4caf50;
+}
+
+.add-day-button {
+  background-color: #2196f3;
+  width: 150px;
+  margin-left: 50%;
+}
+
+.submit-button {
+  background-color: #ff5722;
+  width: 150px;
+}
+
+/* Itinerary section styling */
+.trip-itinerary-title {
+  font-size: 1.8rem;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.title-ininerary {
+  background-color: #4aace1;
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  border-radius: 10px;
+  padding: 0.1px;
+  margin-bottom: 10px;
+}
+
+.trip-itinerary-day {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.trip-itinerary-day-title {
+  font-size: 1.25rem;
+  color: #3613e2;
+  margin-bottom: 10px;
+}
+
+.trip-itinerary-group,
+.trip-activity-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+/* Activity section */
+.trip-activities-title {
+  font-size: 1.25rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #763131;
+  margin-bottom: 10px;
+}
+
+/* Focus effect for inputs */
+.trip-form-input:focus,
+.trip-form-select:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .trip-form-container {
+    padding: 15px;
+  }
+
+  .trip-form-label {
+    font-size: 0.9rem;
+  }
+
+  .trip-form-input,
+  .trip-form-select {
+    font-size: 0.9rem;
+  }
+
+  .trip-form-button {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .trip-itinerary-title,
+  .trip-itinerary-day-title,
+  .trip-activities-title {
+    font-size: 1.1rem;
+  }
+}

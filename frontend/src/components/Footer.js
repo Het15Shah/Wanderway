@@ -26,8 +26,9 @@ const Footer = memo(() => (
           <h5 className="footer-heading">Company</h5>
           <ul className="footer-list">
             <li><Link to="/about-us" className="footer-link">About Us</Link></li>
-            <li><a href="#" className="footer-link">FAQs & Help</a></li>
+            
             <li><Link to="/review" className="footer-link">Reviews</Link></li>
+            <li><Link to="/" className="footer-link">Home</Link></li>
           </ul>
         </div>
 
