@@ -199,16 +199,19 @@ export default function ReviewPage() {
           </MDBCol>
         </MDBRow>
 
-        <h3 className="text-center fw-bold mb-4" style={{ color: "#0275d8" }}>
+
+    <h3 className="text-center fw-bold mb-4" style={{ color: "#0275d8" }}>
           Customer Reviews
         </h3>
 
         <MDBRow className="text-center">
           {reviews?.length === 0 ? (
             <p className="text-center">No reviews yet</p>
-          ) : (
+            ) : (
+          
             reviews?.map((rev, index) => (
               <MDBCol md="4" className="mb-4" key={index}>
+
                 <MDBCard
                   style={{ backgroundColor: "#f0f8ff", position: "relative" }}
                 >
@@ -236,6 +239,7 @@ export default function ReviewPage() {
                       listUnStyled
                       className="d-flex justify-content-center"
                     >
+                  
                       {[...Array(rev.rating)]?.map((_, i) => (
                         <MDBIcon
                           key={i}
@@ -246,17 +250,17 @@ export default function ReviewPage() {
                           }`}
                         />
                       ))}
+                      
                     </MDBTypography>
 
                     <p className="mt-2">{rev.comment}</p>
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-            ))
-          )}
+            )))}
         </MDBRow>
       </MDBContainer>
       <Footer />
     </>
-  );
-}
+  ); 
+} 
