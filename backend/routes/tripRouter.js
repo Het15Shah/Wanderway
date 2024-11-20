@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Trip = require("../models/trip");
 const ensureAdmin = require("../middlewares/ensureAdmin");
-
+const {checkForAuthentication} = require("../middlewares/auth");
 const {
   addNewTrip,
   deleteTripById,
   getAllTrip,
   getTripById,
 } = require("../controllers/trip");
+
 // Create a new trip (Only Admin Will Be Able to Add New Trips)
 router.post("/", addNewTrip);
 
@@ -19,6 +20,6 @@ router.get("/", getAllTrip);
 router.get("/:id", getTripById);
 
 // Delete a trip by ID
-router.delete("/:id", ensureAdmin, deleteTripById);
+router.delete("/:id", checkForAuthentication, ensureAdmin, deleteTripById);
 
 module.exports = router;

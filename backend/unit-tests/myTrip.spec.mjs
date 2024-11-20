@@ -1,219 +1,133 @@
-import * as chai from 'chai';
-import * as sinon from 'sinon';
-import MyTrip from '../models/myTrip.js';
-import { cancelTrip , bookTrip } from '../controllers/myTrip.js';
+import * as chaiModule from "chai";
+import chaiHttp from "chai-http";
+import app from '../index.js';
+import mongodb from 'mongodb';
 
-const expect = chai.expect;
+const chai = chaiModule.use(chaiHttp);
+const expect = chaiModule.expect;
 
+const id = '673c7260d17bce3b30bd13b8'
 
-describe('Test-cases for cancelTrip', () => {
-  let findByIdAndUpdateStub;
+describe('Test suite for myTrip controller', function() {
+	this.timeout(20000);
 
-  beforeEach(() => {
-    findByIdAndUpdateStub = sinon.stub(MyTrip, 'findByIdAndUpdate');
-  });
+	describe('Test cases for book trip functionality',function() {
+		it('A trip should be booked if authenticated user tries to book a trip',async function() {
+			const agent = chai.request.agent(app);
 
-  afterEach(() => {
-    findByIdAndUpdateStub.restore();
-  });
+			try {
+				const signInRes = await agent.post('/api/user/signin')
+					.send({
+						'email': 'ram@gmail.com',
+						'password': 'ram#2005'
+					});
 
-  it('Cancel a trip', async () => {
-    const mockTrip = { 
-      _id: 'tripId123', 
-      status: 'canceled' 
-    };
+				expect(signInRes).to.have.cookie('token');
 
-    findByIdAndUpdateStub.resolves(mockTrip);
+				const bookingRes = await agent.post(`/api/myTrip/book/${id}`)
 
-    const req = {
-      params: { id: 'tripId123' }
-    };
-    const res = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis()
-    };
+				expect(bookingRes).to.have.status(200);
+				expect(bookingRes.body).to.have.all.keys('message');
+				expect(bookingRes.body.message).to.be.equal('Trip Booked Successfully!!');
+			}
+			catch (err) {
+				throw err;
+			}
+			finally {
+				await agent.close();
+			}
+		});
 
-    await cancelTrip(req, res);
+		it('prompt a message if user is not authenticated and do not book a trip', function(done) {
+			chai.request.execute(app)
+				.post(`/api/myTrip/book/${id}`)
+				.then(function (res){
+					expect(res).to.have.status(200);
+					expect(res.body).to.have.all.keys('message', 'success');
+					expect(res.body.success).to.be.false;
+					expect(res.body.message).to.be.equal('You are not Authenticated!');
 
-    expect(res.status.notCalled).to.be.true;
-    expect(res.json.calledOnce).to.be.true;
-    const responseData = res.json.firstCall.args[0];
-    
-    expect(responseData.message).to.equal('Trip canceled successfully');
-    expect(responseData.canceledTrip).to.deep.equal(mockTrip);
-  });
+					done();
+				})
+				.catch(function (err){
+					done(err);
+				});
+		});
+	});
 
-  it('Return 404 if trip is not found', async () => {
-    findByIdAndUpdateStub.resolves(null);
+	describe('Test cases for getting all booked trips functionality', function() {
+		it('All booked trips should be returned if user is authenticated', async function() {
+			const agent = chai.request.agent(app);
 
-    const req = {
-      params: { id: 'nonExistentTripId' }
-    };
-    const res = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis()
-    };
+			try {
+				const signInRes = await agent.post('/api/user/signin')
+					.send({
+						'email': 'ram@gmail.com',
+						'password': 'ram#2005'
+					});
 
-    await cancelTrip(req, res);
+				expect(signInRes).to.have.cookie('token');
 
-    expect(res.status.calledWith(404)).to.be.true;
-    expect(res.json.calledOnce).to.be.true;
-    const responseData = res.json.firstCall.args[0];
-    
-    expect(responseData.message).to.equal('Booking not found');
-  });
+				const bookingRes = await agent.get('/api/myTrip/alltrips');
+				expect(bookingRes).to.have.status(200);
+				expect(bookingRes).to.have.property('body');
+			}
+			catch (err) {
+				throw err;
+			}
+			finally {
+				await agent.close();
+			}
+		});
 
-  it('Handle errors and return 500 status', async () => {
-    const errorMessage = 'Database connection error';
-    findByIdAndUpdateStub.rejects(new Error(errorMessage));
+		it('prompt a message if user is not authenticated', function(done) {
+			chai.request.execute(app)
+				.get('/api/myTrip/alltrips')
+				.then(function (res){
+					expect(res).to.have.status(200);
+					expect(res.body).to.have.all.keys('message', 'success');
+					expect(res.body.success).to.be.false;
+					expect(res.body.message).to.be.equal('You are not Authenticated!');
 
-    const req = {
-      params: { id: 'tripId123' }
-    };
-    const res = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis()
-    };
+					done();
+				})
+				.catch(function (err){
+					done(err);
+				});
+		});
+	});
 
-    await cancelTrip(req, res);
+	describe('Test cases for cancel booked trip functionality',function() {
+		it('Cancel the booked trip if it exists',function(done) {
+			const existingId = '673e2ceb7191fe8c62c1ecbd';
+			chai.request.execute(app)
+				.post(`/api/myTrip/cancel/${existingId}`)
+				.then(function(res) {
+					expect(res).to.have.status(200);
+					expect(res.body).to.have.all.keys('message', 'canceledTrip');
+					expect(res.body.message).to.be.equal('Trip canceled successfully');
 
-    expect(res.status.calledWith(500)).to.be.true;
-    expect(res.json.calledOnce).to.be.true;
-    const responseData = res.json.firstCall.args[0];
-    
-    expect(responseData.message).to.equal(errorMessage);
-  });
+					done();
+				})
+				.catch(function(err) {
+					done(err);
+				});
+		});
 
-  it('Call findByIdAndUpdate with correct parameters', async () => {
-    const tripId = 'tripId123';
-    const mockTrip = { 
-      _id: tripId, 
-      status: 'canceled' 
-    };
+		it('Prompt the message if the trip does not exist',function(done) {
+			const dummyId = new mongodb.ObjectId();
+			chai.request.execute(app)
+				.post(`/api/myTrip/cancel/${dummyId}`)
+				.then(function(res) {
+					expect(res).to.have.status(404);
+					expect(res.body).to.have.all.keys('message');
+					expect(res.body.message).to.be.equal('Booking not found');
 
-    findByIdAndUpdateStub.resolves(mockTrip);
-
-    const req = {
-      params: { id: tripId }
-    };
-    const res = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis()
-    };
-
-    await cancelTrip(req, res);
-
-    expect(findByIdAndUpdateStub.calledOnce).to.be.true;
-    const [receivedId, updateData, options] = findByIdAndUpdateStub.firstCall.args;
-    
-    expect(receivedId).to.equal(tripId);
-    expect(updateData).to.deep.equal({ status: 'canceled' });
-    expect(options).to.deep.equal({ new: true });
-  });
-});
-
-
-describe('bookTrip Functionality', () => {
-  let createStub , consoleErrorStub;
-
-  const mockUser = {
-    _id: 'user123'
-  };
-
-  beforeEach(() => {
-    createStub = sinon.stub(MyTrip, 'create');
-    consoleErrorStub = sinon.stub(console, 'error');
-  });
-
-  afterEach(() => {
-    createStub.restore();
-    consoleErrorStub.restore();
-  });
-
-  it('Successfully book a trip', async () => {
-    const tripId = 'trip456';
-    const mockNewTrip = {
-      user: mockUser._id,
-      trip: tripId
-    };
-
-    createStub.resolves(mockNewTrip);
-
-    const req = {
-      params: { tripId },
-      user: mockUser
-    };
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy()
-    };
-
-    await bookTrip(req, res);
-
-    expect(createStub.calledOnceWith({
-      user: mockUser._id,
-      trip: tripId
-    })).to.be.true;
-
-    expect(res.status.calledWith(200)).to.be.true;
-    expect(res.json.calledOnce).to.be.true;
-    
-    const responseData = res.json.firstCall.args[0];
-    expect(responseData.message).to.equal('Trip Booked Successfully!!');
-  });
-
-  it('Handle trip booking error', async () => {
-    const tripId = 'trip456';
-    const errorMessage = 'Booking failed';
-
-    createStub.rejects(new Error(errorMessage));
-
-    const req = {
-      params: { tripId },
-      user: mockUser
-    };
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy()
-    };
-
-    await bookTrip(req, res);
-
-    expect(createStub.calledOnceWith({
-      user: mockUser._id,
-      trip: tripId
-    })).to.be.true;
-
-    expect(res.status.calledWith(500)).to.be.true;
-    expect(res.json.calledOnce).to.be.true;
-    
-    const responseData = res.json.firstCall.args[0];
-    expect(responseData.message).to.equal('Failed to book trip');
-    expect(responseData.error).to.equal(errorMessage);
-  });
-
-  it('Call create with correct trip and user details', async () => {
-    const tripId = 'trip789';
-    const mockNewTrip = {
-      user: mockUser._id,
-      trip: tripId
-    };
-
-    createStub.resolves(mockNewTrip);
-
-    const req = {
-      params: { tripId },
-      user: mockUser
-    };
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy()
-    };
-
-    await bookTrip(req, res);
-
-    const createArgs = createStub.firstCall.args[0];
-    expect(createArgs.user).to.equal(mockUser._id);
-    expect(createArgs.trip).to.equal(tripId);
-  });
+					done();
+				})
+				.catch(function(err) {
+					done(err);
+				});
+		});
+	});
 });

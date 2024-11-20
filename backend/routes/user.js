@@ -14,7 +14,7 @@ router.post("/edit",setUserProfile);
 router.post("/signup", userSignUp);
 
 router.post("/signin", userSignIn);
-router.post("/delete",deleteAccount)
+router.post("/delete", deleteAccount);
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

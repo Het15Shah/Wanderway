@@ -1,9 +1,12 @@
 import * as chaiModule from "chai";
 import chaiHttp from "chai-http";
 import app from '../index.js';
+import Trip from '../models/trip.js';
 
 const chai = chaiModule.use(chaiHttp);
 const expect = chaiModule.expect;
+
+let id;
 
 describe('Test Suite for trip controller', function () {
     this.timeout(20000);
@@ -136,31 +139,48 @@ describe('Test Suite for trip controller', function () {
                 });
         });
 
-        it('Get a specific trip by provided id', function (done) {
-            chai.request.execute(app).get('/api/trip/673c7a480a687c4c75e50216')
-                .end((err, res) => {
-                    if (err) done(err);
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    expect(res.body).to.have.a.property('title');
-                    expect(res.body).to.have.a.property('destination');
-                    done();
-                });
+        it('Get a specific trip by provided id', async function() {
+            try{
+                const trip = await Trip.findOne({title: 'Romantic Hot Air Balloon Journey in Tuscany'});
+                id = trip.id;
+                const res = await chai.request.execute(app).get(`/api/trip/${id}`);
+
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body).to.have.a.property('title');
+                expect(res.body).to.have.a.property('destination');
+            }
+            catch(err){
+                throw err;
+            }
         });
     });
 
     describe('Test cases for delete trip functionality', function () {
-        it('Delete a specific trip by provided id', function (done) {
-            chai.request.execute(app)
-                .delete('/api/trip/deleteTrip/673ccde754a363e3b6d08888')
-                .end((err, res) => {
-                    expect(err).to.be.null;
+        it('Delete a specific trip by provided id if the role is Admin', async function () {
+            const agent = chai.request.agent(app);
 
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    expect(res.body).to.have.property('message', 'Trip deleted successfully');
-                    done();
-                });
+			try {
+				const signInRes = await agent.post('/api/user/signin')
+					.send({
+						'email': 'ram@gmail.com',
+						'password': 'ram#2005'
+					});
+
+				expect(signInRes).to.have.cookie('token');
+
+				const delRes = await agent.delete(`/api/trip/${id}`)
+				
+				expect(delRes).to.have.status(200);
+                expect(delRes.body).to.be.an('object');
+                expect(delRes.body).to.have.property('message', 'Trip deleted successfully');
+			}
+			catch (err) {
+				throw err;
+			}
+			finally {
+				await agent.close();
+			}
         });
     });
 });

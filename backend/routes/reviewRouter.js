@@ -15,6 +15,6 @@ router.post("/", checkForAuthentication, addReview);
 router.get("/", getAllReview);
 
 // 3. Delete a Review by ID
-router.delete("/:reviewId", ensureAdmin, deleteReviewById);
+router.delete("/:reviewId", checkForAuthentication, ensureAdmin, deleteReviewById);
 
 module.exports = router;

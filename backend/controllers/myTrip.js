@@ -1,6 +1,7 @@
 const MyTrip = require("../models/myTrip");
 const Trip = require("../models/trip");
 const mongoose = require("mongoose");
+
 async function cancelTrip(req, res) {
   try {
     const { id } = req.params;
@@ -24,10 +25,10 @@ async function cancelTrip(req, res) {
 async function bookTrip(req, res) {
   try {
     const tripId = req.params.tripId;
-    console.log(tripId);
+    // console.log(tripId);
 
     const userId = req.user._id;
-    console.log(req.user);
+    // console.log(req.user);
 
     const newTrip = await MyTrip.create({
       user: userId,
@@ -52,10 +53,9 @@ async function allbookedtrips(req, res) {
       return res.status(400).json({ message: "User ID is required" });
     }
 
-    const trips = await MyTrip.find({ user: userId }).populate(
-      {
+    const trips = await MyTrip.find({ user: userId }).populate({
         path : "trip"
-  });
+    });
     // console.log(trips[0]);
     
     // console.log(trips);

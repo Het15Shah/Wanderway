@@ -33,7 +33,6 @@ async function getTripById (req, res) {
 
 async function deleteTripById (req, res){
   try {
-      console.log(req.params);
       // Fetch trip from Trip database and deleting it 
       const deletedTrip = await Trip.findByIdAndDelete(req.params.id);
       if (!deletedTrip) return res.status(404).json({ message: 'Trip not found' });

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "nyc mocha './unit-tests/user.spec.mjs'",
+    "test": "mocha --parallel=false './unit-tests/*.spec.mjs' -exit",
     "test-single": "mocha -exit"
   },
   "author": "",

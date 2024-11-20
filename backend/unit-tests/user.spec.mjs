@@ -90,10 +90,10 @@ describe('Test Suite for User Controller', function () {
 			.post('/api/user/signup')
 			.type('form')
 			.send({
-				'userId': 'dp1405',
-				'fullName': 'Darpan Lunagariya',
-				'email': '202201462@daiict.ac.in',
-				'password': 'mypasswordforwanderways@@'
+				'userId': 'testUser',
+				'fullName': 'Testing User',
+				'email': 'testing.user@test.com',
+				'password': 'testing.user'
 			})
 			.then(function(res) {
 				expect(res).to.have.status(200);
@@ -224,4 +224,48 @@ describe('Test Suite for User Controller', function () {
 				});
 		});
 	});
+
+	describe('Test cases for delete account functionality', function() {
+		it('Delete account if user is authenticated',async function() {
+			const agent = chai.request.agent(app);
+
+			try {
+				const signInRes = await agent.post('/api/user/signin')
+					.send({
+						'email': 'testing.user@test.com',
+						'password': 'testing.user'
+					});
+
+				expect(signInRes).to.have.cookie('token');
+
+				const deleteRes = await agent.post('/api/user/delete');
+
+				expect(deleteRes).to.have.status(200);
+				expect(deleteRes.body).to.have.all.keys('message', 'success');
+				expect(deleteRes.body.message).to.be.equal('Account deleted successfully');
+			}
+			catch (err) {
+				throw err;
+			}
+			finally {
+				await agent.close();
+			}
+		});
+
+		it('Prompt error message if user is not authenticated', function(done){
+			chai.request.execute(app)
+				.post('/api/user/delete')
+				.then(function(res) {
+					expect(res).to.have.status(401);
+					expect(res.body).to.have.all.keys('message', 'success');
+					expect(res.body.success).to.be.false;
+					expect(res.body.message).to.be.equal('Unauthorized: Token not provided');
+
+					done();
+				})
+				.catch(function (err){
+					done(err);
+				});
+		});
+	})
 });

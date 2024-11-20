@@ -33,7 +33,7 @@ async function userSignUp (req,res) {
 
   return res
     .status(200)
-    .json({ success: true, message: "user Signup Successfully" });
+    .json({ success: true, message: "User Signed up Successfully" });
 }
 
 async function userUpdate (req, res)  {
@@ -111,8 +111,6 @@ async function userSignIn (req,res)  {
         // console.log("token ",token);
         // return res.cookie("token",token).redirect("/");
         res.cookie('token',token,{
-           domain: "localhost",
-           httpOnly: true,
            sameSite: 'strict',
            maxAge: 24 * 60 * 60 * 1000, 
         });
