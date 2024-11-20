@@ -21,7 +21,7 @@ import darpan from "../assets/Team Photos/Darpan.jpg";
 import jinay from "../assets/Team Photos/jinay.jpg";
 import divy from "../assets/Team Photos/divy.jpg";
 import meet from "../assets/Team Photos/meet.jpg";
-import priyank from "../assets/Team Photos/ram.jpg";
+import priyank from "../assets/Team Photos/priyank.jpg";
 
 const teamData = {
   team: [
