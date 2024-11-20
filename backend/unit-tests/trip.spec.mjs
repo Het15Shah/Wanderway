@@ -149,18 +149,18 @@ describe('Test Suite for trip controller', function () {
         });
     });
 
-    // describe('Test cases for delete trip functionality', function () {
-    //     it('Delete a specific trip by provided id', function (done) {
-    //         chai.request.execute(app)
-    //             .delete('/api/trip/deleteTrip/673cbe464e637baa096c4b26')
-    //             .end((err, res) => {
-    //                 expect(err).to.be.null;
+    describe('Test cases for delete trip functionality', function () {
+        it('Delete a specific trip by provided id', function (done) {
+            chai.request.execute(app)
+                .delete('/api/trip/deleteTrip/673ccde754a363e3b6d08888')
+                .end((err, res) => {
+                    expect(err).to.be.null;
 
-    //                 expect(res).to.have.status(200);
-    //                 expect(res.body).to.be.an('object');
-    //                 expect(res.body).to.have.property('message', 'Trip deleted successfully');
-    //                 done();
-    //             });
-    //     });
-    // });
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body).to.have.property('message', 'Trip deleted successfully');
+                    done();
+                });
+        });
+    });
 });
