@@ -20,8 +20,8 @@ const uploadOnCloudinary = async (localFilePath) => {
       resource_type: "auto"
     });
     // file uploaded successfully on cloudinary
-    console.log("File Uploaded Successfully on Clodinary");
-    console.log("Response ",response);
+    // console.log("File Uploaded Successfully on Clodinary");
+    // console.log("Response ",response);
 
     return response.secure_url;
     

@@ -91,11 +91,11 @@ async function userSignIn (req,res)  {
         const {email,password} = req.body;
 
         if (email == undefined){
-            return res.status(200).json({success: false, message: "email cannot be missing"});
+            return res.status(400).json({success: false, message: "email cannot be missing"});
         }
 
         if (password == undefined){
-            return res.status(200).json({success: false, message: "password cannot be missing"});
+            return res.status(400).json({success: false, message: "password cannot be missing"});
         }
 
         // console.log("Email and password");
@@ -107,7 +107,8 @@ async function userSignIn (req,res)  {
         // console.log("token ",token);
         // return res.cookie("token",token).redirect("/");
         res.cookie('token',token,{
-           domain: 'localhost',
+           httpOnly: true,
+           sameSite: 'strict',
            maxAge: 24 * 60 * 60 * 1000, 
         });
 
@@ -175,6 +176,7 @@ async function setUserProfile(req, res) {
         return res.status(201).json({ message: "User created successfully", user: newUser });
     } catch (error) {
         // console.error("Error creating user profile:", error);
+        console.log(error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }

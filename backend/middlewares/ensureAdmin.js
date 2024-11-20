@@ -1,7 +1,7 @@
 function ensureAdmin(req, res, next) {
     // Check if user is authenticated and is an admin
-    console.log(req.user);
-    if (req.user && req.user.role === "USER") {
+    // console.log(req);
+    if (req.user && req.user.role === 'ADMIN') {
       return next(); // User is admin, proceed with the request
     }
     // If user is not an admin, return a forbidden response
