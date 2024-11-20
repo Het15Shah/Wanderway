@@ -1,7 +1,7 @@
 const Trip = require('../models/trip')
 
 async function searchTrip (req, res)  {
-    console.log(req.query);
+    // console.log(req.query);
     const { destination, days, maxBudget } = req.query;
   
     // Build query object based on filters

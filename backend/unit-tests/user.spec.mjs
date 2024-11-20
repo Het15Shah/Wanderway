@@ -1,8 +1,5 @@
-import mocha from 'mocha';
 import * as chaiModule from "chai";
 import chaiHttp from "chai-http";
-import * as sinon from 'sinon';
-import { userSignIn, userSignUp, userUpdate, getUserProfile, setUserProfile } from '../controllers/user.js'
 import User from '../models/user.js';
 import app from '../index.js';
 import fs from 'fs';
