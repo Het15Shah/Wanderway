@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("../models/user");
 const uploadOnCloudinary = require("../utils/cloudinary");
-const jwt = require("jsonwebtoken"); // Assuming token is JWT-based
+const jwt = require("jsonwebtoken");
 
 async function userSignUp(req, res) {
   const { userId, fullName, email, password } = req.body;
