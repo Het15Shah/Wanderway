@@ -1,5 +1,9 @@
+body{
+  background-color: #f0f8ff;
+}
+
 .Button_submit {
-  background-color: #ffc107;
+  background-color: #4169e1;
   border: 0;
   border-radius: 5px;
   margin: 5px;
@@ -9,5 +13,5 @@
 }
 
 .Button_submit:hover {
-  background-color: #ff9800;
+  background-color: #3459c8;
 }

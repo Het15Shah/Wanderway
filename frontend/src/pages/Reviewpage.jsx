@@ -104,15 +104,15 @@ export default function ReviewPage() {
 
   return (
     <>
-      <MDBContainer className="py-5" style={{ backgroundColor: "#ffffff" }}>
+      <MDBContainer className="py-5" style={{ backgroundColor: "#f0f8ff" }}>
         {/* Back to Home Button */}
 
         {/* Add Review Form in a Card */}
         <MDBRow className="justify-content-center my-5">
           <MDBCol md="6">
-            <MDBCard style={{ backgroundColor: "#fff5e6" }}>
+            <MDBCard style={{ backgroundColor: "#ffffff", boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"  }}>
               <MDBCardBody>
-                <h4 className="text-center mb-4" style={{ color: "#ffcc00" }}>
+                <h4 className="text-center mb-4" style={{ color: "#0275d8" }}>
                   Add Your Review
                 </h4>
                 <form onSubmit={submitReview}>
@@ -126,7 +126,7 @@ export default function ReviewPage() {
                     required
                     style={{
                       backgroundColor: "#ffffff",
-                      border: "2px solid #ffcc00",
+                      border: "0.11px solid #000000",
                       borderRadius: "5px",
                       padding: "5px",
                     }}
@@ -143,7 +143,7 @@ export default function ReviewPage() {
                     required
                     style={{
                       backgroundColor: "#ffffff",
-                      border: "2px solid #ffcc00",
+                      border: "0.000001px solid #000000",
                       borderRadius: "5px",
                       padding: "5px",
                     }}
@@ -161,7 +161,7 @@ export default function ReviewPage() {
                     required
                     style={{
                       backgroundColor: "#ffffff",
-                      border: "2px solid #ffcc00",
+                      border: "0.1px solid #000000",
                       borderRadius: "5px",
                       padding: "5px",
                     }}
@@ -170,7 +170,7 @@ export default function ReviewPage() {
                   {/* Star Rating Selection */}
                   <div className="star-rating mb-3 text-center">
                     <span>Rating:</span>
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(5)]?.map((_, i) => (
                       <MDBIcon
                         key={i}
                         fas
@@ -205,16 +205,16 @@ export default function ReviewPage() {
         </MDBRow>
 
         {/* Review Section */}
-        <h3 className="text-center fw-bold mb-4" style={{ color: "#ffcc00" }}>
+        <h3 className="text-center fw-bold mb-4" style={{ color: "#0275d8" }}>
           Customer Reviews
         </h3>
 
         {/* Display Existing Reviews */}
         <MDBRow className="text-center">
-          {reviews.length === 0 ? (
+          {reviews?.length === 0 ? (
             <p className="text-center">No reviews yet</p>
           ) : (
-            reviews.map((rev, index) => (
+            reviews?.map((rev, index) => (
               <MDBCol md="4" className="mb-4" key={index}>
                 <MDBCard
                   style={{ backgroundColor: "#fff9e6", position: "relative" }}
@@ -247,7 +247,7 @@ export default function ReviewPage() {
                       listUnStyled
                       className="d-flex justify-content-center"
                     >
-                      {[...Array(rev.rating)].map((_, i) => (
+                      {[...Array(rev.rating)]?.map((_, i) => (
                         <MDBIcon
                           key={i}
                           fas
