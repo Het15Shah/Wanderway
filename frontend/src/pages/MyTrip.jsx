@@ -53,6 +53,7 @@ const MyTrips = () => {
 
           if (trip.status === "canceled") {
             canceled++;
+            // upcoming--;
           } else if (updatedAt > startDate) {
             upcoming++;
           } else if (updatedAt < startDate) {
@@ -72,6 +73,22 @@ const MyTrips = () => {
 
     fetchTrips();
   }, []);
+  
+  const handleCancelTrip = async (id) => {
+    const { data } = await POST(`/api/myTrip/cancel/${id}`);
+    console.log("Data:", data);
+    setTrips(
+      trips?.map((trip) =>
+        // console.log("Trip ID:", trip.id);
+        trip._id === id ? { ...trip, status: "Canceled" } : trip
+      )
+    );
+    setSnackbar({
+      open: true,
+      message: "Trip canceled successfully",
+      severity: "success",
+    });
+  };
 
   const handleOpenShareModal = (tripId) => {
     setShareLink(`http://yourtriplink.com/share/${tripId}`);
@@ -179,42 +196,41 @@ const MyTrips = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Typography
-                      variant="h5"
-                      sx={{ fontWeight: "bold", marginBottom: "12px" }}
-                    >
-                      {trip.title}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                      }}
-                    >
+                    <Box sx={{ marginBottom: "20px" }}>
                      <Typography
                   variant="h6"
-                  sx={{ fontWeight: "bold", marginBottom: "8px" }}
+                  sx={{ fontWeight: "bold", marginBottom: "4px" }}
                 >
                   {trip.trip.title}
                 </Typography>
                 </Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "-20px"}}>
                   <FlightTakeoffIcon fontSize="small" />
-                  <Typography variant="body2">{trip.trip.itinerary.length} Days</Typography>
+                  <Typography variant="body2">{trip?.trip?.itinerary?.length} Days</Typography>
                   <Typography variant="body2" sx={{ fontWeight: "bold" }}>
                     ${trip.trip.budget}
                   </Typography>
+
+                  
+                </Box>
+                <Box sx={{ display: "flex" }}>
+                  <Typography variant="body2" sx={{ marginTop: "10px"}}>
+                    Status: {trip.status}
+                  </Typography>
+                
                 </Box>
                     {trip.status === "booked" && (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ marginTop: "12px" }}
-                        onClick={() => handleOpenShareModal(trip._id)}
-                      >
-                        Share Trip
-                      </Button>
+                       <Button
+                       variant="contained"
+                       color="error"
+                       sx={{ marginTop: "12px" }}
+                       onClick={() => handleCancelTrip(trip._id)}
+                     
+                     >
+                       Cancel Trip
+                     </Button>
+                     
                     )}
                   </Box>
                 </Card>

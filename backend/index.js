@@ -63,9 +63,9 @@ app.use("/api/searchTrip", searchTripRouter);
 
 // Logout Functionality
 
-app.get("/api/logout",(req,res) => {
-   res.clearCookie("token")
-   return res.status(201).json({success:true});
+app.get("/api/logout", (req, res) => {
+  res.clearCookie("token");
+  return res.status(201).json({ success: true });
 });
 app.listen(PORT, () => {
   console.log("Server Started at PORT: ", PORT);

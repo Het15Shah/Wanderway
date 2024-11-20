@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const tripSchema = new mongoose.Schema({
   title: {
@@ -57,5 +57,5 @@ const tripSchema = new mongoose.Schema({
   },
 });
 
-const Trip = mongoose.model('Trip', tripSchema);
+const Trip = mongoose.model("Trip", tripSchema);
 module.exports = Trip;

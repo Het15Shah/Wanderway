@@ -22,4 +22,6 @@ const useAPI = () => {
   return { GET, POST };
 };
 
+  
+
 export default useAPI;

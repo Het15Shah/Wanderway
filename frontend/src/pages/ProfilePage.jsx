@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import { toast} from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
 import Footer from "../components/Footer";
 import {
   Box,
@@ -34,6 +35,7 @@ import ExitToApp from "@mui/icons-material/ExitToApp";
 import axios from "axios";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
+
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
   const [loading, setLoading] = useState(false);
@@ -50,6 +52,30 @@ const TravelProfilePage = () => {
   const [gender, setGender] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
   const [sidebarName, setSidebarName] = useState(name);
+  
+  const handleLogout = async () => {
+    try {
+      const result = await GET("/api/logout");
+      console.log("result", result);
+      toast.success("Logged out successfully!");
+      // navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      toast.error("Failed to log out. Please try again.");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await POST("/api/user/delete");
+      console.log("Account deleted successfully!");
+      toast.success("Account deleted successfully!");
+      // navigate("/signup");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast.error("Failed to delete account. Please try again.");
+    }
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -181,6 +207,7 @@ const TravelProfilePage = () => {
         height: "auto",
       }}
     >
+      <ToastContainer />
       <Box
         sx={{
           // minHeight: "100vh",
@@ -306,6 +333,7 @@ const TravelProfilePage = () => {
               button
               component="a"
               href="/login"
+              onClick={handleLogout}
               sx={{
                 mb: 1,
                 bgcolor: "#fff",
@@ -337,6 +365,7 @@ const TravelProfilePage = () => {
               button
               component="a"
               href="/signup"
+              onClick={handleDeleteAccount}
               sx={{
                 mb: 1,
                 bgcolor: "#fff",
@@ -488,6 +517,7 @@ const TravelProfilePage = () => {
               </Grid>
               <Grid item xs={12}>
                 <Button
+                    
                   fullWidth
                   variant="contained"
                   onClick={updateProfile}
