@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("../models/user");
 const uploadOnCloudinary = require("../utils/cloudinary");
+const jwt = require("jsonwebtoken"); // Assuming token is JWT-based
 
 async function userSignUp(req, res) {
   const { userId, fullName, email, password } = req.body;
@@ -194,10 +195,56 @@ async function setUserProfile(req, res) {
   }
 }
 
+
+async function deleteAccount(req, res) {
+  try {
+    // Extract token from cookies
+    const token = req.cookies.token;
+    // console.log('token' ,token)
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Unauthorized: Token not provided" });
+    }
+
+    // Decode the token to get the userId (ObjectId)
+    let userId;
+    try {
+      const decodedToken = jwt.verify(token, "Hari@2141"); 
+      userId = decodedToken._id; // Assuming the token contains userId
+      // console.log('userId' , userId);
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid token" });
+    }
+
+    // Find and delete the user
+    const deletedUser = await User.findOneAndDelete({ _id:userId });
+    if (!deletedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Clear the token cookie
+    res.clearCookie("token");
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting account:", error);
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+
+
 module.exports = {
   getUserProfile,
   setUserProfile,
   userSignIn,
   userSignUp,
   userUpdate,
+  deleteAccount
 };
+
+
