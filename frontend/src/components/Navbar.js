@@ -18,6 +18,7 @@ const Navbar = memo(() => {
     const validateUser = async() => {
       const authToken = Cookies.get("token");
       // console.log(authToken, "authToken");
+      // Cookies.set("token_sdj", authToken, { expires: 1 });
       if (authToken) {
         try {
           const response = await GET("/api/user/myProfile", {
