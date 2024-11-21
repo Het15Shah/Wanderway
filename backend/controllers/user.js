@@ -104,14 +104,14 @@ async function userSignIn(req, res) {
     // console.log(req.body);
     // console.log("token ",token);
     // return res.cookie("token",token).redirect("/");
-    res.cookie("token", token, {
-      domain: "localhost",
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+    // res.cookie("token", token, {
+    //   domain: "localhost",
+    //   maxAge: 24 * 60 * 60 * 1000,
+    // });
 
     return res
       .status(200)
-      .json({ success: true, message: "user Signup Successfully" });
+      .json({ success: true, message: "user Signup Successfully", token });
   } catch (err) {
     return res.status(200).json({ success: false, message: err.message });
   }

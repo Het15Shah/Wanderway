@@ -22,7 +22,7 @@ const PORT = 8000;
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: config.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -31,9 +31,7 @@ app.use(
 
 // Connection
 mongoose
-  .connect(
-    config.MONGODB_URL,
-  )
+  .connect(config.MONGODB_URL)
   .then(() => {
     console.log("Connected to MongoDB");
   })
