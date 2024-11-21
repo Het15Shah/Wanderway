@@ -4,7 +4,7 @@
 // };
 
 const config = {
-  BACKEND_API: "http://localhost:8000",
+  BACKEND_API: "https://wanderways-travel-api.vercel.app",
   PEXELS_API: "9eNdOrrjY5sGHhwhnQkQjIO5XH6JUAFN2VuEGbRErc0VPKvnzyu03nBn",
 };
 
