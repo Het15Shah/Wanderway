@@ -22,6 +22,7 @@ import useAPI from "../hooks/useAPI";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import EmailIcon from "@mui/icons-material/Email";
+import fetchImage from "../utils/fetchimage";
 
 const MyTrips = () => {
   const { GET, POST } = useAPI();
@@ -41,27 +42,6 @@ const MyTrips = () => {
       try {
         const response = await GET("/api/myTrip/alltrips");
         console.log(response.data);
-
-        let upcoming = 0;
-        let past = 0;
-        let canceled = 0;
-
-        response.data.forEach((trip) => {
-          const currentDate = new Date();
-          const startDate = new Date(trip.trip.created_at);
-          const updatedAt = new Date(trip.trip.startDate);
-
-          if (trip.status === "canceled") {
-            canceled++;
-            // upcoming--;
-          } else if (updatedAt > startDate) {
-            upcoming++;
-          } else if (updatedAt < startDate) {
-            past++;
-          }
-        });
-
-        setCounts({ upcoming, past, canceled });
         setTrips(response.data);
       } catch (error) {
         console.error("Error fetching trips:", error);
@@ -73,7 +53,35 @@ const MyTrips = () => {
 
     fetchTrips();
   }, []);
-  
+
+  useEffect(() => {
+    let upcoming = 0;
+    let past = 0;
+    let canceled = 0;
+
+    trips.forEach(async (trip) => {
+      const img = String(trip?.trip?.imageURL);
+      if (img && img.startsWith("https://example.com")) {
+        const fetchedImageUrl = await fetchImage(trips.destination, 1);
+        trip.trip.imageURL = fetchedImageUrl[0];
+      }
+
+      const startDate = new Date(trip.trip.created_at);
+      const updatedAt = new Date(trip.trip.startDate);
+
+      if (trip.status == "canceled") {
+        canceled++;
+        // upcoming--;
+      } else if (updatedAt > startDate) {
+        upcoming++;
+      } else if (updatedAt < startDate) {
+        past++;
+      }
+    });
+
+    setCounts({ upcoming, past, canceled });
+  }, [trips]);
+
   const handleCancelTrip = async (id) => {
     const { data } = await POST(`/api/myTrip/cancel/${id}`);
     console.log("Data:", data);
@@ -155,7 +163,6 @@ const MyTrips = () => {
               <Typography variant="body1">
                 Plan your next adventure and create memories to cherish!
               </Typography>
-              
             </Box>
           ) : (
             trips?.map((trip) => (
@@ -197,40 +204,44 @@ const MyTrips = () => {
                     }}
                   >
                     <Box sx={{ marginBottom: "20px" }}>
-                     <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", marginBottom: "4px" }}
-                >
-                  {trip.trip.title}
-                </Typography>
-                </Box>
-                
-                <Box sx={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "-20px"}}>
-                  <FlightTakeoffIcon fontSize="small" />
-                  <Typography variant="body2">{trip?.trip?.itinerary?.length} Days</Typography>
-                  <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                    ${trip.trip.budget}
-                  </Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", marginBottom: "4px" }}
+                      >
+                        {trip.trip.title}
+                      </Typography>
+                    </Box>
 
-                  
-                </Box>
-                <Box sx={{ display: "flex" }}>
-                  <Typography variant="body2" sx={{ marginTop: "10px"}}>
-                    Status: {trip.status}
-                  </Typography>
-                
-                </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        marginTop: "-20px",
+                      }}
+                    >
+                      <FlightTakeoffIcon fontSize="small" />
+                      <Typography variant="body2">
+                        {trip?.trip?.itinerary?.length} Days
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                        ${trip.trip.budget}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex" }}>
+                      <Typography variant="body2" sx={{ marginTop: "10px" }}>
+                        Status: {trip.status}
+                      </Typography>
+                    </Box>
                     {trip.status === "booked" && (
-                       <Button
-                       variant="contained"
-                       color="error"
-                       sx={{ marginTop: "12px" }}
-                       onClick={() => handleCancelTrip(trip._id)}
-                     
-                     >
-                       Cancel Trip
-                     </Button>
-                     
+                      <Button
+                        variant="contained"
+                        color="error"
+                        sx={{ marginTop: "12px" }}
+                        onClick={() => handleCancelTrip(trip._id)}
+                      >
+                        Cancel Trip
+                      </Button>
                     )}
                   </Box>
                 </Card>

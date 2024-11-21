@@ -455,7 +455,7 @@ function TripForm() {
       budget: trip.budget,
       highlights: trip.highlights,
       servicesIncluded: trip.servicesIncluded,
-      imageURL: trip.imageURL,
+      imageURL: trip?.imageURL,
       itinerary: trip.itinerary,
     };
     // tripData.JSON.stringify();
@@ -627,7 +627,7 @@ function TripForm() {
               <TextField
                 label="Image URL"
                 name="imageURL"
-                value={trip.imageURL}
+                value={trip?.imageURL}
                 onChange={handleInputChange}
                 fullWidth
                 variant="outlined"

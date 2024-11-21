@@ -1,7 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { response } = require('express');
 const config = require('../config');
-const genAI = new GoogleGenerativeAI("AIzaSyD96FD_zb1LWMXrjFLD6maLmkJjGKaTz5Q");
+const genAI = new GoogleGenerativeAI(config.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 const Trip = require('../models/trip');
 
@@ -37,7 +37,7 @@ async function generateResponse(prompt) {
           budget: parsedResponse.budget,
           highlights: parsedResponse.highlights,
           includedServices: parsedResponse.includedServices,
-          imageURL: parsedResponse.imageURL,
+          imageURL: parsedResponse?.imageURL,
           created_at: parsedResponse.created_at || new Date()
       });
 
@@ -60,8 +60,7 @@ module.exports = {generateResponse}
 // const { GoogleGenerativeAI } = require('@google/generative-ai');
 // const mongoose = require('mongoose');
 // const Trip = require('../models/trip');  // Assuming your Trip schema is defined here
-
-// const genAI = new GoogleGenerativeAI('AIzaSyD96FD_zb1LWMXrjFLD6maLmkJjGKaTz5Q');  // Replace with actual API key
+  // Replace with actual API key
 // const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 // async function generateResponseAndSaveToDB(prompt) {

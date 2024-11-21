@@ -1,6 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const Activity = require('../models/activities');
-const genAI = new GoogleGenerativeAI('AIzaSyD96FD_zb1LWMXrjFLD6maLmkJjGKaTz5Q');
+const  config  = require('../config');
+const genAI = new GoogleGenerativeAI(config.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 async function generateResponse(prompt) {

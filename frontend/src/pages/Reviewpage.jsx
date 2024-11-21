@@ -213,7 +213,7 @@ export default function ReviewPage() {
               <MDBCol md="4" className="mb-4" key={index}>
 
                 <MDBCard
-                  style={{ backgroundColor: "#f0f8ff", position: "relative" }}
+                  style={{ backgroundColor: "#f0f8ff", position: "relative" , height: "100%" }}
                 >
                   <MDBIcon
                     fas
