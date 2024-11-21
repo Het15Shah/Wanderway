@@ -36,6 +36,7 @@ app.use(
     allowedHeaders: ["Content-Type", "authorization", "token"],
     credentials: true,
   })
+  
 );
 
 // app.use((req, res, next) => {
