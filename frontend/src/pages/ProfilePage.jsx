@@ -34,6 +34,7 @@ import VpnKey from "@mui/icons-material/VpnKey";
 import ExitToApp from "@mui/icons-material/ExitToApp";
 import axios from "axios";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import config from "../config";
 
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
@@ -127,7 +128,7 @@ const TravelProfilePage = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/user/update?userId=${userName}`,
+        `${config.BACKEND_API}/api/user/update?userId=${userName}`,
         userData,
         { headers }
       );
