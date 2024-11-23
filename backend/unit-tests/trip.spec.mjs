@@ -6,7 +6,7 @@ import Trip from '../models/trip.js';
 const chai = chaiModule.use(chaiHttp);
 const expect = chaiModule.expect;
 
-let id;
+let tripId;
 
 describe('Test Suite for trip controller', function () {
     this.timeout(20000);
@@ -142,8 +142,8 @@ describe('Test Suite for trip controller', function () {
         it('Get a specific trip by provided id', async function() {
             try{
                 const trip = await Trip.findOne({title: 'Romantic Hot Air Balloon Journey in Tuscany'});
-                id = trip.id;
-                const res = await chai.request.execute(app).get(`/api/trip/${id}`);
+                tripId = trip.id;
+                const res = await chai.request.execute(app).get(`/api/trip/${tripId}`);
 
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.an('object');
@@ -169,7 +169,7 @@ describe('Test Suite for trip controller', function () {
 
 				expect(signInRes).to.have.cookie('token');
 
-				const delRes = await agent.delete(`/api/trip/${id}`)
+				const delRes = await agent.delete(`/api/trip/${tripId}`)
 				
 				expect(delRes).to.have.status(200);
                 expect(delRes.body).to.be.an('object');
@@ -182,5 +182,46 @@ describe('Test Suite for trip controller', function () {
 				await agent.close();
 			}
         });
+
+        it('Do not Delete a specific trip by provided id if the role is user', async function () {
+            const agent = chai.request.agent(app);
+
+			try {
+				const signInRes = await agent.post('/api/user/signin')
+					.send({
+						'email': 'test.user.darpan@gmail.com',
+						'password': 'testUserDarpan'
+					});
+
+				expect(signInRes).to.have.cookie('token');
+
+				const delRes = await agent.delete(`/api/trip/${tripId}`)
+				
+				expect(delRes).to.have.status(403);
+                expect(delRes.body).to.have.all.keys('message');
+                expect(delRes.body).to.have.property('message', 'Access denied. Admins only.');
+			}
+			catch (err) {
+				throw err;
+			}
+			finally {
+				await agent.close();
+			}
+        });
+
+        it('Prompt an error if user is not authenticated', function(done) {
+			chai.request.execute(app)
+				.delete(`/api/trip/${tripId}`)
+				.then(function(res) {
+					expect(res).to.have.status(401);
+					expect(res.body).to.have.all.keys('success','message');
+					expect(res.body.success).to.be.false;
+					expect(res.body.message).to.be.equal('Unauthorized: Token not provided');
+					done();
+				})
+				.catch(function(err) {
+					done(err);
+				});
+		});
     });
 });

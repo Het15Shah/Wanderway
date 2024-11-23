@@ -22,8 +22,7 @@ async function ensureAdmin(req, res, next) {
       .json({ success: false, message: "Invalid token" });
   }
   const user = await User.findById({_id:userId})
-  console.log(user)
-  if (user && user.role == "USER") {
+  if (user && user.role == "ADMIN") {
     return next(); // User is admin, proceed with the request
   }
   // If user is not an admin, return a forbidden response

@@ -20,6 +20,6 @@ router.get("/", getAllTrip);
 router.get("/:id", getTripById);
 
 // Delete a trip by ID
-router.delete("/:id", checkForAuthentication, ensureAdmin, deleteTripById);
+router.delete("/:id", ensureAdmin, deleteTripById);
 
 module.exports = router;

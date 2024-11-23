@@ -6,7 +6,7 @@ import mongodb from 'mongodb';
 const chai = chaiModule.use(chaiHttp);
 const expect = chaiModule.expect;
 
-const id = '673c7260d17bce3b30bd13b8'
+const tripIdToBook = '673c7260d17bce3b30bd13b8';
 
 describe('Test suite for myTrip controller', function() {
 	this.timeout(20000);
@@ -24,7 +24,7 @@ describe('Test suite for myTrip controller', function() {
 
 				expect(signInRes).to.have.cookie('token');
 
-				const bookingRes = await agent.post(`/api/myTrip/book/${id}`)
+				const bookingRes = await agent.post(`/api/myTrip/book/${tripIdToBook}`)
 
 				expect(bookingRes).to.have.status(200);
 				expect(bookingRes.body).to.have.all.keys('message');
@@ -40,7 +40,7 @@ describe('Test suite for myTrip controller', function() {
 
 		it('prompt a message if user is not authenticated and do not book a trip', function(done) {
 			chai.request.execute(app)
-				.post(`/api/myTrip/book/${id}`)
+				.post(`/api/myTrip/book/${tripIdToBook}`)
 				.then(function (res){
 					expect(res).to.have.status(200);
 					expect(res.body).to.have.all.keys('message', 'success');

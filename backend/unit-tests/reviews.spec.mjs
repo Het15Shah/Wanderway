@@ -121,7 +121,7 @@ describe('Test suite for reviews controller', function () {
 
 				const review = await Review.findOne({comment: 'Nice website for exploring new location and generating trips'});
 
-				const delRes = await agent.delete(`/api/review/${review.id}`)
+				const delRes = await agent.delete(`/api/review/${review.id}`);
 				
 				expect(delRes).to.have.status(403);
 				expect(delRes.body).to.have.all.keys('message');
@@ -142,10 +142,10 @@ describe('Test suite for reviews controller', function () {
 				const delRes = await chai.request.execute(app)
 					.delete(`/api/review/${review.id}`)
 				
-				expect(delRes).to.have.status(200);
+				expect(delRes).to.have.status(401);
 				expect(delRes.body).to.have.all.keys('message','success');
 				expect(delRes.body.success).to.be.false;
-				expect(delRes.body.message).to.be.equal('You are not Authenticated!');
+				expect(delRes.body.message).to.be.equal('Unauthorized: Token not provided');
 			}
 			catch(err) {
 				throw err;

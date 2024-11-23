@@ -1,6 +1,5 @@
 import * as chaiModule from "chai";
 import chaiHttp from "chai-http";
-import User from '../models/user.js';
 import app from '../index.js';
 import fs from 'fs';
 
@@ -267,5 +266,49 @@ describe('Test Suite for User Controller', function () {
 					done(err);
 				});
 		});
-	})
+	});
+
+	describe('Test cases for log out functionality', function() {
+		it('Log out user from the system if user is already authenticated.', async function(){
+			const agent = chai.request.agent(app);
+
+			try {
+				const signInRes = await agent.post('/api/user/signin')
+					.send({
+						'email': 'ram@gmail.com',
+						'password': 'ram#2005'
+					});
+
+				expect(signInRes).to.have.cookie('token');
+
+				const logOutRes = await agent.get('/api/logout');
+
+				expect(logOutRes).to.have.status(201);
+				expect(logOutRes.body).to.have.all.keys('success');
+				expect(logOutRes.body.success).to.be.true;
+				expect(logOutRes).to.not.have.cookie('token');
+			}
+			catch (err) {
+				throw err;
+			}
+			finally {
+				await agent.close();
+			}
+		});
+
+		it('Prompt an error if user is not authenticated', function(done) {
+			chai.request.execute(app)
+				.get('/api/logout')
+				.then(function(res) {
+					expect(res).to.have.status(200);
+					expect(res.body).to.have.all.keys('success','message');
+					expect(res.body.success).to.be.false;
+					expect(res.body.message).to.be.equal('You are not Authenticated!');
+					done();
+				})
+				.catch(function(err) {
+					done(err);
+				});
+		});
+	});
 });

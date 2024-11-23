@@ -62,6 +62,7 @@ describe('Test-cases for searchTrip Functionality', function() {
 			'maxBudget': '8000'
 		})
 		.then(function(res) {
+			console.log(res.body);
 			expect(res).to.have.status(200);
 			done();
 		})
