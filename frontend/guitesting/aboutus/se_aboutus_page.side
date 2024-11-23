@@ -1,0 +1,253 @@
+{
+  "id": "14d32c6f-e903-48fb-a1fa-b498186ef452",
+  "version": "2.0",
+  "name": "se_aboutus_page",
+  "url": "http://localhost:3000",
+  "tests": [{
+    "id": "dc2e9083-f7a8-44c2-8159-ba4bb820f85d",
+    "name": "buttons_verify",
+    "commands": [{
+      "id": "488acda6-a199-4a00-980e-a5d5c70420ac",
+      "comment": "",
+      "command": "open",
+      "target": "/about-us",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "21160a23-f5a8-4c99-807e-a8824585957e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1512x857",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9082c04b-455c-41fd-a8d7-d536ab6cdaa7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.back-home-button",
+      "targets": [
+        ["css=.back-home-button", "css:finder"],
+        ["xpath=//div[@id='root']/div/header/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Back to Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3dcb02bd-384a-4120-a989-4ea6c9b143b6",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "linkText=Sign Up",
+      "targets": [
+        ["linkText=Sign Up", "linkText"],
+        ["css=.css-1j2d3ga-MuiButtonBase-root-MuiButton-root", "css:finder"],
+        ["xpath=//a[contains(text(),'Sign Up')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/header/div/div/a[4]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/signup')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Sign Up')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e515d651-47b2-472c-af86-270639d460ba",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.MuiButton-text:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/header/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7a214efd-847c-442c-8621-71a19c9e8e5e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=About Us",
+      "targets": [
+        ["linkText=About Us", "linkText"],
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'About Us')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/header/div/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/about-us')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'About Us')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4516dc8e-0e84-4be2-afa4-8df696e8688d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.about-website > h2",
+      "targets": [
+        ["css=.about-website > h2", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/h2", "xpath:idRelative"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'About the Website')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "02781fbe-9f37-4542-afc6-ac1ca6fc1331",
+      "comment": "",
+      "command": "click",
+      "target": "css=p",
+      "targets": [
+        ["css=p", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69dd19b9-3019-48a9-a97b-226183c23720",
+      "comment": "",
+      "command": "click",
+      "target": "css=.team-card:nth-child(1) > .team-photo",
+      "targets": [
+        ["css=.team-card:nth-child(1) > .team-photo", "css:finder"],
+        ["xpath=//img[@alt='Kavit Patel']", "xpath:img"],
+        ["xpath=//div[@id='root']/div/div[2]/div/div/img", "xpath:idRelative"],
+        ["xpath=//img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9709da99-ba37-482b-8775-13cf5395f6e3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.team-card:nth-child(1) .instagram",
+      "targets": [
+        ["css=.team-card:nth-child(1) .instagram", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[2]/div/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://instagram.com/kavit007')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win8140",
+      "windowTimeout": 2000
+    }, {
+      "id": "cd6508fd-724b-443e-89f5-fcb2a90217f6",
+      "comment": "",
+      "command": "storeWindowHandle",
+      "target": "root",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "01781bb1-9337-45ab-956a-6ed8af5eceea",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win8140}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a035d865-1202-45e6-8846-04b665d8700c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2db93787-34fb-411c-8376-a2f1ebe7dee7",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e895c883-ac02-4bb6-ab5c-561bf7577f77",
+      "comment": "",
+      "command": "click",
+      "target": "css=.team-card:nth-child(2) > .team-photo",
+      "targets": [
+        ["css=.team-card:nth-child(2) > .team-photo", "css:finder"],
+        ["xpath=//img[@alt='Darpan Lunagariya']", "xpath:img"],
+        ["xpath=//div[@id='root']/div/div[2]/div/div[2]/img", "xpath:idRelative"],
+        ["xpath=//div[2]/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d8b97df-1cfe-4ea0-99fb-d7d3e6f6257c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.team-card:nth-child(2) .instagram",
+      "targets": [
+        ["css=.team-card:nth-child(2) .instagram", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[2]/div/div[2]/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://instagram.com/darpan_1405')]", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win5734",
+      "windowTimeout": 2000
+    }, {
+      "id": "4ddaed3b-21ab-4179-a2bd-0d50cae8ee07",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win5734}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5d0e6ebf-07aa-4ea6-b114-3289f42a5601",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ec4ad4f8-d535-442b-966b-3c8956816495",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3f012e44-1009-4c2a-bc95-b5eecf3fde80",
+      "comment": "",
+      "command": "click",
+      "target": "css=.team-card:nth-child(3) .instagram > .fab",
+      "targets": [
+        ["css=.team-card:nth-child(3) .instagram > .fab", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[2]/div/div[3]/div/a/i", "xpath:idRelative"],
+        ["xpath=//div[3]/div/a/i", "xpath:position"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win7917",
+      "windowTimeout": 2000
+    }, {
+      "id": "85fbe8e4-7999-43bf-b877-70bb84e108cd",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win7917}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2a4c9401-498d-4a66-8aa4-efc6cf950935",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "df426951-13a1-4b9d-bc29-c26184e03422",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "02bfe3a5-b00c-466d-8d29-81b2ac4618d7",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["dc2e9083-f7a8-44c2-8159-ba4bb820f85d"]
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}
