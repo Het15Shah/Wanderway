@@ -186,11 +186,11 @@ async function setUserProfile(req, res) {
     }
 }
 
-
 async function deleteAccount(req, res) {
   try {
     // Extract token from cookies
-    const token = req.cookies.token;
+    // const token = req.cookies.token;
+    const token = req.headers["token"];
     // console.log('token' ,token)
     if (!token) {
       return res
@@ -201,19 +201,19 @@ async function deleteAccount(req, res) {
     // Decode the token to get the userId (ObjectId)
     let userId;
     try {
-      const decodedToken = jwt.verify(token, "Hari@2141"); 
+      const decodedToken = jwt.verify(token, "Hari@2141");
       userId = decodedToken._id; // Assuming the token contains userId
       // console.log('userId' , userId);
     } catch (error) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid token" });
+      return res.status(400).json({ success: false, message: "Invalid token" });
     }
 
     // Find and delete the user
-    const deletedUser = await User.findOneAndDelete({ _id:userId });
+    const deletedUser = await User.findOneAndDelete({ _id: userId });
     if (!deletedUser) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     // Clear the token cookie
@@ -224,10 +224,11 @@ async function deleteAccount(req, res) {
       .json({ success: true, message: "Account deleted successfully" });
   } catch (error) {
     console.error("Error deleting account:", error);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 }
-
 
 module.exports = {
   getUserProfile,
@@ -235,7 +236,5 @@ module.exports = {
   userSignIn,
   userSignUp,
   userUpdate,
-  deleteAccount
+  deleteAccount,
 };
-
-

@@ -20,20 +20,34 @@ const { checkForAuthentication } = require("./middlewares/auth");
 const PORT = 8000;
 
 const app = express();
+// app.use(
+//   cors({
+//     origin: config.FRONTEND_URL,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: config.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "authorization", "token"],
     credentials: true,
   })
+  
 );
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
 // Connection
 mongoose
-  .connect(
-    "mongodb+srv://shahhet525:UWvWpIIhwWWslp0S@cluster0.ex1lr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(config.MONGODB_URL)
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -60,6 +74,9 @@ app.use("/api/review", reviewRouter);
 app.use("/api/myTrip", myTripRouter);
 app.use("/api/customTrip", customTripRouter);
 app.use("/api/searchTrip", searchTripRouter);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 // Logout Functionality
 

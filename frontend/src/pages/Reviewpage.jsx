@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MDBContainer,
   MDBRow,
@@ -11,18 +11,16 @@ import {
 } from "mdb-react-ui-kit";
 import "../CSS/ReviewPage.css";
 import Footer from "../components/Footer";
-import { useEffect } from "react";
 import useAPI from "../hooks/useAPI";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Box } from "@mui/system";
 
 export default function ReviewPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
-  // const [rating, setRating] = useState(0);
-
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState({
     name: "",
@@ -41,9 +39,9 @@ export default function ReviewPage() {
         comment: review.comment,
         rating: review.rating,
       };
-      console.log("Review data:", reviewData);
+      // console.log("Review data:", reviewData);
+
       const response = await POST("/api/review", reviewData);
-      // console.log("Review submitted:", response);
       toast.success("Review submitted successfully!");
       // Clear the form
       setReview({
@@ -62,7 +60,6 @@ export default function ReviewPage() {
     const fetchReviews = async () => {
       try {
         const response = await GET("/api/review");
-        // console.log("Reviews:", response);
         setReviews(response.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -72,31 +69,30 @@ export default function ReviewPage() {
 
     fetchReviews();
   }, [submitReview]);
-  // Handle form input changes
+
   const handleReviewChange = (e) => {
     const { name, value } = e.target;
     setReview((prevReview) => ({ ...prevReview, [name]: value }));
   };
 
-  // Handle star rating
   const setRating = (rating) => {
     setReview((prevReview) => ({ ...prevReview, rating }));
   };
 
-  // Submit review and clear form
-
-  // const fetchReviews = async () => {
-  //   try {
-  //     const response = await GET("/api/review");
-  //     console.log("Reviews:", response);
-  //     setReviews(response);
-  //   } catch (error) {
-  //     console.error("Error fetching reviews:", error);
-  //   }
-  // };
-
-  // Delete review by index
-  const deleteReview = (indexToDelete) => {
+  const deleteReview = async (indexToDelete) => {
+    const reviewId = reviews[indexToDelete]?._id;
+    const response = await POST(`/api/review/delete/${reviewId}`)
+      .then((response) => {
+        if (response.status === 403) {
+          toast.error("You are not authorized to delete this review.");
+          return;
+        }
+        // console.log("Review deleted:", response);
+        toast.success("Review deleted successfully!");
+      })
+      .catch((error) => {
+        toast.error("Failed to delete review. Please try again.");
+      });
     setReviews((prevReviews) =>
       prevReviews.filter((_, index) => index !== indexToDelete)
     );
@@ -104,19 +100,21 @@ export default function ReviewPage() {
 
   return (
     <>
-      <MDBContainer className="py-5" style={{ backgroundColor: "#f0f8ff" }}>
-        {/* Back to Home Button */}
-
-        {/* Add Review Form in a Card */}
+      <ToastContainer /> {/* Ensure this line is included */}
+      <MDBContainer className="py-5" style={{ backgroundColor: "#ffffff" }}>
         <MDBRow className="justify-content-center my-5">
           <MDBCol md="6">
-            <MDBCard style={{ backgroundColor: "#ffffff", boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"  }}>
+            <MDBCard
+              style={{
+                backgroundColor: "#f0f8ff",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               <MDBCardBody>
                 <h4 className="text-center mb-4" style={{ color: "#0275d8" }}>
                   Add Your Review
                 </h4>
                 <form onSubmit={submitReview}>
-                  {/* Name Field */}
                   <h6>Your Name</h6>
                   <MDBInput
                     name="name"
@@ -126,13 +124,12 @@ export default function ReviewPage() {
                     required
                     style={{
                       backgroundColor: "#ffffff",
-                      border: "0.11px solid #000000",
+                      border: "2px solid #0275d8",
                       borderRadius: "5px",
                       padding: "5px",
                     }}
                   />
 
-                  {/* Email Field */}
                   <h6>Your Email</h6>
                   <MDBInput
                     name="email"
@@ -143,13 +140,12 @@ export default function ReviewPage() {
                     required
                     style={{
                       backgroundColor: "#ffffff",
-                      border: "0.000001px solid #000000",
+                      border: "2px solid #0275d8",
                       borderRadius: "5px",
                       padding: "5px",
                     }}
                   />
 
-                  {/* Comment Field */}
                   <h6>Your Comment</h6>
                   <MDBInput
                     name="comment"
@@ -161,13 +157,12 @@ export default function ReviewPage() {
                     required
                     style={{
                       backgroundColor: "#ffffff",
-                      border: "0.1px solid #000000",
+                      border: "2px solid #0275d8",
                       borderRadius: "5px",
                       padding: "5px",
                     }}
                   />
 
-                  {/* Star Rating Selection */}
                   <div className="star-rating mb-3 text-center">
                     <span>Rating:</span>
                     {[...Array(5)]?.map((_, i) => (
@@ -204,22 +199,22 @@ export default function ReviewPage() {
           </MDBCol>
         </MDBRow>
 
-        {/* Review Section */}
-        <h3 className="text-center fw-bold mb-4" style={{ color: "#0275d8" }}>
+
+    <h3 className="text-center fw-bold mb-4" style={{ color: "#0275d8" }}>
           Customer Reviews
         </h3>
 
-        {/* Display Existing Reviews */}
         <MDBRow className="text-center">
           {reviews?.length === 0 ? (
             <p className="text-center">No reviews yet</p>
-          ) : (
+            ) : (
+          
             reviews?.map((rev, index) => (
               <MDBCol md="4" className="mb-4" key={index}>
+
                 <MDBCard
-                  style={{ backgroundColor: "#fff9e6", position: "relative" }}
+                  style={{ backgroundColor: "#f0f8ff", position: "relative" , height: "100%" }}
                 >
-                  {/* Delete Review Button */}
                   <MDBIcon
                     fas
                     icon="trash-alt"
@@ -236,17 +231,15 @@ export default function ReviewPage() {
                   />
 
                   <MDBCardBody className="py-4">
-                    {/* Display User's Name */}
                     <h5 className="font-weight-bold">
                       {rev.user?.fullName || "Anonymous"}
                     </h5>
-                    {/* Fallback to "Anonymous" if name is not available */}
 
-                    {/* Display Star Rating */}
                     <MDBTypography
                       listUnStyled
                       className="d-flex justify-content-center"
                     >
+                  
                       {[...Array(rev.rating)]?.map((_, i) => (
                         <MDBIcon
                           key={i}
@@ -257,20 +250,17 @@ export default function ReviewPage() {
                           }`}
                         />
                       ))}
+                      
                     </MDBTypography>
 
-                    {/* Display Review Comment */}
                     <p className="mt-2">{rev.comment}</p>
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-            ))
-          )}
+            )))}
         </MDBRow>
-
-        {/* Add Review Form in a Card */}
       </MDBContainer>
       <Footer />
     </>
-  );
-}
+  ); 
+} 

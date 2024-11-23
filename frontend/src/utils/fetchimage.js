@@ -1,24 +1,25 @@
 // import axios from "axios";
-// import { createClient } from 'pexels';
+import { createClient } from "pexels";
+import config from "../config";
+// const { createClient } = require("pexels");
+// const config = require("../config");
 
-const { createClient } = require('pexels');
-
-const client = createClient('9eNdOrrjY5sGHhwhnQkQjIO5XH6JUAFN2VuEGbRErc0VPKvnzyu03nBn');
+const client = createClient(config.PEXELS_API);
 let query;
 let imageNum;
 
-const fetchImage = async (query,imageNum) => {
-const data = await client.photos.search({ query, per_page: imageNum });
+const fetchImage = async (query, imageNum) => {
+  const data = await client.photos.search({ query, per_page: imageNum });
 
-const images = data.photos.map(photo => photo.src.original);
+  const images = data.photos.map((photo) => photo.src.original);
 
-// for (let i = 0; i < images.length; i++) {
-//   console.log(images[i]);
-// }   
-// console.log(images);
-return images;
-}
+  // for (let i = 0; i < images.length; i++) {
+  //   console.log(images[i]);
+  // }
+  // console.log(images);
+  return images;
+};
 
-fetchImage("goa",imageNum);
+fetchImage(query, imageNum);
 
-module.exports = fetchImage;
+export default fetchImage;

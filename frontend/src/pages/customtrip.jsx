@@ -183,7 +183,7 @@ import { Container, Box, Typography, Paper, Grid, Button } from '@mui/material';
 import { BeachAccess as BeachAccessIcon, Flight as FlightIcon } from '@mui/icons-material';
 import { MoneyOff as MoneyOffIcon, CurrencyExchange as CurrencyExchangeIcon, Star as StarIcon, Diamond as DiamondIcon } from '@mui/icons-material'; // New icons
 import { Container as BootstrapContainer } from 'react-bootstrap';
-
+import config from "../config";
 const CreateTrip = () => {
   const navigate = useNavigate();
   const [selectedDestination, setSelectedDestination] = useState("");
@@ -208,7 +208,7 @@ const CreateTrip = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/api/customTrip", {
+      const response = await axios.post(`${config.BACKEND_API}/api/customTrip`, {
         destination: selectedDestination,
         budget: Object.keys(budgetOptions).filter(option => budgetOptions[option]),
         activities: activities,

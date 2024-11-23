@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
 import Footer from "../components/Footer";
 import {
   Box,
@@ -33,6 +34,7 @@ import VpnKey from "@mui/icons-material/VpnKey";
 import ExitToApp from "@mui/icons-material/ExitToApp";
 import axios from "axios";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import config from "../config";
 
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
@@ -50,6 +52,30 @@ const TravelProfilePage = () => {
   const [gender, setGender] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
   const [sidebarName, setSidebarName] = useState(name);
+
+  const handleLogout = async () => {
+    try {
+      const result = await GET("/api/logout");
+      console.log("result", result);
+      toast.success("Logged out successfully!");
+      // navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      toast.error("Failed to log out. Please try again.");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await POST("/api/user/delete");
+      console.log("Account deleted successfully!");
+      toast.success("Account deleted successfully!");
+      // navigate("/signup");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast.error("Failed to delete account. Please try again.");
+    }
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -102,13 +128,14 @@ const TravelProfilePage = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/user/update?userId=${userName}`,
+        `${config.BACKEND_API}/api/user/update?userId=${userName}`,
         userData,
         { headers }
       );
       toast.success("Profile updated successfully!");
-      // console.log("response", response);
-      setSidebarName(name);
+
+      console.log("response", response);
+      setSidebarName(response.data.user.fullName);
     } catch (err) {
       console.log("Error ->", err);
       toast.error("Server Problem, Failed to Update user data.");
@@ -181,6 +208,7 @@ const TravelProfilePage = () => {
         height: "auto",
       }}
     >
+      <ToastContainer />
       <Box
         sx={{
           // minHeight: "100vh",
@@ -220,9 +248,7 @@ const TravelProfilePage = () => {
                   onChange={handleImageUpload}
                 />
                 <Avatar
-                  src={
-                    previewImage 
-                  }
+                  src={previewImage}
                   sx={{
                     width: 150,
                     height: 150,
@@ -235,10 +261,9 @@ const TravelProfilePage = () => {
                       boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
                     },
                     marginBottom: 2,
-                    marginTop: -6
+                    marginTop: -6,
                   }}
                 />
-              
               </label>
               {previewImage && (
                 <IconButton
@@ -259,11 +284,10 @@ const TravelProfilePage = () => {
                   <ClearIcon fontSize="small" />
                 </IconButton>
               )}
-              
             </Box>
             {/* </Box> */}
             <Typography sx={{ fontWeight: 500, color: "#495057" }}>
-              {sidebarName || "John Doe"}
+              {name || "John Doe"}
             </Typography>
             <Typography variant="body2" sx={{ color: "#6c757d", mt: 0.5 }}>
               {email || "john@example.com"}
@@ -306,6 +330,7 @@ const TravelProfilePage = () => {
               button
               component="a"
               href="/login"
+              onClick={handleLogout}
               sx={{
                 mb: 1,
                 bgcolor: "#fff",
@@ -337,6 +362,7 @@ const TravelProfilePage = () => {
               button
               component="a"
               href="/signup"
+              onClick={handleDeleteAccount}
               sx={{
                 mb: 1,
                 bgcolor: "#fff",

@@ -5,19 +5,38 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import useAPI from "../hooks/useAPI";
 
 const Navbar = memo(() => {
+  const {GET} = useAPI();
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
-    const validateUser = () => {
+    const validateUser = async() => {
       const authToken = Cookies.get("token");
-      console.log(authToken, "authToken");
-      if (authToken) navigate("/");
+      // console.log(authToken, "authToken");
+      // Cookies.set("token_sdj", authToken, { expires: 1 });
+      if (authToken) {
+        try {
+          const response = await GET("/api/user/myProfile", {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+          console.log(response.data, "response");
+          if (response.data.user.role === "ADMIN") {
+            setIsAdmin(true);
+          }
+          navigate("/");
+        } catch (error) {
+          console.error("Error validating user:", error);
+        }
+      }
     };
+    
 
     validateUser();
   }, []);
@@ -107,6 +126,29 @@ const Navbar = memo(() => {
             >
               About Us
             </Button>
+
+           {isAdmin && (<Button
+              component={Link}
+              to="/add-trips"
+              variant="text"
+              color="inherit"
+              sx={{
+                fontSize: "18px",
+                textTransform: "none",
+                color: "#fff",
+                "&:hover": {
+                  color: "#FF8C00",
+                  transform: "scale(1.1)",
+                  transition: "transform 0.3s ease",
+                  textShadow: "0px 0px 10px rgba(255, 255, 255, 0.8)",
+                },
+              }}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              Add trips
+            </Button>
+            )}
             
 {isLoggedIn && (
               <>

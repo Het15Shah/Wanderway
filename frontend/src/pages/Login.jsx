@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import useAPI from "../hooks/useAPI";
 import { toast } from "react-hot-toast";
 import { isValidEmail } from "../utils/validators";
+import Cookies from "js-cookie";
+
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -38,6 +40,8 @@ function LoginPage() {
       const response = await POST("/api/user/signin", loginCredentials);
 
       if (response.data.success === true) {
+        Cookies.set("token", response.data.token);
+
         toast.success(response.data.message);
         navigate("/");
       } else {

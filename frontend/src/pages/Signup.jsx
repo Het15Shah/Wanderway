@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { isValidEmail } from "../utils/validators";
 import useAPI from '../hooks/useAPI';
 import { toast } from "react-hot-toast";
+import Cookies from "js-cookie";
+
 
 function SignUpPage() {
     const { POST } = useAPI();
@@ -62,6 +64,7 @@ function SignUpPage() {
             if (response.data.success === true) {
                 toast.success(response.data.message);
                 navigate("/login");
+                Cookies.set("token", response.data.token);
             }
             else{
                 toast.error(response.data.message);

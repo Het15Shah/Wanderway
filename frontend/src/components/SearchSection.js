@@ -4,7 +4,6 @@ import { blue, orange } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import useAPI from "../hooks/useAPI";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import fetchImage from "../utils/fetchimage.js";
 
 const SearchSection = () => {
   const { GET } = useAPI();
@@ -216,7 +215,7 @@ const SearchSection = () => {
                       alignItems: "center",
                       justifyContent: "center",
                       textAlign: "center",
-                      backgroundImage: `url(${plan.imageURL})`,
+                      backgroundImage: `url(${plan?.imageURL})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       cursor: "pointer",

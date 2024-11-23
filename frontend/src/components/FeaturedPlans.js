@@ -90,7 +90,7 @@ const FeaturedPlans = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 textAlign: "center",
-                backgroundImage: `url(${plan.imageUrl})`,
+                backgroundImage: `url(${plan?.imageUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 cursor: "pointer",
