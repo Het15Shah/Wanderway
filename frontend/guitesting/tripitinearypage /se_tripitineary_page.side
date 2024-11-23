@@ -1,0 +1,74 @@
+{
+  "id": "0f94d148-72dd-473f-9dc7-760d22c86f9a",
+  "version": "2.0",
+  "name": "se_tripitineary_page",
+  "url": "http://localhost:3000",
+  "tests": [{
+    "id": "24de8812-9e50-44de-98f0-36f04fd43c78",
+    "name": "buttons_verify",
+    "commands": [{
+      "id": "7a1e1182-daa9-4448-90cc-6aa48ab200d5",
+      "comment": "",
+      "command": "open",
+      "target": "/trip/1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fca314b6-bd7f-450b-af2f-b30c2f15f204",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1512x870",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c2bb16f2-0bc7-4701-b530-1ac54c117233",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButtonBase-root",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Book Your Trip Now')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "83a2b565-9209-4a2d-9aba-be7ea10ab554",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Book Your Trip Now')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7ccd4b6-cbea-4e21-8ae1-019f9cae9fc9",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButtonBase-root",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Book Your Trip Now')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "de93e543-cd31-47c1-8fe2-74b49f43ad4a",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["24de8812-9e50-44de-98f0-36f04fd43c78"]
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}

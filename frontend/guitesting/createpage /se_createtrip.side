@@ -1,0 +1,234 @@
+{
+  "id": "ffe45ae1-7084-47e6-954b-397a33a10e48",
+  "version": "2.0",
+  "name": "se_createtrip",
+  "url": "http://localhost:3000/create",
+  "tests": [{
+    "id": "4987bf7b-6489-46b0-b2ad-b62df4e4460e",
+    "name": "Textfields",
+    "commands": [{
+      "id": "eb031f1b-d8d4-45a7-8829-3899fb309ec7",
+      "comment": "",
+      "command": "open",
+      "target": "/create",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a30b9748-b001-48a3-9aab-d175c2fe3885",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1512x857",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1a5588c0-2607-4ede-b00c-cce8e4384a1c",
+      "comment": "",
+      "command": "click",
+      "target": "css=input",
+      "targets": [
+        ["css=input", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "26d9ef01-3794-4c75-9b75-33c4c8ac7f2c",
+      "comment": "",
+      "command": "type",
+      "target": "css=input",
+      "targets": [
+        ["css=input", "css:finder"],
+        ["xpath=//input[@value='Ahmedabad']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Ahmedabad"
+    }, {
+      "id": "7d02814d-3d5d-4adb-bc8b-433c18c29be8",
+      "comment": "",
+      "command": "click",
+      "target": "css=textarea",
+      "targets": [
+        ["css=textarea", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "90f8e945-c096-49ec-bfbf-159f30d279b5",
+      "comment": "",
+      "command": "type",
+      "target": "css=textarea",
+      "targets": [
+        ["css=textarea", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "exploring, swimming etc"
+    }, {
+      "id": "f96eac71-8929-40ac-92cd-cd7f7f1a1f7f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-root:nth-child(1) .MuiTypography-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiGrid-root:nth-child(1) .MuiTypography-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[3]/div/div/div/div/div/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Affordable options for everyone.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e2e9f5a-49e0-48ad-8a72-4e6333359606",
+      "comment": "",
+      "command": "click",
+      "target": "css=textarea",
+      "targets": [
+        ["css=textarea", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a25eb315-eb49-4eeb-9692-e41d0a0c533b",
+      "comment": "",
+      "command": "type",
+      "target": "css=textarea",
+      "targets": [
+        ["css=textarea", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "exploring, swimming etc "
+    }]
+  }, {
+    "id": "5b1fef2d-60d6-4166-ba6a-3756795edba3",
+    "name": "buttons_verify",
+    "commands": [{
+      "id": "6f128e6c-cb09-4eff-b724-135191328a62",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/create",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5e50723c-b76c-4836-acf8-c0cc58a46f78",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1512x857",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7f8cbcac-1b06-4e09-9368-fda6d8c3a71c",
+      "comment": "",
+      "command": "click",
+      "target": "css=input",
+      "targets": [
+        ["css=input", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "093810be-f336-4b63-a959-089d13d3f4a5",
+      "comment": "",
+      "command": "type",
+      "target": "css=input",
+      "targets": [
+        ["css=input", "css:finder"],
+        ["xpath=//input[@value='Ahemdabad']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Ahemdabad"
+    }, {
+      "id": "b0d1d434-5461-4b59-a2c1-6e80dedf06b2",
+      "comment": "",
+      "command": "click",
+      "target": "css=textarea",
+      "targets": [
+        ["css=textarea", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff37f2db-57b9-4c1f-a6ef-40cf01299c6f",
+      "comment": "",
+      "command": "type",
+      "target": "css=textarea",
+      "targets": [
+        ["css=textarea", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "exploring places , going to riverfront and leisure activites"
+    }, {
+      "id": "9e39c009-edd1-46e7-8d4b-499639c4be6f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-root:nth-child(1) .MuiTypography-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiGrid-root:nth-child(1) .MuiTypography-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[3]/div/div/div/div/div/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Affordable options for everyone.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "16c6cd29-9259-4a2e-bbf2-3c8ab26d3999",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-root:nth-child(2) > .MuiPaper-root .MuiTypography-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiGrid-root:nth-child(2) > .MuiPaper-root .MuiTypography-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[3]/div/div/div[2]/div/div/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Great options for a middle ground.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "23da29a1-0ef2-434a-a06d-413e1963f56d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-grid-sm-4:nth-child(1) > .MuiPaper-root",
+      "targets": [
+        ["css=.MuiGrid-grid-sm-4:nth-child(1) > .MuiPaper-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[3]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a00856d-17d2-468a-b056-e6475deb3d73",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[2]/div[4]/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Generate Trip')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c6795c3-f009-4e1d-a216-17164a69f443",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,211)",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "ce26b1f3-9a18-4a64-a942-f49b43f4a338",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["4987bf7b-6489-46b0-b2ad-b62df4e4460e"]
+  }],
+  "urls": ["http://localhost:3000/", "http://localhost:3000/create"],
+  "plugins": []
+}
