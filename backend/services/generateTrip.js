@@ -54,7 +54,6 @@
 // const activity = ["Effile Tower", "Muesum"];
 // module.exports = { generateResponse };
 
-
 const Groq = require("groq-sdk");
 const Trip = require("../models/trip");
 
@@ -65,8 +64,8 @@ async function generateResponse(prompt) {
     // Use Groq API to generate a response
     const chatCompletion = await groq.chat.completions.create({
       messages: [
-        { role: "system", content: "You are a helpful assistant." },
-        { role: "user", content: prompt },
+        { role: "system", content: "You are an assistant that generates JSON responses strictly according to the given schema." },
+        { role: "user", content: `${prompt}\nEnsure the output is wrapped in ```json ... ``` for correct parsing.` },
       ],
       model: "llama3-8b-8192", // Replace with the desired Groq model
       temperature: 1,
