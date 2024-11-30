@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config";
 import Cookies from "js-cookie";
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 const API = axios.create({
   baseURL: config.BACKEND_API,
