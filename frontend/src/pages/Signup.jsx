@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 function SignUpPage() {
     const { POST } = useAPI();
     const navigate = useNavigate();
+    const [justVerify, setJustVerify] = useState(false);
+
     const [formData, setFormData] = useState({
         username: '',
         fullName: '',
@@ -31,7 +33,7 @@ function SignUpPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setJustVerify(true);
         if(!isValidEmail(formData.email)) return;
 
         if (formData.password !== formData.confirmPassword) {
@@ -135,6 +137,8 @@ function SignUpPage() {
                             type="password"
                             variant="outlined"
                             value={formData.password}
+                            error={justVerify && formData.password.length < 8}
+                            helperText={justVerify && formData.password.length < 8 && 'Password must be at least 8 characters'}
                             onChange={handleChange}
                             InputProps={{
                                 startAdornment: <Lock sx={{ mr: 1 }} />,
@@ -156,7 +160,7 @@ function SignUpPage() {
                         />
 
                         <FormControlLabel
-                            control={<Checkbox name="agreeToTerms" color="primary" checked={formData.agreeToTerms} onChange={handleChange} />}
+                            control={<Checkbox required name="agreeToTerms" color="primary" checked={formData.agreeToTerms} onChange={handleChange} />}
                             label={
                                 <Typography variant="body2">
                                     I agree to all statements in <Link href="#" underline="always">Terms of service</Link>

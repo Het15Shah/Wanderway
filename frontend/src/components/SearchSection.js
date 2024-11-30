@@ -120,6 +120,10 @@ const SearchSection = () => {
               name="budget"
               type="number"
               value={searchCriteria.budget}
+              error={searchCriteria.budget < 0}
+              helperText={
+                searchCriteria.budget < 0 ? "Budget cannot be negative" : ""
+              }
               onChange={handleSearchChange}
               InputProps={{
                 startAdornment: (
