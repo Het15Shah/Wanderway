@@ -10,6 +10,7 @@ import {
   Link,
   Box,
   Paper,
+  FormHelperText
 } from "@mui/material";
 import { Person, Email, Lock } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
