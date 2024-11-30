@@ -14,13 +14,13 @@ async function searchTrip(req, res) {
 
   // Filter by positive budget
   if (maxBudget) {
-    // const budgetValue = parseInt(maxBudget, 10);
-    // console.log(budgetValue);
     const budgetValue = parseInt(maxBudget, 10);
-    if (isNaN(budgetValue) || budgetValue <= 0) { // Validate for valid positive number
+    // console.log(budgetValue);
+    if (budgetValue > 0) {
+      query.budget = { $lte: budgetValue };
+    } else {
       return res.status(400).json({ message: "Budget must be a positive number." });
     }
-    query.budget = { $lte: budgetValue };
   }
 
   try {
