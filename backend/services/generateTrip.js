@@ -65,7 +65,7 @@ async function generateResponse(prompt) {
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         { role: "system", content: "You are an assistant that generates JSON responses strictly according to the given schema." },
-        { role: "user", content: `${prompt}\nEnsure the output is wrapped in ```json ... ``` for correct parsing.` },
+        { role: "user", content: `${prompt}\nEnsure the output is wrapped in \`\`\`json ... \`\`\` for correct parsing.` },
       ],
       model: "llama3-8b-8192", // Replace with the desired Groq model
       temperature: 1,
