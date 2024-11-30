@@ -215,7 +215,13 @@ const SearchSection = () => {
                       alignItems: "center",
                       justifyContent: "center",
                       textAlign: "center",
-                      backgroundImage: `url(${plan?.imageURL})`,
+                      // backgroundImage: `url(${plan?.imageURL})`,
+                      backgroundImage: `url(${
+                        plan?.imageURL &&
+                        plan?.imageURL.startsWith("https://example.com")
+                          ? "https://media.timeout.com/images/106080481/750/422/image.jpg"
+                          : plan.imageURL
+                      })`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       cursor: "pointer",
