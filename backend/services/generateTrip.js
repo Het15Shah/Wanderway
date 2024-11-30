@@ -211,6 +211,7 @@ async function generateResponse(prompt) {
 
     // Parse JSON
     const parsedResponse = JSON.parse(jsonString);
+    console.log("Parsed response:", parsedResponse);
 
     // Ensure required fields are present in the parsed JSON
     if (!parsedResponse.title || !parsedResponse.destination || !parsedResponse.startDate || !parsedResponse.endDate || !parsedResponse.budget) {
