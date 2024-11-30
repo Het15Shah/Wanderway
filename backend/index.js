@@ -52,7 +52,7 @@ app.options("*", cors(corsOptions)); // Handle preflight requests
 
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Origin", "https://wanderways-travel.netlify.app");
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Token");
     return res.status(200).json({});
