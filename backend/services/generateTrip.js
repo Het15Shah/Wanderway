@@ -142,7 +142,7 @@ async function generateResponse(prompt) {
       console.error("Empty response content.");
       throw new Error("Groq response is empty.");
     }
-
+    console.log("Response content:", responseContent);
     // Extract JSON block
     const jsonMatch = responseContent.match(/```json([\s\S]*?)```/);
     if (!jsonMatch || jsonMatch.length < 2) {
