@@ -118,7 +118,65 @@
     // module.exports = { generateResponse };
 
 
-    const Groq = require("groq-sdk");
+//     const Groq = require("groq-sdk");
+// const Trip = require("../models/trip");
+
+// const groq = new Groq();
+
+// async function generateResponse(prompt) {
+//   try {
+//     const chatCompletion = await groq.chat.completions.create({
+//       messages: [
+//         { role: "system", content: "You are an assistant that generates JSON responses strictly according to the given schema." },
+//         { role: "user", content: `${prompt}\nEnsure the output is wrapped in \`\`\`json ... \`\`\` for correct parsing.` },
+//       ],
+//       model: "llama3-8b-8192",
+//       temperature: 1,
+//       max_tokens: 1024,
+//       top_p: 1,
+//       stream: false,
+//     });
+
+//     const responseContent = chatCompletion.choices[0]?.message?.content;
+//     if (!responseContent) {
+//       console.error("Empty response content.");
+//       throw new Error("Groq response is empty.");
+//     }
+//     console.log("Response content:", responseContent);
+//     // Extract JSON block
+//     const jsonMatch = responseContent.match(/```json([\s\S]*?)```/);
+//     if (!jsonMatch || jsonMatch.length < 2) {
+//       console.error("JSON block not found:", responseContent);
+//       throw new Error("JSON block not found in the response.");
+//     }
+
+//     // Parse JSON
+//     const parsedResponse = JSON.parse(jsonMatch[1].trim());
+//     const newTrip = new Trip({
+//       title: parsedResponse.title,
+//       destination: parsedResponse.destination,
+//       startDate: parsedResponse.startDate,
+//       endDate: parsedResponse.endDate,
+//       itinerary: parsedResponse.itinerary,
+//       budget: parsedResponse.budget,
+//       highlights: parsedResponse.highlights,
+//       includedServices: parsedResponse.includedServices,
+//       imageURL: parsedResponse?.imageURL,
+//       created_at: parsedResponse.created_at || new Date(),
+//     });
+
+//     await newTrip.save();
+//     return newTrip;
+//   } catch (error) {
+//     console.error("Error generating content:", error);
+//     throw new Error("Failed to generate trip.");
+//   }
+// }
+
+// module.exports = { generateResponse };
+
+
+const Groq = require("groq-sdk");
 const Trip = require("../models/trip");
 
 const groq = new Groq();
@@ -127,8 +185,8 @@ async function generateResponse(prompt) {
   try {
     const chatCompletion = await groq.chat.completions.create({
       messages: [
-        { role: "system", content: "You are an assistant that generates JSON responses strictly according to the given schema." },
-        { role: "user", content: `${prompt}\nEnsure the output is wrapped in \`\`\`json ... \`\`\` for correct parsing.` },
+        { role: "system", content: "You are an assistant that generates responses strictly according to a given schema." },
+        { role: "user", content: prompt },
       ],
       model: "llama3-8b-8192",
       temperature: 1,
@@ -137,39 +195,46 @@ async function generateResponse(prompt) {
       stream: false,
     });
 
-    const responseContent = chatCompletion.choices[0]?.message?.content;
+    const responseContent = chatCompletion?.choices?.[0]?.message?.content;
     if (!responseContent) {
-      console.error("Empty response content.");
-      throw new Error("Groq response is empty.");
-    }
-    console.log("Response content:", responseContent);
-    // Extract JSON block
-    const jsonMatch = responseContent.match(/```json([\s\S]*?)```/);
-    if (!jsonMatch || jsonMatch.length < 2) {
-      console.error("JSON block not found:", responseContent);
-      throw new Error("JSON block not found in the response.");
+      throw new Error("Groq response is empty or invalid.");
     }
 
+    // Add manual enforcement for JSON block extraction
+    const jsonStartIndex = responseContent.indexOf("{");
+    const jsonEndIndex = responseContent.lastIndexOf("}");
+    if (jsonStartIndex === -1 || jsonEndIndex === -1) {
+      throw new Error("Valid JSON block not found in the response.");
+    }
+
+    const jsonString = responseContent.substring(jsonStartIndex, jsonEndIndex + 1);
+
     // Parse JSON
-    const parsedResponse = JSON.parse(jsonMatch[1].trim());
+    const parsedResponse = JSON.parse(jsonString);
+
+    // Ensure required fields are present in the parsed JSON
+    if (!parsedResponse.title || !parsedResponse.destination || !parsedResponse.startDate || !parsedResponse.endDate || !parsedResponse.budget) {
+      throw new Error("Parsed response is missing required fields.");
+    }
+
     const newTrip = new Trip({
       title: parsedResponse.title,
       destination: parsedResponse.destination,
       startDate: parsedResponse.startDate,
       endDate: parsedResponse.endDate,
-      itinerary: parsedResponse.itinerary,
+      itinerary: parsedResponse.itinerary || [],
       budget: parsedResponse.budget,
-      highlights: parsedResponse.highlights,
-      includedServices: parsedResponse.includedServices,
-      imageURL: parsedResponse?.imageURL,
+      highlights: parsedResponse.highlights || [],
+      includedServices: parsedResponse.includedServices || [],
+      imageURL: parsedResponse.imageURL || "",
       created_at: parsedResponse.created_at || new Date(),
     });
 
     await newTrip.save();
     return newTrip;
   } catch (error) {
-    console.error("Error generating content:", error);
-    throw new Error("Failed to generate trip.");
+    console.error("Error generating content:", error.message);
+    throw new Error("Failed to generate trip. Details: " + error.message);
   }
 }
 
