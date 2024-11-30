@@ -4,11 +4,13 @@ const config = require('../config');
 const genAI = new GoogleGenerativeAI(config.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 const Trip = require('../models/trip');
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
 async function generateResponse(prompt) {
     // console.log(prompt);
     try {
+      await delay(20000);
       const result = await model.generateContent(prompt);
       // console.log(result.response.text());
       const jsonMatch = result.response.text().match(/```json([\s\S]*?)```/);
