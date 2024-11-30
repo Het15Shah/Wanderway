@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 const API = axios.create({
   baseURL: config.BACKEND_API,
-  withCredentials: true,
+  // withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });
 
