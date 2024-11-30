@@ -67,7 +67,7 @@ const tripSchema = new mongoose.Schema({
   },
 });
 An return respone in json format
-Ensure that if trip is cheap budget should not be greater than $2000, for affordbale it should be in between $2000 to $4000, expensive should be witin $10000 
+Ensure that if trip is cheap budget should not be greater than $2000, for affordbale it should be in between $2000 to $4000, expensive should be witin $10000 also ensure that trip is reasonable means don't give for invalid destination(like moon, space,etc..) or activities.
 `;
   const trip = await generateResponse(prompt);
   return res.status(200).json({ success: true, trip: trip });
