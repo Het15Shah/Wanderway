@@ -39,10 +39,6 @@ app.use(
 );
 
 app.options("*", cors({ origin: config.FRONTEND_URL }));
-res.setHeader('Access-Control-Allow-Origin', config.FRONTEND_URL);
-res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-res.setHeader('Access-Control-Allow-Headers', 'content-type, authorization, token');
-
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', '*');
