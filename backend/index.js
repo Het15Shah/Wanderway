@@ -41,18 +41,14 @@ const app = express();
 // app.options("*", cors({ origin: config.FRONTEND_URL }));
 
 const corsOptions = {
-  origin: "https://wanderways-travel.netlify.app", // Your frontend's URL
+  origin: "*", // Your frontend's URL
   methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
   allowedHeaders: ["Content-Type", "Authorization", "Token"], // Allowed headers
-  credentials: true, // Allow cookies/authentication
+  // credentials: true, // Allow cookies/authentication
 };
 
 app.use(cors(corsOptions)); // Apply CORS middleware
 app.options("*", cors(corsOptions)); // Handle preflight requests
-
-// Apply CORS before all other middlewares and routes
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
