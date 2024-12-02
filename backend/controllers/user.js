@@ -92,7 +92,7 @@ async function userUpdate(req, res) {
 
 async function userSignIn(req, res) {
   try {
-    console.log("I am in the signin POST Request");
+    // console.log("I am in the signin POST Request");
 
     const { email, password } = req.body;
 
