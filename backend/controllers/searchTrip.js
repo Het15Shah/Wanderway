@@ -1,9 +1,11 @@
 const Trip = require('../models/trip')
 
 async function searchTrip (req, res)  {
+    //  console.log("Search Trip Called");
     // console.log(req.query);
     const { destination, days, maxBudget } = req.query;
-  
+  //  console.log("Destination", destination);
+   
     // Build query object based on filters
     let query = {};
   
@@ -33,5 +35,4 @@ async function searchTrip (req, res)  {
       res.status(500).json({ message: error.message });
     }
   }
-  
 module.exports = {searchTrip}

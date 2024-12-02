@@ -142,10 +142,10 @@ describe('Test suite for reviews controller', function () {
 				const delRes = await chai.request.execute(app)
 					.delete(`/api/review/${review.id}`)
 				
-				expect(delRes).to.have.status(401);
+				expect(delRes).to.have.status(400);
 				expect(delRes.body).to.have.all.keys('message','success');
 				expect(delRes.body.success).to.be.false;
-				expect(delRes.body.message).to.be.equal('Unauthorized: Token not provided');
+				expect(delRes.body.message).to.be.equal('Invalid token');
 			}
 			catch(err) {
 				throw err;

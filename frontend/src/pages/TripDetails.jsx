@@ -199,7 +199,7 @@ const TripDetails = () => {
         sx={{
           backgroundImage: `url(${
             trip?.imageURL && trip?.imageURL.startsWith("https://example.com")
-              ? imageUrl
+              ? "https://media.timeout.com/images/106080481/750/422/image.jpg"
               : trip.imageURL
           })`,
           width: "100%",

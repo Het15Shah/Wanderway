@@ -35,6 +35,8 @@ import ExitToApp from "@mui/icons-material/ExitToApp";
 import axios from "axios";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import config from "../config";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const TravelProfilePage = () => {
   const { GET, POST } = useAPI();
@@ -52,17 +54,19 @@ const TravelProfilePage = () => {
   const [gender, setGender] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
   const [sidebarName, setSidebarName] = useState(name);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      const result = await GET("/api/logout");
-      console.log("result", result);
-      toast.success("Logged out successfully!");
-      // navigate("/login");
-    } catch (error) {
-      console.error("Error logging out:", error);
-      toast.error("Failed to log out. Please try again.");
-    }
+    Cookies.remove("token");
+    navigate("/login");
+    // try {
+    //   const result = await GET("/api/logout");
+    //   console.log("result", result);
+    //   toast.success("Logged out successfully!");
+    // } catch (error) {
+    //   console.error("Error logging out:", error);
+    //   toast.error("Failed to log out. Please try again.");
+    // }
   };
 
   const handleDeleteAccount = async () => {
@@ -70,7 +74,8 @@ const TravelProfilePage = () => {
       await POST("/api/user/delete");
       console.log("Account deleted successfully!");
       toast.success("Account deleted successfully!");
-      // navigate("/signup");
+      Cookies.remove("token");
+      navigate("/signup");
     } catch (error) {
       console.error("Error deleting account:", error);
       toast.error("Failed to delete account. Please try again.");
@@ -329,7 +334,7 @@ const TravelProfilePage = () => {
             <ListItem
               button
               component="a"
-              href="/login"
+              // href="/login"
               onClick={handleLogout}
               sx={{
                 mb: 1,
@@ -361,9 +366,10 @@ const TravelProfilePage = () => {
             <ListItem
               button
               component="a"
-              href="/signup"
+              // href="/signup"
               onClick={handleDeleteAccount}
               sx={{
+                cursor: "pointer",
                 mb: 1,
                 bgcolor: "#fff",
                 boxShadow: "none",

@@ -8,4 +8,13 @@ const config = {
   PEXELS_API: "9eNdOrrjY5sGHhwhnQkQjIO5XH6JUAFN2VuEGbRErc0VPKvnzyu03nBn",
 };
 
+// const config = {
+//   BACKEND_API: "https://wanderways-travel-api.vercel.app", 
+//   PEXELS_API: "9eNdOrrjY5sGHhwhnQkQjIO5XH6JUAFN2VuEGbRErc0VPKvnzyu03nBn",
+// };
+// const config = {
+//     BACKEND_API: "http://localhost:8000",
+//     PEXELS_API: "9eNdOrrjY5sGHhwhnQkQjIO5XH6JUAFN2VuEGbRErc0VPKvnzyu03nBn",
+//   };
+
 export default config;

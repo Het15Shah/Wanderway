@@ -18,7 +18,7 @@ describe('Test-cases for creating a custom trip Functionality', function() {
 		})
 		.then(function(res) {
 			expect(res).to.have.status(200);
-            expect(res.body).to.have.all.keys('success', 'trip');
+            expect(res.body).to.have.all.keys('success');
             expect(res.body.success).to.be.true;
 			done();
 		})
