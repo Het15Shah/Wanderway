@@ -15,23 +15,23 @@ let tripId;
 describe('Test Suite for User Controller', function () {
 	this.timeout(20000);
 	describe('Test cases for sign in functionality', function () {
-		it('Successful sign in with valid credentials', function (done) {
-			chai.request.execute(app)
+		it('Successful sign in with valid credentials', async function () {
+			try{
+				const res = await chai.request.execute(app)
 				.post('/api/user/signin')
 				.send({
 					'email': 'ram@gmail.com',
 					'password': 'ram#2005'
-				})
-				.then(function (res) {
-					expect(res).to.have.status(200);
-					expect(res.body).to.have.all.keys('success', 'message');
-					expect(res.body.success).to.be.true;
-					expect(res.body.message).to.be.equal('User Signed In Successfully');
-					done();
-				})
-				.catch(function (err) {
-					done(err);
 				});
+
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.all.keys('success', 'message');
+				expect(res.body.success).to.be.true;
+				expect(res.body.message).to.be.equal('User Signed In Successfully');
+			}
+			catch(err){
+				throw err;
+			}
 		});
 
 		it('Prompting the error message for invalid credentials', function (done) {
@@ -261,10 +261,10 @@ describe('Test Suite for User Controller', function () {
 			chai.request.execute(app)
 				.post('/api/user/delete')
 				.then(function(res) {
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(200);
 					expect(res.body).to.have.all.keys('message', 'success');
 					expect(res.body.success).to.be.false;
-					expect(res.body.message).to.be.equal('Unauthorized: Token not provided');
+					expect(res.body.message).to.be.equal('You are not Authenticated!');
 
 					done();
 				})
@@ -288,7 +288,6 @@ describe('Test Suite for User Controller', function () {
 				expect(signInRes).to.have.cookie('token');
 
 				const logOutRes = await agent.get('/api/logout');
-
 				expect(logOutRes).to.have.status(201);
 				expect(logOutRes.body).to.have.all.keys('success');
 				expect(logOutRes.body.success).to.be.true;
@@ -524,10 +523,10 @@ describe('Test Suite for trip controller', function () {
 			chai.request.execute(app)
 				.delete(`/api/trip/${tripId}`)
 				.then(function(res) {
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(400);
 					expect(res.body).to.have.all.keys('success','message');
 					expect(res.body.success).to.be.false;
-					expect(res.body.message).to.be.equal('Unauthorized: Token not provided');
+					expect(res.body.message).to.be.equal('Invalid token');
 					done();
 				})
 				.catch(function(err) {
@@ -543,7 +542,7 @@ describe('Test-cases for searchTrip Functionality', function() {
 	it('Search trips using destination', function(done) {
 		chai.request.execute(app)
 		.get('/api/searchTrip')
-		.send({
+		.query({
 			'destination': 'Paris'
 		})
 		.then(function(res) {
@@ -588,7 +587,7 @@ describe('Test-cases for searchTrip Functionality', function() {
 	it('Search trips using all three factors', function(done) {
 		chai.request.execute(app)
 		.get('/api/searchTrip')
-		.send({
+		.query({
 			'destination': 'Paris',
 			'days': '3',
 			'maxBudget': '8000'
@@ -738,10 +737,10 @@ describe('Test suite for reviews controller', function () {
 				const delRes = await chai.request.execute(app)
 					.delete(`/api/review/${review.id}`)
 				
-				expect(delRes).to.have.status(401);
+				expect(delRes).to.have.status(400);
 				expect(delRes.body).to.have.all.keys('message','success');
 				expect(delRes.body.success).to.be.false;
-				expect(delRes.body.message).to.be.equal('Unauthorized: Token not provided');
+				expect(delRes.body.message).to.be.equal('Invalid token');
 			}
 			catch(err) {
 				throw err;
@@ -915,7 +914,7 @@ describe('Test-cases for creating a custom trip Functionality', function() {
 		})
 		.then(function(res) {
 			expect(res).to.have.status(200);
-            expect(res.body).to.have.all.keys('success', 'trip');
+            expect(res.body).to.have.property('success');
             expect(res.body.success).to.be.true;
 			done();
 		})

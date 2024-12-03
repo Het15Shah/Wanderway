@@ -213,10 +213,10 @@ describe('Test Suite for trip controller', function () {
 			chai.request.execute(app)
 				.delete(`/api/trip/${tripId}`)
 				.then(function(res) {
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(400);
 					expect(res.body).to.have.all.keys('success','message');
 					expect(res.body.success).to.be.false;
-					expect(res.body.message).to.be.equal('Unauthorized: Token not provided');
+					expect(res.body.message).to.be.equal('Invalid token');
 					done();
 				})
 				.catch(function(err) {

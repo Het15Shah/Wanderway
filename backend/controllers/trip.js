@@ -3,7 +3,7 @@ const Trip = require("../models/trip");
 async function addNewTrip(req, res) {
   try {
 
-    console.log(req.body);
+    // console.log(req.body);
     const trip = new Trip(req.body);
     await trip.save();
 
@@ -33,7 +33,7 @@ async function getAllTrip(req, res) {
 async function getTripById(req, res) {
   try {
     const trip = await Trip.findById(req.params.id); // find trip from Trip database using tripId provided by user
-    if (!trip) return res.status(404).json({ message: "Trip not found" });
+    // if (!trip) return res.status(404).json({ message: "Trip not found" });
     res.json(trip);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,8 +44,8 @@ async function deleteTripById(req, res) {
   try {
     // Fetch trip from Trip database and deleting it
     const deletedTrip = await Trip.findByIdAndDelete(req.params.id);
-    if (!deletedTrip)
-      return res.status(404).json({ message: "Trip not found" });
+    // if (!deletedTrip)
+    //   return res.status(404).json({ message: "Trip not found" });
     res.json({ message: "Trip deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });

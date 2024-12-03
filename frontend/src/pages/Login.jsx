@@ -15,7 +15,6 @@ import { toast } from "react-hot-toast";
 import { isValidEmail } from "../utils/validators";
 import Cookies from "js-cookie";
 
-
 function LoginPage() {
   const navigate = useNavigate();
   const { POST } = useAPI();

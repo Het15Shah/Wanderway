@@ -1,3 +1,5 @@
-/node_modules
 .env
+/node_modules
 /.nyc_output
+# stryker temp files
+.stryker-tmp

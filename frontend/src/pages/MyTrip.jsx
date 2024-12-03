@@ -62,8 +62,9 @@ const MyTrips = () => {
     trips.forEach(async (trip) => {
       const img = String(trip?.trip?.imageURL);
       if (img && img.startsWith("https://example.com")) {
-        const fetchedImageUrl = await fetchImage(trips.destination, 1);
-        trip.trip.imageURL = fetchedImageUrl[0];
+        // const fetchedImageUrl = await fetchImage(trips.destination, 1);
+        // trip.trip.imageURL = fetchedImageUrl[0];
+        trip.trip.imageURL = "https://media.timeout.com/images/106080481/750/422/image.jpg";
       }
 
       const startDate = new Date(trip.trip.created_at);

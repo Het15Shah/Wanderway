@@ -38,7 +38,7 @@ async function bookTrip(req, res) {
 
     return res.status(200).json({ message: "Trip Booked Successfully!!" });
   } catch (error) {
-    console.error("Error booking trip:", error);
+    // console.error("Error booking trip:", error);
     return res
       .status(500)
       .json({ message: "Failed to book trip", error: error.message });
@@ -62,7 +62,7 @@ async function allbookedtrips(req, res) {
     // console.log(tripsWithDetails.length);
     return res.status(200).json(trips);
   } catch (error) {
-    console.error("Error fetching booked trips:", error);
+    // console.error("Error fetching booked trips:", error);
     return res.status(500).json({ message: "Failed to fetch booked trips" });
   }
 }

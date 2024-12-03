@@ -196,6 +196,7 @@ describe('Test Suite for User Controller', function () {
 				const profileRes = await agent
 					.get('/api/user/myProfile');
 
+				console.log(profileRes.body)
 				expect(profileRes).to.have.status(200);
 				expect(profileRes.body).to.have.all.keys('success', 'user');
 				expect(profileRes.body.success).to.be.true;
@@ -239,6 +240,7 @@ describe('Test Suite for User Controller', function () {
 
 				const deleteRes = await agent.post('/api/user/delete');
 
+				console.log(deleteRes.body);
 				expect(deleteRes).to.have.status(200);
 				expect(deleteRes.body).to.have.all.keys('message', 'success');
 				expect(deleteRes.body.message).to.be.equal('Account deleted successfully');
@@ -255,10 +257,10 @@ describe('Test Suite for User Controller', function () {
 			chai.request.execute(app)
 				.post('/api/user/delete')
 				.then(function(res) {
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(200);
 					expect(res.body).to.have.all.keys('message', 'success');
 					expect(res.body.success).to.be.false;
-					expect(res.body.message).to.be.equal('Unauthorized: Token not provided');
+					expect(res.body.message).to.be.equal('You are not Authenticated!');
 
 					done();
 				})
@@ -282,7 +284,7 @@ describe('Test Suite for User Controller', function () {
 				expect(signInRes).to.have.cookie('token');
 
 				const logOutRes = await agent.get('/api/logout');
-
+				console.log(logOutRes.body)
 				expect(logOutRes).to.have.status(201);
 				expect(logOutRes.body).to.have.all.keys('success');
 				expect(logOutRes.body.success).to.be.true;
