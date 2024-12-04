@@ -202,6 +202,7 @@ describe('Test Suite for User Controller', function () {
 				const profileRes = await agent
 					.get('/api/user/myProfile');
 
+				console.log(profileRes.body)
 				expect(profileRes).to.have.status(200);
 				expect(profileRes.body).to.have.all.keys('success', 'user');
 				expect(profileRes.body.success).to.be.true;
@@ -245,6 +246,7 @@ describe('Test Suite for User Controller', function () {
 
 				const deleteRes = await agent.post('/api/user/delete');
 
+				console.log(deleteRes.body);
 				expect(deleteRes).to.have.status(200);
 				expect(deleteRes.body).to.have.all.keys('message', 'success');
 				expect(deleteRes.body.message).to.be.equal('Account deleted successfully');
@@ -593,6 +595,7 @@ describe('Test-cases for searchTrip Functionality', function() {
 			'maxBudget': '8000'
 		})
 		.then(function(res) {
+			console.log(res.body);
 			expect(res).to.have.status(200);
 			done();
 		})
