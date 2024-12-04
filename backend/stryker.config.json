@@ -14,5 +14,6 @@
     "spec": [
       "./unit-tests/combined-tests.spec.mjs"
     ]
-  }
+  },
+  "mutate": ["./controllers/*.js" , "./routes/*.js" , "./middlewares/*.js"]
 }

@@ -1,1 +1,0 @@
-For testing cancel trip in myTrip test suite, myTrip that exist in database must be provided.
