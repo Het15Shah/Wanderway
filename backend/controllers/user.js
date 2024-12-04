@@ -190,8 +190,10 @@ async function deleteAccount(req, res) {
   try {
     // Extract token from cookies
     // const token = req.cookies.token;
+
     const token = req.headers["token"];
-    // console.log('token' ,token)
+    console.log(req.headers["token"]);
+    console.log("token", token);
     if (!token) {
       return res
         .status(401)
