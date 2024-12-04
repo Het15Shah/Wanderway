@@ -4,13 +4,13 @@ const jwt = require("jsonwebtoken");
 async function ensureAdmin(req, res, next) {
   // Check if user is authenticated and is an admin
   // Extract token from cookies
-  // const token = req.cookies.token;
-  const token = req.headers["token"];
-  if (!token) {
-    return res
-      .status(401)
-      .json({ success: false, message: "Unauthorized: Token not provided" });
-  }
+  const token = req.cookies.token;
+  // const token = req.headers["token"];
+  // if (!token) {
+  //   return res
+  //     .status(401)
+  //     .json({ success: false, message: "Unauthorized: Token not provided" });
+  // }
 
   // Decode the token to get the userId (ObjectId)
   let userId;

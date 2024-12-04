@@ -5,7 +5,6 @@ const path = require("path");
 const router = express.Router();
 const {
   getUserProfile,
-  setUserProfile,
   userUpdate,
   userSignIn,
   userSignUp,
@@ -15,12 +14,12 @@ const { checkForAuthentication } = require("../middlewares/auth");
 const { createHmac, randomBytes } = require("crypto");
 
 router.get("/myProfile", checkForAuthentication, getUserProfile);
-router.post("/edit", setUserProfile);
+// router.post("/edit", setUserProfile);
 
 router.post("/signup", userSignUp);
 
 router.post("/signin", userSignIn);
-router.post("/delete", deleteAccount);
+router.post("/delete", checkForAuthentication, deleteAccount);
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

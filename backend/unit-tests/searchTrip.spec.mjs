@@ -11,7 +11,7 @@ describe('Test-cases for searchTrip Functionality', function() {
 	it('Search trips using destination', function(done) {
 		chai.request.execute(app)
 		.get('/api/searchTrip')
-		.send({
+		.query({
 			'destination': 'Paris'
 		})
 		.then(function(res) {
@@ -56,7 +56,7 @@ describe('Test-cases for searchTrip Functionality', function() {
 	it('Search trips using all three factors', function(done) {
 		chai.request.execute(app)
 		.get('/api/searchTrip')
-		.send({
+		.query({
 			'destination': 'Paris',
 			'days': '3',
 			'maxBudget': '8000'

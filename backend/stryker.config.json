@@ -10,5 +10,10 @@
   "testRunner": "mocha",
   "testRunner_comment": "Take a look at https://stryker-mutator.io/docs/stryker-js/mocha-runner for information about the mocha plugin.",
   "coverageAnalysis": "perTest",
-  "buildCommand": "npm run test"
+  "mochaOptions": {
+    "spec": [
+      "./unit-tests/combined-tests.spec.mjs"
+    ]
+  },
+  "mutate": ["./controllers/*.js", "./middlewares/*.js", "./routes/*.js"]
 }
