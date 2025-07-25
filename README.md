@@ -197,9 +197,6 @@ MytripPage:
 
 ![screencapture-wanderways-travel-netlify-app-my-trips-2024-12-02-23_43_17](https://github.com/user-attachments/assets/da555206-e3a8-4507-abd0-ccf1f995aa51)
 
-AboutusPage:
-
-![screencapture-wanderways-travel-netlify-app-about-us-2024-12-02-23_55_59](https://github.com/user-attachments/assets/bc48a929-489b-4104-9dc0-a1843883d3c6)
 
                                                             -- Wanderways Team--
 
